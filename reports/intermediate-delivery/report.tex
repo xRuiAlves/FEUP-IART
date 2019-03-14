@@ -8,6 +8,7 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{float}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -55,7 +56,37 @@ Firstly, the problem will be described in further detail, and its structure will
 Alguns parágrafos motivando e introduzindo o tema e os objetivos do documento e descrevendo a estrutura do artigo.
 
 \section{Problem Description}
-'Unblock Me' is a puzzle game that was released in 17-06-2009 by Kiragames. Each puzzle consist in a 6x6 cells board, surrounded with walls (except for the puzzle's exit). The game's objective is to move a special piece to the level's exit, by moving that and the other pieces with the least number of movements possible. Pieces are rectangles with a given orientation (vertical or horizontal) and constant length. Pieces can only move in the direction of their orientation into empty cells (they may not overlap). Levels are fully surrounded by walls, except for the level's exit door that is alligned with the special piece and by which only the special piece can go through. Some levels may even contain fixed blocks that can not be moved, representing obstacles.
+'Unblock Me' is a puzzle game that was released in 17-06-2009 by Kiragames. Each puzzle consist in a 6x6 cells board, surrounded with walls (except for the puzzle's exit). 
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=100px]{img1.png}}
+    \caption{Example of an \textit{Unblock Me} level}
+    \label{fig}
+\end{figure}
+
+The game's objective is to move a special piece to the level's exit, by moving that and the other pieces with the least number of movements possible. Pieces are rectangles with a given orientation (vertical or horizontal) and constant length. Pieces can only move in the direction of their orientation into empty cells (they may not overlap).  
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=200px]{img2.png}}
+    \caption{Piece moving down one cell}
+    \label{fig}
+\end{figure}
+
+Levels are fully surrounded by walls, except for the level's exit door that is alligned with the special piece and by which only the special piece can go through. The level is completed once the piece goes through the exit door.
+ 
+\begin{figure}[H]
+    \centerline{\includegraphics[width=100px]{img3.png}}
+    \caption{Beating a level by going through the exit}
+    \label{fig}
+\end{figure}
+
+Some levels may even contain fixed blocks that can not be moved, representing obstacles.
+ 
+\begin{figure}[H]
+    \centerline{\includegraphics[width=100px]{img4.png}}
+    \caption{Example of an \textit{Unblock Me} level containg fixed blocks}
+    \label{fig}
+\end{figure}
 
 \section{Problem Formulation}
 The game's solving process can be formulated as a searching problem, in which the goal is to find the sequence of moves (state transitions) that take the special piece to the level's exit door - the problem's goal state. 
