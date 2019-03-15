@@ -37,7 +37,7 @@ up201606746@fe.up.pt}
 \maketitle
 
 \begin{abstract}
-The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving the game Unblock Me, in which rectangular pieces block the path of a red special piece. The objective of the game is for the special piece to reach the exit of the level, which is achieved by moving it and the other pieces.
+The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving the game \textit{Unblock Me}, in which rectangular pieces block the path of a red special piece. The objective of the game is for the special piece to reach the exit of the level, which is achieved by moving it and the other pieces.
 The problem will be described and then formulated as a \textit{Search Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process.
 Several algorithms will be investigated, along with testing them against levels with varying difficulty and branching factors. Both the efficiency in reaching a solution and the cost of the calculated solution will be taken into account in the pursuit for the optimal \textit{Search Algorithm}.
 {\huge NEEDS PART ABOUT SECTION V THAT WILL BE CHANGED}
@@ -55,7 +55,7 @@ Firstly, the game will be described in further detail, ensuring that all non-for
 {\huge Finally, a small section covers the conclusions and future work.}
 
 \section{Problem Description}
-\textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit). 
+\textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. It is an adapted version of the Rush Hour, a puzzle game invented by Nob Yoshigahara in the 1970s. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit). 
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=100px]{img1.png}}
@@ -166,10 +166,14 @@ The solution's path cost that is to be minimized is equal to the number of movem
 
 
 \section{Related Work}
-as
+\textit{Unblock Me} is also widely knwon as \textit{Rush Hour}. This game is studied in the Computer Science MSc from the University of Princeton, namely in the course "Computer Science 402 - Artificial Intelligence" (INSERIR REFS).
+
+In this course, students implement multiple heuristics to solve the problem using the A* algorithm. In June 2018, Michael Fogleman (a Software Engineer at Formlabs) developed an artificial intelligence that solves the puzzle and created a database with over two million and a half different puzzles. His solution is based in the usage of bitboards (data structure that is often used by board gamescomputer systems due to its short space usage and operations efficiency) for the game states representation. (INSERIR REFS)
+
+Even though that the problem is not complex, the increasing of the board size quickly leads to a combinatorial explosion, being that a 6x6 board has over 27 billion possible states. Thus, it is not efficient to find a solution by exploring all the possible states, being a good heuristic for state exploration mandatory (INSERIR REFS).
 
 \section{Conclusions and Development Perspectives}
-asd
+TODO
 
 \section*{References}
 
