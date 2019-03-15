@@ -55,12 +55,11 @@ Firstly, the game will be described in further detail, ensuring that all non-for
 {\huge Finally, a small section covers the conclusions and future work.}
 
 \section{Problem Description}
-\textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. It is an adapted version of the Rush Hour, a puzzle game invented by Nob Yoshigahara in the 1970s. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit). 
+\textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. It is an adapted version of the Rush Hour, a puzzle game invented by Nobuyuki Yoshigahara in the 1970s. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit) \cite{b1}. 
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=100px]{img1.png}}
     \caption{Example of an \textit{Unblock Me} level}
-    \label{fig}
 \end{figure}
 
 The game's objective is to move a special piece to the level's exit, by moving that and the other pieces with the least number of movements possible. Pieces are rectangles with a given orientation (vertical or horizontal) and constant length. Pieces can only move in the direction of their orientation into empty cells (they may not overlap).  
@@ -68,7 +67,6 @@ The game's objective is to move a special piece to the level's exit, by moving t
 \begin{figure}[H]
     \centerline{\includegraphics[width=200px]{img2.png}}
     \caption{Piece moving down one cell}
-    \label{fig}
 \end{figure}
 
 Levels are fully surrounded by walls, except for the level's exit door that is alligned with the special piece and by which only the special piece can go through. The level is completed once the piece goes through the exit door.
@@ -76,7 +74,7 @@ Levels are fully surrounded by walls, except for the level's exit door that is a
 \begin{figure}[H]
     \centerline{\includegraphics[width=100px]{img3.png}}
     \caption{Beating a level by going through the exit}
-    \label{fig}
+    \label{img:final_state}
 \end{figure}
 
 Some levels may even contain fixed blocks that can not be moved, representing obstacles.
@@ -84,7 +82,6 @@ Some levels may even contain fixed blocks that can not be moved, representing ob
 \begin{figure}[H]
     \centerline{\includegraphics[width=100px]{img4.png}}
     \caption{Example of an \textit{Unblock Me} level containg fixed blocks}
-    \label{fig}
 \end{figure}
 
 \section{Problem Formulation}
@@ -103,19 +100,19 @@ The game's solving process can be formulated as a searching problem, in which th
     \item Matrix of booleans, where True means the cell is empty
 \end{itemize}
 
-This representation of the game state makes the generation of valid movements easier, due to the fact that to determine possible movements of a single piece the other pieces do not need to be taken into account if all empty cells are known. So to generate all possible ramifications, the list of pieces needs to be iterated over, while checking if there is empty space adjacent to the piece's extremities (these change with the piece's direction). This representation facilitates the execution of this tasks, also making it less costly (important fact due to high number of operations of this kind):
+This representation of the game state makes the generation of valid movements easier, due to the fact that to determine possible movements of a single piece, the other pieces do not need to be taken into account (assuming that all empty cells are known). Thus, to generate all possible branching options, the list of pieces needs to be iterated over, while checking if there are empty cells adjacent to the piece's extremities (these change with the piece's direction). This representation facilitates the execution of these tasks, making it less costly (important fact due to high number of operations of this kind):
 
 \begin{itemize}
     \item Using a list of pieces makes it trivial to determine which of them can be moved in a given state;
     \item Using a matrix (of booleans, that state if a cell is occupied or not) makes it trivial to check if adjacent cells to the pieces extremities are empty;
-    \item Finnaly, using a reference to the special piece allows access to it in constant time, which will be useful to heuristic related operations and determine if the goal state was achieved (\autoref{subsec:gs}).
+    \item Finnaly, using a reference to the special piece allows accessing it in constant time, which will be useful to heuristic related operations and determine if the goal state (\autoref{subsec:gs}) is achieved.
 \end{itemize}
 
 \subsection{Initial State}
-The initial state depends of the level in question, being represented by a game state described in \autoref{subsec:gr}.
+The initial state depends of the level in question, being represented by a game state as described in \autoref{subsec:gr}.
 
 \subsection{Goal State} \label{subsec:gs}
-The goal state consists of a piece configuration where the special piece reaches the level exit.
+The goal state consists of a piece configuration where the special piece reaches the level exit (\autoref{img:final_state}).
 
 \subsection{Operators}
 \begin{itemize}
@@ -166,47 +163,22 @@ The solution's path cost that is to be minimized is equal to the number of movem
 
 
 \section{Related Work}
-\textit{Unblock Me} is also widely knwon as \textit{Rush Hour}. This game is studied in the Computer Science MSc from the University of Princeton, namely in the course "Computer Science 402 - Artificial Intelligence" (INSERIR REFS).
+\textit{Unblock Me} is also widely knwon as \textit{Rush Hour}. In June 2018, Michael Fogleman (a Software Engineer at Formlabs) developed an artificial intelligence that solves the puzzle and created a database with over two million and a half different puzzles\cite{b2}. His solution is based in the usage of bitboards\cite{b3} (data structure that is often used by board games computer systems due to its short space usage and operations efficiency) for the game states representation. 
 
-In this course, students implement multiple heuristics to solve the problem using the A* algorithm. In June 2018, Michael Fogleman (a Software Engineer at Formlabs) developed an artificial intelligence that solves the puzzle and created a database with over two million and a half different puzzles. His solution is based in the usage of bitboards (data structure that is often used by board gamescomputer systems due to its short space usage and operations efficiency) for the game states representation. (INSERIR REFS)
+This game is also studied in the Computer Science MSc from the University of Princeton, namely in the course "Computer Science 402 - Artificial Intelligence". In this course, students implement multiple heuristics to solve the problem using the A* algorithm\cite{b4}. Rainhard Findling, a researcher in Aalto University in Finland, proposes a solution to this problem statement, by using a heuristic based on a vote system, where each piece that is blocking the way of the special piece to the level's exit votes on how they want to free the way (how many moves they have to perform) for the special piece\cite{b5}. 
 
 Even though that the problem is not complex, the increasing of the board size quickly leads to a combinatorial explosion, being that a 6x6 board has over 27 billion possible states. Thus, it is not efficient to find a solution by exploring all the possible states, being a good heuristic for state exploration mandatory (INSERIR REFS).
 
 \section{Conclusions and Development Perspectives}
 TODO
 
-\section*{References}
-
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
-
 \begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+    
+\bibitem{b1} "Unblock me FREE.". Google Play. February 28, 2019. https://play.google.com/store/apps/details?id=com.kiragames.unblockmefree.
+\bibitem{b2} Fogleman, Michael. "Solving Rush Hour, the Puzzle.". July, 2018. https://www.michaelfogleman.com/rush/.
+\bibitem{b3} "Bitboard.". Wikipedia - The free Encyclopedia. December 6, 2018. https://en.wikipedia.org/wiki/Bitboard.
+\bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/.
+\bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. https://www.michaelfogleman.com/rush/.
 \end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
 
 \end{document}
