@@ -93,7 +93,7 @@ The game's solving process can be formulated as a searching problem, in which th
 \subsection{Game State Representation} \label{subsec:gr}
 
 \begin{itemize}
-        \item List of pieces, where each piece contains the following information:
+    \item List of pieces, where each piece contains the following information:
     \begin{itemize}
         \item Origin Square (top left piece corner, e.g. (0,0))
         \item Length (e.g. 4)
@@ -103,16 +103,18 @@ The game's solving process can be formulated as a searching problem, in which th
     \item Matrix of booleans, where True means the cell is empty
 \end{itemize}
 
-This representation of the game state makes the generation of the valid movements easier, due to the fact that to determine possible movements 
-Esta representação do estado do jogo facilita a geração de todos os movimentos válidos, devido ao facto de que o que condiciona o movimento de uma peça não ser necessariamente dependente das outras peças, mas dos espaços vazios do estado atual. Para gerar estes movimentos, basta percorrer a lista de peças, verificando se cada peça possui algum espaço vazio em cada uma das suas duas extremidades (com base na sua orientação). A representação apresentada facilita a execução desta tarefa, tornando-a também pouco custosa (facto importante devido ao elevado número de cálculos deste tipo):
-Utilizando uma lista para armazenar todas as peças, é trivial percorrê-la a fim de determinar quais delas se podem mover num dado estado;
-Utilizando uma matriz (de valores booleanos, que indicam se uma célula está ou não ocupada) é trivial verificar se as duas células adjacentes às extremidades de uma peça estão ou não vazias
-Por fim, a utilização de uma referência para a peça especial permite um acesso constante a essa peça, que será útil para as operações relacionadas com as heurísticas de avaliação.
+This representation of the game state makes the generation of valid movements easier, due to the fact that to determine possible movements of a single piece the other pieces do not need to be taken into account if all empty cells are known. So to generate all possible ramifications, the list of pieces needs to be iterated over, while checking if there is empty space adjacent to the piece's extremities (these change with the piece's direction). This representation facilitates the execution of this tasks, also making it less costly (important fact due to high number of operations of this kind):
+
+\begin{itemize}
+    \item Using a list of pieces makes it trivial to determine which of them can be moved in a given state;
+    \item Using a matrix (of booleans, that state if a cell is occupied or not) makes it trivial to check if adjacent cells to the pieces extremities are empty;
+    \item Finnaly, using a reference to the special piece allows access to it in constant time, which will be useful to heuristic related operations and determine if the goal state was achieved (\autoref{subsec:gs}).
+\end{itemize}
 
 \subsection{Initial State}
 The initial state depends of the level in question, being represented by a game state described in \autoref{subsec:gr}.
 
-\subsection{Goal State}
+\subsection{Goal State} \label{subsec:gs}
 The goal state consists of a piece configuration where the special piece reaches the level exit.
 
 \subsection{Operators}
