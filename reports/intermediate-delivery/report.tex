@@ -40,8 +40,6 @@ up201606746@fe.up.pt}
 The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving the game \textit{Unblock Me}, in which rectangular pieces block the path of a red special piece. The objective of the game is for the special piece to reach the exit of the level, which is achieved by moving it and the other pieces.
 The problem will be described and then formulated as a \textit{Search Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process.
 Several algorithms will be investigated, along with testing them against levels with varying difficulty and branching factors. Both the efficiency in reaching a solution and the cost of the calculated solution will be taken into account in the pursuit for the optimal \textit{Search Algorithm}.
-{\huge NEEDS PART ABOUT SECTION V THAT WILL BE CHANGED}
-
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -52,7 +50,8 @@ Artificial Intelligence, Search Problems, Path finding algorithms, Graph Algorit
 The game that is the subject of study in this paper (\textit{Unblock Me}) will be approached with several different \textit{Search Algorithms}, implemented in \textit{Python}, in order to conclude what is the best approach for solving it using \textit{Artificial Intelligence Algorithms}.
 
 Firstly, the game will be described in further detail, ensuring that all non-formal aspects of it are well documented. Secondly, it will be formulated as a \textit{Search Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken. Thirdly, a research on related work on this topic will be presented, giving some insight on the problem from other points of view.
-{\huge Finally, a small section covers the conclusions and future work.}
+
+Finally, a small section will cover the conclusions and future work, by expanding on the already developed tasks and elaborating on the planned approach.
 
 \section{Problem Description}
 \textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. It is an adapted version of the Rush Hour, a puzzle game invented by Nobuyuki Yoshigahara in the 1970s. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit) \cite{b1}. 
@@ -85,7 +84,7 @@ Some levels may even contain fixed blocks that can not be moved, representing ob
 \end{figure}
 
 \section{Problem Formulation}
-The game's solving process can be formulated as a searching problem, in which the goal is to find the sequence of moves (state transitions) that take the special piece to the level's exit door - the problem's goal state. 
+The game's solving process can be formulated as a search problem, in which the goal is to find the sequence of moves (state transitions) that take the special piece to the level's exit door - the problem's goal state. 
 
 \subsection{Game State Representation} \label{subsec:gr}
 
@@ -169,16 +168,40 @@ This game is also studied in the Computer Science MSc from the University of Pri
 
 Even though that the problem is not complex, the increasing of the board size quickly leads to a combinatorial explosion, being that a 6x6 board has over 27 billion possible states. Thus, it is not efficient to find a solution by exploring all the possible states, being a good heuristic for state exploration mandatory.
 
-\section{Conclusions and Development Perspectives}
-TODO
+\section{Conclusions and Future Work}
+% Adicionar links para as secções acima?
+As of yet, the problem has been completely formalized - it has been formally described, and formulated as a search problem (a Game State representation has been reached, the initial and goal states have been described and the operators and path cost have been stated).
+
+The chosen programming language was Python, and a simple graphical interface has been implemented, in order to show the solutions of the different algorithms when they are implemented.
+
+In order to study the best possible approach for solving \textit{Unblock Me} puzzles, the following algorithms will be the subject of various tests:
+\begin{itemize}
+    \item Breadth-First Search
+    \item Depth-First Search
+    \item Iterative Deepening
+    \item Uniform Cost Search
+    \item Greedy Search
+    \item A*
+    \item Bi-Directional Search (using Greedy Search)
+    \item Bi-Directional Search (using A*)
+\end{itemize}
+
+For the informed search algorithms (Greedy and A*), several different heuristics will be experimented with, such as:
+
+\begin{itemize}
+    \item The number of pieces between the special piece and the level exit
+    \item The number of cells (distance) between the special piece and the level exit
+\end{itemize}
+
+In order to evaluate the implemented algorithms, they will be assessed both in terms of the achieved solution's quality and in terms of the algorithm's performance. For the first metric, the main evaluation point will be the number of piece movements. For the latter, both the execution time and the number of evaluated states will be taken into account.
 
 \begin{thebibliography}{00}
     
-\bibitem{b1} "Unblock me FREE.". Google Play. February 28, 2019. https://play.google.com/store/apps/details?id=com.kiragames.unblockmefree.
-\bibitem{b2} Fogleman, Michael. "Solving Rush Hour, the Puzzle.". July, 2018. https://www.michaelfogleman.com/rush/.
-\bibitem{b3} "Bitboard.". Wikipedia - The free Encyclopedia. December 6, 2018. https://en.wikipedia.org/wiki/Bitboard.
-\bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/.
-\bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. https://www.michaelfogleman.com/rush/.
+\bibitem{b1} "Unblock me FREE.". Google Play. February 28, 2019.\href{https://play.google.com/store/apps/details?id=com.kiragames.unblockmefree}{https://play.google.com/store/apps/details?id=com.kiragames.unblo\\ckmefree}.
+\bibitem{b2} Fogleman, Michael. "Solving Rush Hour, the Puzzle.". July, 2018. \href{https://www.michaelfogleman.com/rush/}{https://www.michaelfogleman.com/rush/}.
+\bibitem{b3} "Bitboard.". Wikipedia - The free Encyclopedia. December 6, 2018. \href{https://en.wikipedia.org/wiki/Bitboard}{https://en.wikipedia.org/wiki/Bitboard}.
+\bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. \href{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/}{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments\\/programs/rushhour/}.
+\bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. \href{https://www.michaelfogleman.com/rush/}{https://www.michaelfogleman.com/rush/}.
 \end{thebibliography}
 
 \end{document}
