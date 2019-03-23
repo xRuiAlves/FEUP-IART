@@ -1,7 +1,22 @@
 from gameState import stateFromString
+from search import breathSearch, depthSearch, progressiveDepth
 
-gameState = stateFromString('BBBJCCHooJoKHAAJoKooIDDLEEIooLooooGG')
-print(gameState)
+ini = stateFromString('BBBJCCHooJoKHAAJoKooIDDLEEIooLooooGG')
 
-for gs in gameState.getAllStates():
-    print(gs)
+res = breathSearch(ini)
+print("Breadth: ")
+for state in res.previousStates:
+    print(state)
+print(res)
+
+res = depthSearch(ini, maxDepth=10)
+print("Depth: ")
+for state in res.previousStates:
+    print(state)
+print(res)
+
+res = progressiveDepth(ini)
+print("Progressive Depth: ")
+for state in res.previousStates:
+    print(state)
+print(res)

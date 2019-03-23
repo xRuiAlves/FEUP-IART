@@ -47,7 +47,8 @@ class GameState:
                     lPieces[pieceNumber] = nPiece
 
                     sp = lPieces[pieceNumber] if piece is self.specialPiece else self.specialPiece
-                    prevState = copy(self.previousStates).append(self)
+                    prevState = copy(self.previousStates)
+                    prevState.append(self)
                     nextStates.append(GameState(eMatrix, lPieces,
                                                 sp, self.exitX, self.exitY,
                                                 self.ordering, prevState,
