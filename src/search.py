@@ -1,12 +1,15 @@
 from queue import Queue, PriorityQueue
 from sys import maxsize
+from stats import Stats
 
 
 def breathSearch(ini, debug=False):
+    stats = Stats()
     states = Queue()
     states.put(ini)
     searchedStates = []
 
+    stats.startTimer()
     while True:
         stateToAnalyze = states.get()
 
@@ -15,82 +18,117 @@ def breathSearch(ini, debug=False):
         searchedStates.append(stateToAnalyze)
 
         if debug:
-            print(str(stateToAnalyze) + ' - ', end="")
+            print(str(stateToAnalyze))
 
+        stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
-            if debug:
-                print(str(nextState), end=" ", flush=True)
+            if nextState in searchedStates:
+                continue
+
             if nextState.isFinal():
-                if debug:
-                    print()
-                return nextState
+                stats.endTimer()
+                return stats.setState(nextState)
             states.put(nextState)
-        if debug:
-            print()
 
 
 def depthSearch(ini, maxDepth=maxsize, debug=False):
-    return recursiveDS(ini, 0, [], maxDepth, debug)
+    stats = Stats()
+    states = [ini]
+    searchedStates = []
+
+    stats.startTimer()
+    while True:
+        if len(states) == 0:
+            return None
+
+        stateToAnalyze = states.pop()
+
+        if stateToAnalyze in searchedStates:
+            continue
+
+        searchedStates.append(stateToAnalyze)
+
+        if debug:
+            print(str(stateToAnalyze))
+
+        stats.nodeExpanded()
+        for nextState in stateToAnalyze.getAllStates():
+            if nextState in searchedStates:
+                continue
+
+            if nextState.isFinal():
+                stats.endTimer()
+                return stats.setState(nextState)
+
+            if stateToAnalyze.depth() < maxDepth:
+                states.append(nextState)
 
 
-def recursiveDS(stateToAnalyze, depth,
-                prevStates, maxDepth, debug=False):
-    if stateToAnalyze.isFinal():
-        return stateToAnalyze
+def pSearchStep(ini, stats, maxDepth=maxsize, debug=False):
+    states = [ini]
+    searchedStates = []
 
-    if debug:
-        print(str(depth) + " - " +
-              str(stateToAnalyze) + " " + str(stateToAnalyze.transitions))
+    while True:
+        if len(states) == 0:
+            return None
 
-    if depth >= maxDepth:
-        return None
+        stateToAnalyze = states.pop()
+        if stateToAnalyze in searchedStates:
+            continue
 
-    nextPStates = prevStates.copy()
-    nextPStates.append(stateToAnalyze)
-    for nextState in stateToAnalyze.getAllStates():
-        res = None
-        if nextState not in prevStates:
-            res = recursiveDS(nextState, depth +
-                              1, nextPStates, maxDepth, debug)
-        if res is not None:
-            return res
+        searchedStates.append(stateToAnalyze)
+        if debug:
+            print(str(stateToAnalyze))
 
-    return None
+        stats.nodeExpanded()
+        for nextState in stateToAnalyze.getAllStates():
+            if nextState in searchedStates:
+                continue
+
+            if nextState.isFinal():
+                stats.endTimer()
+                return stats.setState(nextState)
+
+            if nextState.depth() < maxDepth:
+                states.append(nextState)
 
 
 def progressiveDepth(ini, deb=False):
+    stats = Stats()
     sol = None
     depth = 0
+
+    stats.startTimer()
     while sol is None:
         depth += 1
-        sol = depthSearch(ini, maxDepth=depth, debug=deb)
+        sol = pSearchStep(ini, stats, maxDepth=depth, debug=deb)
 
     return sol
 
 
 def informedSearch(ini, debug=False):
+    stats = Stats()
     states = PriorityQueue()
     states.put(ini)
     searchedStates = []
+
+    stats.startTimer()
     while True:
         stateToAnalyze = states.get()
 
         if stateToAnalyze in searchedStates:
-            if debug:
-                print(str(stateToAnalyze) + " already analized")
             continue
         searchedStates.append(stateToAnalyze)
 
         if debug:
-            print(str(stateToAnalyze) + ' - ', end="")
+            print(str(stateToAnalyze))
 
+        stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
-            if debug:
-                print(str(nextState), end=" ", flush=True)
+            if nextState in searchedStates:
+                continue
+
             if nextState.isFinal():
-                if debug:
-                    print()
-                return nextState
+                stats.endTimer()
+                return stats.setState(nextState)
             states.put(nextState)
-        if debug:
-            print()

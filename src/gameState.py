@@ -13,6 +13,7 @@ class GameState:
             exitY=None,
             ordering=None,
             previousStates=[],
+            movements=[],
             emptySymbol=' ',
             wallSymbol='x'):
 
@@ -23,6 +24,7 @@ class GameState:
         self.emptySymbol = emptySymbol
         self.wallSymbol = wallSymbol
         self.ordering = ordering
+        self.movements = movements
         self.exitX = 2 if exitX is None else exitX
         self.exitY = len(self.emptyMatrix[0]) - 1 if exitY is None else exitY
 
@@ -47,11 +49,18 @@ class GameState:
                     lPieces[pieceNumber] = nPiece
 
                     sp = lPieces[pieceNumber] if piece is self.specialPiece else self.specialPiece
+
                     prevState = copy(self.previousStates)
                     prevState.append(self)
+
+                    movTaken = copy(self.movements)
+                    movTaken.append(piece.id + str(movX if movX != 0 else movY))
+
                     nextStates.append(GameState(eMatrix, lPieces,
                                                 sp, self.exitX, self.exitY,
-                                                self.ordering, prevState,
+                                                self.ordering,
+                                                prevState,
+                                                movTaken,
                                                 self.emptySymbol,
                                                 self.wallSymbol))
 
@@ -67,7 +76,7 @@ class GameState:
             and self.emptyMatrix[x][y]
 
     def depth(self):
-        return len(self.previousState)
+        return len(self.previousStates)
 
     def __str__(self):
         characterMap = [[self.emptySymbol] *
@@ -86,19 +95,22 @@ class GameState:
             for cell in line:
                 strRep += cell
                 strRep += ' '
-            strRep += '\t'
-            for emptyCell in emptyLine:
-                if emptyCell:
-                    strRep += ' '
-                    strRep += ' '
-                else:
-                    strRep += 'O'
-                    strRep += ' '
+            # strRep += '\t'
+            # for emptyCell in emptyLine:
+            #     if emptyCell:
+            #         strRep += ' '
+            #         strRep += ' '
+            #     else:
+            #         strRep += 'O'
+            #         strRep += ' '
 
             strRep += '\n'
         return strRep
 
     def __eq__(self, value):
+        for m1, m2 in zip(self.movements, value.movements):
+            if m1 != m2:
+                return False
         return str(self) == str(value)
 
     def __lt__(self, other):

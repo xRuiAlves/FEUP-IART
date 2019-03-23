@@ -3,20 +3,31 @@ from search import breathSearch, depthSearch, progressiveDepth
 
 ini = stateFromString('BBBJCCHooJoKHAAJoKooIDDLEEIooLooooGG')
 
-res = breathSearch(ini)
-print("Breadth: ")
-for state in res.previousStates:
-    print(state)
-print(res)
+print(ini)
 
-res = depthSearch(ini, maxDepth=10)
-print("Depth: ")
-for state in res.previousStates:
-    print(state)
-print(res)
+# res = breathSearch(ini)
+# if res is not None:
+#     print("Breadth: {}\n\t{} answer length\n\t{} nodes expanded\n\t{} seconds"
+#           .format(
+#               res.gameState.movements,
+#               res.answerLength,
+#               res.expandedNodes,
+#               res.executionTime))
 
-res = progressiveDepth(ini)
-print("Progressive Depth: ")
-for state in res.previousStates:
-    print(state)
-print(res)
+res = depthSearch(ini, maxDepth=5)
+if res is not None:
+    print("Depth: {}\n\t{} answer length\n\t{} nodes expanded\n\t{} seconds"
+          .format(
+              res.gameState.movements,
+              res.answerLength,
+              res.expandedNodes,
+              res.executionTime))
+
+# res = progressiveDepth(ini)
+# if res is not None:
+#     print("P-Depth: {}\n\t{} answer length\n\t{} nodes expanded\n\t{} seconds"
+#           .format(
+#               res.gameState.movements,
+#               res.answerLength,
+#               res.expandedNodes,
+#               res.executionTime))
