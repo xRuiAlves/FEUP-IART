@@ -59,3 +59,6 @@ typings/
 
 # next.js build output
 .next
+venv/
+*__pycache__/
+*.vscode/
