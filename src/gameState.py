@@ -1,6 +1,8 @@
 from math import sqrt, floor
 from copy import deepcopy, copy
 from piece import Piece
+from sys import stdout
+from time import sleep
 
 
 class GameState:
@@ -108,9 +110,6 @@ class GameState:
         return strRep
 
     def __eq__(self, value):
-        for m1, m2 in zip(self.movements, value.movements):
-            if m1 != m2:
-                return False
         return str(self) == str(value)
 
     def __lt__(self, other):
@@ -118,6 +117,13 @@ class GameState:
             return len(self.previousStates) < len(other.previousStates)
         else:
             return self.ordering(self, other)
+
+    def playGame(self, sleepTime=0.5):
+        for state in self.previousStates:
+            print(state)
+
+            sleep(sleepTime)
+        print(str(self))
 
 
 def stateFromString(

@@ -7,24 +7,16 @@ def breathSearch(ini, debug=False):
     stats = Stats()
     states = Queue()
     states.put(ini)
-    searchedStates = []
 
     stats.startTimer()
     while True:
         stateToAnalyze = states.get()
-
-        if stateToAnalyze in searchedStates:
-            continue
-        searchedStates.append(stateToAnalyze)
 
         if debug:
             print(str(stateToAnalyze))
 
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
-            if nextState in searchedStates:
-                continue
-
             if nextState.isFinal():
                 stats.endTimer()
                 return stats.setState(nextState)
@@ -66,26 +58,19 @@ def depthSearch(ini, maxDepth=maxsize, debug=False):
 
 def pSearchStep(ini, stats, maxDepth=maxsize, debug=False):
     states = [ini]
-    searchedStates = []
 
     while True:
         if len(states) == 0:
             return None
 
         stateToAnalyze = states.pop()
-        if stateToAnalyze in searchedStates:
-            continue
-
-        searchedStates.append(stateToAnalyze)
         if debug:
             print(str(stateToAnalyze))
 
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
-            if nextState in searchedStates:
-                continue
 
-            if nextState.isFinal():
+            if nextState.depth() == maxDepth and nextState.isFinal():
                 stats.endTimer()
                 return stats.setState(nextState)
 
