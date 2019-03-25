@@ -56,7 +56,8 @@ class GameState:
                     prevState.append(self)
 
                     movTaken = copy(self.movements)
-                    movTaken.append(piece.id + str(movX if movX != 0 else movY))
+                    movTaken.append(piece.id +
+                                    str(movX if movX != 0 else movY))
 
                     nextStates.append(GameState(eMatrix, lPieces,
                                                 sp, self.exitX, self.exitY,
@@ -97,14 +98,6 @@ class GameState:
             for cell in line:
                 strRep += cell
                 strRep += ' '
-            # strRep += '\t'
-            # for emptyCell in emptyLine:
-            #     if emptyCell:
-            #         strRep += ' '
-            #         strRep += ' '
-            #     else:
-            #         strRep += 'O'
-            #         strRep += ' '
 
             strRep += '\n'
         return strRep
@@ -124,6 +117,9 @@ class GameState:
 
             sleep(sleepTime)
         print(str(self))
+
+    def __hash__(self):
+        return str(self).__hash__()
 
 
 def stateFromString(

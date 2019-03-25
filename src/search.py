@@ -3,20 +3,32 @@ from sys import maxsize
 from stats import Stats
 
 
-def breathSearch(ini, debug=False):
+def breathSearch(ini, debug=False, saveStates=False):
     stats = Stats()
     states = Queue()
     states.put(ini)
 
+    searchedStates = set()
+
     stats.startTimer()
     while True:
+        if states.empty():
+            return None
+
         stateToAnalyze = states.get()
 
         if debug:
             print(str(stateToAnalyze))
 
+        if saveStates:
+            searchedStates.add(stateToAnalyze)
+
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
+            if saveStates and nextState in searchedStates:
+                stats.nodeSkipped()
+                continue
+
             if nextState.isFinal():
                 stats.endTimer()
                 return stats.setState(nextState)
@@ -26,7 +38,7 @@ def breathSearch(ini, debug=False):
 def depthSearch(ini, maxDepth=maxsize, debug=False):
     stats = Stats()
     states = [ini]
-    searchedStates = []
+    searchedStates = set()
 
     stats.startTimer()
     while True:
@@ -38,7 +50,7 @@ def depthSearch(ini, maxDepth=maxsize, debug=False):
         if stateToAnalyze in searchedStates:
             continue
 
-        searchedStates.append(stateToAnalyze)
+        searchedStates.add(stateToAnalyze)
 
         if debug:
             print(str(stateToAnalyze))
@@ -46,6 +58,7 @@ def depthSearch(ini, maxDepth=maxsize, debug=False):
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
             if nextState in searchedStates:
+                stats.nodeSkipped()
                 continue
 
             if nextState.isFinal():
@@ -56,8 +69,9 @@ def depthSearch(ini, maxDepth=maxsize, debug=False):
                 states.append(nextState)
 
 
-def pSearchStep(ini, stats, maxDepth=maxsize, debug=False):
+def pSearchStep(ini, stats, saveStates, debug, maxDepth=maxsize):
     states = [ini]
+    searchedStates = set()
 
     while True:
         if len(states) == 0:
@@ -67,8 +81,15 @@ def pSearchStep(ini, stats, maxDepth=maxsize, debug=False):
         if debug:
             print(str(stateToAnalyze))
 
+        if saveStates:
+            searchedStates.add(stateToAnalyze)
+
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
+
+            if saveStates and nextState in searchedStates:
+                stats.nodeSkipped()
+                continue
 
             if nextState.depth() == maxDepth and nextState.isFinal():
                 stats.endTimer()
@@ -78,7 +99,7 @@ def pSearchStep(ini, stats, maxDepth=maxsize, debug=False):
                 states.append(nextState)
 
 
-def progressiveDepth(ini, deb=False):
+def progressiveDepth(ini, debug=False, saveStates=False):
     stats = Stats()
     sol = None
     depth = 0
@@ -86,7 +107,7 @@ def progressiveDepth(ini, deb=False):
     stats.startTimer()
     while sol is None:
         depth += 1
-        sol = pSearchStep(ini, stats, maxDepth=depth, debug=deb)
+        sol = pSearchStep(ini, stats, saveStates, debug, maxDepth=depth)
 
     return sol
 
