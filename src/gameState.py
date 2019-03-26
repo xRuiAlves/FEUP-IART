@@ -11,6 +11,7 @@ class GameState:
             emptyMatrix,
             listOfPieces,
             specialPiece,
+            fixedBlocks=[],
             exitX=None,
             exitY=None,
             ordering=None,
@@ -22,6 +23,7 @@ class GameState:
         self.emptyMatrix = emptyMatrix
         self.listOfPieces = listOfPieces
         self.previousStates = previousStates
+        self.fixedBlocks = fixedBlocks
         self.specialPiece = specialPiece
         self.emptySymbol = emptySymbol
         self.wallSymbol = wallSymbol
@@ -131,6 +133,7 @@ def stateFromString(
     emptyMatrix = [[True] * n for x in range(n)]
     pieces = {}
     specialPiece = None
+    fixedBlocks = []
 
     for pos in range(len(stateStr)):
         cell = stateStr[pos]
@@ -142,6 +145,7 @@ def stateFromString(
 
         if cell == wallSymbol:
             emptyMatrix[x][y] = False
+            fixedBlocks.append((y,x))
             continue
 
         if cell in pieces:
@@ -157,4 +161,4 @@ def stateFromString(
     if specialPiece is None:
         raise 'No special piece'
 
-    return GameState(emptyMatrix, list(pieces.values()), specialPiece)
+    return GameState(emptyMatrix, list(pieces.values()), specialPiece, fixedBlocks)
