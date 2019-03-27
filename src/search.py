@@ -3,7 +3,7 @@ from sys import maxsize
 from stats import Stats
 
 
-def breathSearch(ini, debug=False, saveStates=False):
+def breathSearch(ini, debug=False, saveStates=True):
     stats = Stats()
     states = Queue()
     states.put(ini)
@@ -99,7 +99,7 @@ def pSearchStep(ini, stats, saveStates, debug, maxDepth=maxsize):
                 states.append(nextState)
 
 
-def progressiveDepth(ini, debug=False, saveStates=False):
+def progressiveDepth(ini, debug=False, saveStates=True):
     stats = Stats()
     sol = None
     depth = 0

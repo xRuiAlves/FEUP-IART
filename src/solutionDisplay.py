@@ -9,7 +9,7 @@ pieceWidth = 100
 pieceBorderWidth = 3
 specialPieceColor = color_rgb(220, 43, 43)
 wallColor = color_rgb(89, 44, 12)
-fixedBlockColor = wallColor
+fixedBlockColor = color_rgb(0, 0, 0)
 backgroundColor = color_rgb(198, 185, 175)
 animationSpeed = 0.350
 
@@ -46,6 +46,7 @@ def drawFixedBlocks(blocks, window):
         p1 = Point((block[0] + 1)*pieceWidth, (block[1] + 1)*pieceWidth)
         p2 = Point((block[0] + 2)*pieceWidth, (block[1] + 2)*pieceWidth)
         model = Rectangle(p1, p2)
+        model.setWidth(3)
         model.setFill(fixedBlockColor)
         model.draw(window)
 
@@ -76,12 +77,20 @@ def cls(window):
     door_model.setFill(backgroundColor)
     door_model.draw(window)
 
-
 def drawState(state, window):
     cls(window)
     drawFixedBlocks(state.fixedBlocks, window)
     for index, piece in enumerate(state.listOfPieces):
         drawPiece(piece, index, window)
+
+def drawSingleState(state):
+    window = initWindow()
+    drawState(state, window)
+    try:
+        window.getMouse()
+    except GraphicsError:
+        return
+    window.close()
 
 def drawSolution(states):
     window = initWindow()
@@ -89,5 +98,5 @@ def drawSolution(states):
         drawState(state, window)
         update(10)
         sleep(animationSpeed)
-    window.getMouse()  # waits for mouse click input
+    window.getMouse()
     window.close()

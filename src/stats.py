@@ -32,8 +32,8 @@ class Stats:
         return self
 
     def __str__(self):
-        return "{}\n\t{} answer length\n\t{} nodes expanded\n\t{} nodes skipped\n\t{} seconds".format(
-            self.gameState.movements, self.answerLength, self.expandedNodes, self.skippedStates, self.executionTime)
+        return "Answer length: {}\nNumber of nodes Expanded: {}\nNumber of nodes Skipped: {}\nTime taken: {}s\n".format(
+            self.answerLength, self.expandedNodes, self.skippedStates, self.executionTime)
     
     def getSolution(self):
         return self.gameState.previousStates + [self.gameState]
