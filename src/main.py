@@ -3,7 +3,7 @@ from solutionDisplay import drawSolution, drawSingleState
 from gameState import stateFromString
 from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
 from search import breathSearch, depthSearch, progressiveDepth, informedSearch
-from heuristics import aStarBlockingPieces
+from heuristics import greedyBlockingPieces, aStarBlockingPieces
 
 
 class Menu:
@@ -65,7 +65,6 @@ def puzzleChoice(puzzles):
                 continue
 
             puzzle = stateFromString(list(puzzles.values())[puzzleNumber - 1])
-            puzzle.ordering = aStarBlockingPieces
             drawSingleState(puzzle)
             getAlgorithmChoice(puzzle)
 
@@ -81,18 +80,25 @@ def getAlgorithmChoice(puzzle):
                               "DFS",
                               "BFS",
                               "Iterative Deepening",
-                              "Informed Search"
+                              "Greedy Search",
+                              "A* Search"
                           ],
                           [
                               partial(performAlgorithm, puzzle, depthSearch),
                               partial(performAlgorithm, puzzle, breathSearch),
                               partial(performAlgorithm, puzzle, progressiveDepth),
-                              partial(performAlgorithm, puzzle, informedSearch)
+                              partial(performAlgorithm, puzzle, informedSearch, heuristicInfo="greedy"),
+                              partial(performAlgorithm, puzzle, informedSearch, heuristicInfo="aStar")
                           ]
                           ).display()
 
 
-def performAlgorithm(puzzle, algorithm):
+def performAlgorithm(puzzle, algorithm, heuristicInfo=""):
+    if (heuristicInfo == "aStar"):
+        puzzle.ordering = aStarBlockingPieces
+    elif (heuristicInfo == "greedy"):
+        puzzle.ordering = greedyBlockingPieces
+        
     res = algorithm(puzzle)
     if res is None:
         print("Failed to find solution")
