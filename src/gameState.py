@@ -62,7 +62,7 @@ class GameState:
                                     str(movX if movX != 0 else movY))
 
                     nextStates.append(GameState(eMatrix, lPieces,
-                                                sp, 
+                                                sp,
                                                 self.fixedBlocks,
                                                 self.exitX, self.exitY,
                                                 self.ordering,
@@ -147,7 +147,7 @@ def stateFromString(
 
         if cell == wallSymbol:
             emptyMatrix[x][y] = False
-            fixedBlocks.append((y,x))
+            fixedBlocks.append((y, x))
             continue
 
         if cell in pieces:
@@ -163,4 +163,9 @@ def stateFromString(
     if specialPiece is None:
         raise 'No special piece'
 
-    return GameState(emptyMatrix, list(pieces.values()), specialPiece, fixedBlocks)
+    return GameState(
+        emptyMatrix,
+        list(
+            pieces.values()),
+        specialPiece,
+        fixedBlocks)

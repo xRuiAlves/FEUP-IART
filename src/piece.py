@@ -47,6 +47,17 @@ class Piece:
 
         return False
 
+    def inRange(self, x, y, width, height):
+        if self.direction == 'H':
+            self.width = self.length
+            self.height = 1
+        else:
+            self.width = 1
+            self.height = self.length
+
+        return self.x < x + width and self.x + \
+            self.width > x and self.y < y + height and self.y + self.height > y
+
     def getExtremities(self):
         ex = []
         if self.direction == 'V':

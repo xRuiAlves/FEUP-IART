@@ -116,15 +116,19 @@ def informedSearch(ini, debug=False):
     stats = Stats()
     states = PriorityQueue()
     states.put(ini)
-    searchedStates = []
+    searchedStates = set()
 
     stats.startTimer()
     while True:
         stateToAnalyze = states.get()
 
+        if stateToAnalyze.isFinal():
+            stats.endTimer()
+            return stats.setState(stateToAnalyze)
+
         if stateToAnalyze in searchedStates:
             continue
-        searchedStates.append(stateToAnalyze)
+        searchedStates.add(stateToAnalyze)
 
         if debug:
             print(str(stateToAnalyze))
@@ -133,8 +137,4 @@ def informedSearch(ini, debug=False):
         for nextState in stateToAnalyze.getAllStates():
             if nextState in searchedStates:
                 continue
-
-            if nextState.isFinal():
-                stats.endTimer()
-                return stats.setState(nextState)
             states.put(nextState)

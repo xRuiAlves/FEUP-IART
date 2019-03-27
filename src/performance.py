@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from gameState import stateFromString
-from search import breathSearch, depthSearch, progressiveDepth
+from search import breathSearch, depthSearch, progressiveDepth, informedSearch
+from heuristics import greedyBlockingPieces, aStarBlockingPieces
 
 
 def getStats(puzzleString):
@@ -11,6 +12,10 @@ def getStats(puzzleString):
     results['breadth'] = breathSearch(ini, saveStates=True)
     results['depth'] = depthSearch(ini)
     results['p-depth'] = progressiveDepth(ini, saveStates=True)
+    ini.ordering = greedyBlockingPieces
+    results['greedy-bpieces'] = informedSearch(ini)
+    ini.ordering = aStarBlockingPieces
+    results['a*-bpieces'] = informedSearch(ini)
     return results
 
 
@@ -19,7 +24,7 @@ def getData(statistics, alg, field):
     for puzzleId in statistics:
         stats = statistics[puzzleId]
         data.append(getattr(stats[alg], field))
-        
+
     return data
 
 
@@ -43,15 +48,16 @@ def createGrapth(
     for alg_index in range(n_alg):
         alg = algs[alg_index]
         executionData = getData(statistics, alg, field)
-        rects1 = ax.bar(index + (alg_index + 1) * barWidth, executionData, 
-                         barWidth,
-                         alpha=opacity,
-                         label=alg)
+        rects1 = ax.bar(index + (alg_index + 1) * barWidth, executionData,
+                        barWidth,
+                        alpha=opacity,
+                        label=alg)
 
     plt.xlabel('Puzzles')
     plt.ylabel(ylabel)
     plt.title(title)
-    plt.xticks(index + ((n_alg-1)/2 + 1) * barWidth, statistics.keys(), rotation=90)
+    plt.xticks(index + ((n_alg - 1) / 2 + 1) *
+               barWidth, statistics.keys(), rotation=90)
 
     fig.tight_layout()
 
@@ -103,6 +109,24 @@ for puzzleId in puzzles:
     print(puzzleId)
     statistics[puzzleId] = getStats(puzzles[puzzleId])
 
-createGrapth(statistics, 'executionTime', 'Execution Time (s)', '', barWidth=0.1, save=True)
-createGrapth(statistics, 'expandedNodes', 'Expanded Nodes', '', barWidth=0.1, save=True)
-createGrapth(statistics, 'answerLength', 'Answer Length', '', barWidth=0.1, save=True)
+createGrapth(
+    statistics,
+    'executionTime',
+    'Execution Time (s)',
+    '',
+    barWidth=0.1,
+    save=True)
+createGrapth(
+    statistics,
+    'expandedNodes',
+    'Expanded Nodes',
+    '',
+    barWidth=0.1,
+    save=True)
+createGrapth(
+    statistics,
+    'answerLength',
+    'Answer Length',
+    '',
+    barWidth=0.1,
+    save=True)
