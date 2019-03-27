@@ -103,10 +103,13 @@ def drawSingleState(state):
 
 
 def drawSolution(states):
-    window = initWindow()
-    for state in states:
-        drawState(state, window)
-        update(10)
-        sleep(animationSpeed)
-    window.getMouse()
-    window.close()
+    try:
+        window = initWindow()
+        for state in states:
+            drawState(state, window)
+            update(10)
+            sleep(animationSpeed)
+        window.getMouse()
+        window.close()
+    except GraphicsError:
+        return
