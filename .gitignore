@@ -62,3 +62,5 @@ typings/
 venv/
 *__pycache__/
 *.vscode/
+rush.txt
+test.txt
