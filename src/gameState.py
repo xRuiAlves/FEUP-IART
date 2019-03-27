@@ -62,7 +62,9 @@ class GameState:
                                     str(movX if movX != 0 else movY))
 
                     nextStates.append(GameState(eMatrix, lPieces,
-                                                sp, self.exitX, self.exitY,
+                                                sp, 
+                                                self.fixedBlocks,
+                                                self.exitX, self.exitY,
                                                 self.ordering,
                                                 prevState,
                                                 movTaken,
