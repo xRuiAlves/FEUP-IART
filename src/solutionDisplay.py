@@ -1,48 +1,30 @@
 from graphics import *
 from gameState import stateFromString
 from search import breathSearch, depthSearch, progressiveDepth
+from time import sleep
 
 windowWidth = 801
 windowHeight = 801
 pieceWidth = 100
-specialPieceColor = color_rgb(200, 40, 40)
-wallColor = color_rgb(139, 69, 19)
-fixedBlockColor = color_rgb(30, 30, 30)
-backgroundColor = color_rgb(150, 150, 150)
-
-tempState = stateFromString('BBBJCCHooJoKHAAJoKooIDDLEEIooLooxxGG')
+pieceBorderWidth = 3
+specialPieceColor = color_rgb(220, 43, 43)
+wallColor = color_rgb(89, 44, 12)
+fixedBlockColor = wallColor
+backgroundColor = color_rgb(198, 185, 175)
+animationSpeed = 0.350
 
 pieceColors = [
-    color_rgb(190, 180, 180),
-    color_rgb(180, 190, 180),
-    color_rgb(180, 180, 190),
-    color_rgb(190, 190, 180),
-    color_rgb(180, 190, 190),
-    color_rgb(190, 180, 190)
+    color_rgb(64, 75, 109),
+    color_rgb(74, 75, 115),
+    color_rgb(54, 85, 109),
+    color_rgb(74, 92, 113),
+    color_rgb(80, 77, 112),
+    color_rgb(60, 90, 112),
+    color_rgb(75, 80, 120),
+    color_rgb(100, 77, 112),
+    color_rgb(60, 110, 112),
+    color_rgb(90, 102, 120)
 ]
-
-def drawWalls(window):
-    points = [
-        Point(0, 0),
-        Point(8*pieceWidth, pieceWidth),
-
-        Point(0, 7*pieceWidth),
-        Point(8*pieceWidth, 8*pieceWidth),
-
-        Point(0, pieceWidth),
-        Point(pieceWidth, 7*pieceWidth),
-
-        Point(7*pieceWidth, pieceWidth),
-        Point(8*pieceWidth, 3*pieceWidth),
-
-        Point(7*pieceWidth, 4*pieceWidth),
-        Point(8*pieceWidth, 7*pieceWidth)
-    ]
-
-    for i in range(len(points)//2):
-        wall = Rectangle(points[2*i], points[2*i + 1])
-        wall.setFill(wallColor)
-        wall.draw(window)
 
 def drawPiece(piece, pieceNum, window):
     if (piece.direction == "H"):
@@ -56,6 +38,7 @@ def drawPiece(piece, pieceNum, window):
         model.setFill(specialPieceColor)
     else:
         model.setFill(pieceColors[pieceNum % len(pieceColors)])
+    model.setWidth(pieceBorderWidth)
     model.draw(window)
 
 def drawFixedBlocks(blocks, window):
@@ -66,19 +49,45 @@ def drawFixedBlocks(blocks, window):
         model.setFill(fixedBlockColor)
         model.draw(window)
 
-
 def initWindow():
-    window = GraphWin("Unblock Me", windowWidth, windowHeight)
+    window = GraphWin("Unblock Me", windowWidth, windowHeight, autoflush=False)
     window.setBackground(backgroundColor)
     return window
 
-def drawState(state):
-    window = initWindow()
-    drawWalls(window)
+def cls(window):
+    wall_p1 = Point(-1, -1)
+    wall_p2 = Point(windowWidth, windowHeight)
+    wall_model = Rectangle(wall_p1, wall_p2)
+    wall_model.setFill(wallColor)
+    wall_model.setWidth(0)
+    wall_model.draw(window)
+
+    background_p1 = Point(pieceWidth - 1, pieceWidth - 1)
+    background_p2 = Point(7*pieceWidth + 1, 7*pieceWidth + 1)
+    background_model = Rectangle(background_p1, background_p2)
+    background_model.setFill(backgroundColor)
+    background_model.setWidth(0)
+    background_model.draw(window)
+
+    door_p1 = Point(7*pieceWidth - 1, 3*pieceWidth - 1)
+    door_p2 = Point(8*pieceWidth + 1, 4*pieceWidth + 1)
+    door_model = Rectangle(door_p1, door_p2)
+    door_model.setWidth(0)
+    door_model.setFill(backgroundColor)
+    door_model.draw(window)
+
+
+def drawState(state, window):
+    cls(window)
     drawFixedBlocks(state.fixedBlocks, window)
     for index, piece in enumerate(state.listOfPieces):
         drawPiece(piece, index, window)
+
+def drawSolution(states):
+    window = initWindow()
+    for state in states:
+        drawState(state, window)
+        update(10)
+        sleep(animationSpeed)
     window.getMouse()  # waits for mouse click input
     window.close()
-
-drawState(tempState)
