@@ -1,7 +1,7 @@
 from functools import partial
 from solutionDisplay import drawSolution, drawSingleState
 from gameState import stateFromString
-from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles
+from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
 from search import breathSearch, depthSearch, progressiveDepth, informedSearch
 from heuristics import aStarBlockingPieces
 
@@ -105,12 +105,14 @@ mainMenu = Menu("Unblock Me",
                 [
                     "Easy Puzzles",
                     "Medium Puzzles",
-                    "Hard Puzzles"
+                    "Hard Puzzles",
+                    "Long Puzzles"
                 ],
                 [
                     partial(puzzleChoice, easyPuzzles),
                     partial(puzzleChoice, mediumPuzzles),
                     partial(puzzleChoice, hardPuzzles),
+                    partial(puzzleChoice, longPuzzles),
                 ],
                 isMainMenu=True
                 ).display()

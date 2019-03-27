@@ -34,3 +34,11 @@ hardPuzzles = {
     'hard-10-i': 'BBCCLooxEELMAAJooMIoJFFMIGGKoooHHKoo',
     'hard-10-j': 'GBBoKLGHooKLGHIAAMCCIJoMoooJDDEEFFoo'
 }
+
+longPuzzles = {
+    'long-a': 'BBBJCCHooJoKHAAJoKooIDDLEEIooLooxoGG',
+    'long-b': 'oooJBBoCCJLoAAIKLoDDIKEEHFFFoMHoGGoM',
+    'long-c': 'oJoxCCoJDDMooAALMoxoKLFFIoKGGNIoHHoN',
+    'long-d': 'IoBBBNICCKMNAAJKMoDDJLMxoooLFFoGGHHo',
+    'long-e': 'BBBoooooICCxAAIJLMHEEJLMHooKFFGGGKoo'
+}

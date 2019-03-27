@@ -9,9 +9,9 @@ from heuristics import greedyBlockingPieces, aStarBlockingPieces
 def getStats(puzzleString):
     ini = stateFromString(puzzleString)
     results = {}
-    results['breadth'] = breathSearch(ini, saveStates=True)
+    results['breadth'] = breathSearch(ini)
     results['depth'] = depthSearch(ini)
-    results['p-depth'] = progressiveDepth(ini, saveStates=True)
+    results['p-depth'] = progressiveDepth(ini)
     ini.ordering = greedyBlockingPieces
     results['greedy-bpieces'] = informedSearch(ini)
     ini.ordering = aStarBlockingPieces
