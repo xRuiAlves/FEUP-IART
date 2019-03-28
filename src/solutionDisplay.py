@@ -92,9 +92,33 @@ def drawState(state, window):
         drawPiece(piece, index, window)
 
 
+def printPreviewText(window):
+    label = Text(Point(windowWidth//2, 30), 'Level Preview')
+    label.setSize(30)
+    label.setTextColor(backgroundColor)
+    label.draw(window)
+    printContinue(window)
+
+
+def printLevelCompletedText(window):
+    label = Text(Point(windowWidth//2, 30), 'Level Completed')
+    label.setSize(30)
+    label.setTextColor(backgroundColor)
+    label.draw(window)
+    printContinue(window)
+
+
+def printContinue(window):
+    label = Text(Point(windowWidth//2, 70), 'Click or Close the window to continue ...')
+    label.setSize(17)
+    label.setTextColor(backgroundColor)
+    label.draw(window)
+
+
 def drawSingleState(state):
     window = initWindow()
     drawState(state, window)
+    printPreviewText(window)
     try:
         window.getMouse()
     except GraphicsError:
@@ -109,6 +133,7 @@ def drawSolution(states):
             drawState(state, window)
             update(10)
             sleep(animationSpeed)
+        printLevelCompletedText(window)
         window.getMouse()
         window.close()
     except GraphicsError:
