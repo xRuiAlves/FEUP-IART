@@ -66,7 +66,7 @@ def puzzleChoice(puzzles):
 
             puzzle = stateFromString(list(puzzles.values())[puzzleNumber - 1])
             drawSingleState(puzzle)
-            getAlgorithmChoice(puzzle)
+            getAlgorithmChoice(puzzle, puzzleNumber)
 
             return
         except ValueError:
@@ -74,8 +74,8 @@ def puzzleChoice(puzzles):
                 "Invalid puzzle number. Please enter a puzzle number between 1 and " + str(len(puzzles)))
 
 
-def getAlgorithmChoice(puzzle):
-    algorithmsMenu = Menu("Choose Algorithm",
+def getAlgorithmChoice(puzzle, puzzleNumber):
+    algorithmsMenu = Menu("Choose Algorithm for Puzzle no. " + str(puzzleNumber),
                           [
                               "DFS",
                               "BFS",
