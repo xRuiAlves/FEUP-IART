@@ -1,4 +1,4 @@
-from search.search import breathSearch, depthSearch
+from search.search import breadthSearch, depthSearch
 from search.search import progressiveDepth, informedSearch
 from copy import deepcopy
 
@@ -140,7 +140,7 @@ for n in puzzles:
     puzzle = puzzles[n]
     ini = PuzzleState(puzzle)
 
-    # res = breathSearch(ini)
+    # res = breadthSearch(ini)
     # print("\tBreadth: " + str(res.transitions))
 
     # res = depthSearch(ini, maxDepth=10)

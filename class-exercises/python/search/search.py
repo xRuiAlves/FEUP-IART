@@ -3,7 +3,7 @@ from .state import StaticStateUpdater
 from sys import maxsize
 
 
-def breathSearch(ini, debug=False):
+def breadthSearch(ini, debug=False):
     states = Queue()
     states.put(ini)
     searchedStates = []

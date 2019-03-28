@@ -2,7 +2,7 @@ from functools import partial
 from solutionDisplay import drawSolution, drawSingleState
 from gameState import stateFromString
 from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
-from search import breathSearch, depthSearch, progressiveDepth, informedSearch
+from search import breadthSearch, depthSearch, progressiveDepth, informedSearch
 from heuristics import greedyBlockingPieces, aStarBlockingPieces
 
 
@@ -85,7 +85,7 @@ def getAlgorithmChoice(puzzle):
                           ],
                           [
                               partial(performAlgorithm, puzzle, depthSearch),
-                              partial(performAlgorithm, puzzle, breathSearch),
+                              partial(performAlgorithm, puzzle, breadthSearch),
                               partial(performAlgorithm, puzzle, progressiveDepth),
                               partial(performAlgorithm, puzzle, informedSearch, heuristicInfo="greedy"),
                               partial(performAlgorithm, puzzle, informedSearch, heuristicInfo="aStar")

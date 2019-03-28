@@ -1,4 +1,4 @@
-from search.search import breathSearch, depthSearch, progressiveDepth
+from search.search import breadthSearch, depthSearch, progressiveDepth
 from search.state import StaticStateUpdater
 
 
@@ -83,7 +83,7 @@ ramifications = [
 
 ini = StaticStateUpdater([0, 0], [2, 0], ramifications)
 
-res = breathSearch(ini)
+res = breadthSearch(ini)
 print("Breadth: " + str(res.transitions))
 res = depthSearch(ini)
 print("Depth: " + str(res.transitions))

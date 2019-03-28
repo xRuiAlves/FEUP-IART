@@ -1,6 +1,6 @@
 from graphics import *
 from gameState import stateFromString
-from search import breathSearch, depthSearch, progressiveDepth
+from search import breadthSearch, depthSearch, progressiveDepth
 from time import sleep
 
 windowWidth = 801

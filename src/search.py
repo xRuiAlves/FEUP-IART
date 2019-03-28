@@ -3,7 +3,7 @@ from sys import maxsize
 from stats import Stats
 
 
-def breathSearch(ini, debug=False, saveStates=True):
+def breadthSearch(ini, debug=False, saveStates=True):
     stats = Stats()
     states = Queue()
     states.put(ini)

@@ -2,20 +2,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from gameState import stateFromString
-from search import breathSearch, depthSearch, progressiveDepth, informedSearch
+from search import breadthSearch, depthSearch, progressiveDepth, informedSearch
 from heuristics import greedyBlockingPieces, aStarBlockingPieces
+from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
 
 
-def getStats(puzzleString):
+def calculate(initialState,
+              algorithm,
+              ordering,
+              times=3,
+              statistics=['executionTime', 'expandedNodes', 'answerLength']):
+    averages = {}
+    for stat in statistics:
+        averages[stat] = 0
+
+    for i in range(times):
+        initialState.ordering = ordering
+        res = algorithm(initialState)
+        for stat in statistics:
+            averages[stat] += getattr(res, stat)
+
+    for stat in statistics:
+        averages[stat] /= times
+
+    return averages
+
+
+def getStats(puzzleString, algorithms):
     ini = stateFromString(puzzleString)
     results = {}
-    results['breadth'] = breathSearch(ini)
-    results['depth'] = depthSearch(ini)
-    results['p-depth'] = progressiveDepth(ini)
-    ini.ordering = greedyBlockingPieces
-    results['greedy-bpieces'] = informedSearch(ini)
-    ini.ordering = aStarBlockingPieces
-    results['a*-bpieces'] = informedSearch(ini)
+    for name, function, ordering in algorithms:
+        results[name] = calculate(ini, function, ordering)
+
     return results
 
 
@@ -23,7 +41,7 @@ def getData(statistics, alg, field):
     data = []
     for puzzleId in statistics:
         stats = statistics[puzzleId]
-        data.append(getattr(stats[alg], field))
+        data.append(stats[alg][field])
 
     return data
 
@@ -66,67 +84,85 @@ def createGrapth(
         if saveName is None:
             plt.savefig("../graphics/" + field + ".png")
         else:
-            plt.savefig(saveName)
+            plt.savefig("../graphics/" + saveName + ".png")
     else:
         plt.show()
-    pass
 
 
-puzzles = {
-    'easy-a': 'BBBoFoooooFoAADoFoooDoooooEoooooECCC',
-    'easy-b': 'BBBooxFooooHFAAooHGoooooGDDEEEoooooo',
-    'easy-c': 'BBBooxFooooHFAAooHGoooooGDDDEEoooooo',
-    'easy-d': 'BBooGooEooGooEAAGooEoCCooFoooooFDDDo',
-    'easy-e': 'BBoooooGxDDooGAAIooHooIooHEEFFoooooo',
-    'easy-f': 'oxCCDDoooooJoGAAoJoGoIEEoHoIoooHFFFo',
-    'easy-g': 'oxCCCooooGoooAAGooooFDDxooFoooooFooo',
-    'easy-h': 'oICCDDHIooKoHxAAKoHEEJFFoooJoooGGGoo',
-    # 'medium-10-a': 'oooxoooooHoIEAAHoIEFCCCooFGoooDDGooo',
-    # 'medium-10-b': 'ooooGoDoooGIDAAFHIooEFHoooEFBBoCCCoo',
-    # 'medium-10-c': 'GBBBoxGoDDoIAAoHoIoooHEEoooHooooFFoo',
-    # 'medium-10-d': 'FBBoKoFoIoKLAAIooLooJCCoGHJoooGHDDEE',
-    # 'medium-10-e': 'ooIBBBooIJoLoAAJKLoxDDKoHoEEooHFFFxo',
-    # 'medium-10-f': 'ooGHBBFoGHIJFAAoIJoCCooooooxoxoooooo',
-    # 'medium-10-g': 'HoIBBoHoIJoKHAAJoKCCoooooxEEoxGGoooo',
-    # 'medium-10-h': 'EoooooEooHBBEAAHoIoFGCCIoFGooJDDDooJ',
-    # 'medium-10-i': 'ooHoBBooHCCCFAAoIJFGDDIJoGooIxoooooo',
-    # 'medium-10-j': 'ooBBBxooJoKLAAJoKLIDDxooIFFoooGGHHoo',
-    # 'hard-10-a': 'BBHoKLooHoKLAAIooMoGICCMFGoJDDFEEJoo',
-    # 'hard-10-b': 'BBJoooHoJxLxHAAKLoEEoKoMoIFFoMoIGGoo',
-    # 'hard-10-c': 'oIBBLMoICCLMAAoKooHDDKooHoJxoxGGJooo',
-    # 'hard-10-d': 'oHBBoxoHIooLAAIooLGoIDDoGEEJKooFFJKo',
-    # 'hard-10-e': 'oGBBoKoGHooKAAHIoKFoHICCFDDoJooEEoJo',
-    # 'hard-10-f': 'oIBBxooIDDoLAAJooLHoJEEoHFFoKoGGGoKo',
-    # 'hard-10-g': 'IJBBCCIJDDxoIAALoooooLFFooKGGMHHKooM',
-    # 'hard-10-h': 'BBIooLoHIoxLoHAAKMDDoJKMGooJEEGFFFoo',
-    # 'hard-10-i': 'BBCCLooxEELMAAJooMIoJFFMIGGKoooHHKoo',
-    # 'hard-10-j': 'GBBoKLGHooKLGHIAAMCCIJoMoooJDDEEFFoo',
-}
+allAlgorithms = [
+    ('breadth', breadthSearch, None),
+    ('depth', depthSearch, None),
+    ('p-depth', progressiveDepth, None),
+    ('greedy-bpieces', informedSearch, greedyBlockingPieces),
+    ('a*-bpieces', informedSearch, aStarBlockingPieces),
+]
+
+fastAlgorithms = [
+    ('depth', depthSearch, None),
+    ('greedy-bpieces', informedSearch, greedyBlockingPieces),
+    ('a*-bpieces', informedSearch, aStarBlockingPieces),
+]
 
 statistics = {}
 
-for puzzleId in puzzles:
+for puzzleId in easyPuzzles:
     print(puzzleId)
-    statistics[puzzleId] = getStats(puzzles[puzzleId])
+    statistics[puzzleId] = getStats(easyPuzzles[puzzleId], allAlgorithms)
 
 createGrapth(
     statistics,
     'executionTime',
     'Execution Time (s)',
-    '',
+    'Execution time in easy puzzles',
     barWidth=0.1,
-    save=True)
+    save=True,
+    saveName='executionTimeEasy')
+
 createGrapth(
     statistics,
     'expandedNodes',
     'Expanded Nodes',
-    '',
+    'Expanded nodes in easy puzzles',
     barWidth=0.1,
-    save=True)
+    save=True,
+    saveName='expandedNodesEasy')
+
 createGrapth(
     statistics,
     'answerLength',
     'Answer Length',
-    '',
+    'Answer length in easy puzzles',
+    barWidth=0.1,
+    save=True,
+    saveName='answerLengthEasy')
+
+statistics = {}
+
+for puzzleDict in [mediumPuzzles, hardPuzzles, longPuzzles]:
+    for puzzleId in puzzleDict:
+        print(puzzleId)
+        statistics[puzzleId] = getStats(puzzleDict[puzzleId], fastAlgorithms)
+
+createGrapth(
+    statistics,
+    'executionTime',
+    'Execution Time (s)',
+    'Execution Time by Puzzle',
+    barWidth=0.1,
+    save=True)
+
+createGrapth(
+    statistics,
+    'expandedNodes',
+    'Expanded Nodes',
+    'Expanded Nodes by Puzzle',
+    barWidth=0.1,
+    save=True)
+
+createGrapth(
+    statistics,
+    'answerLength',
+    'Answer Length',
+    'Answer Length by Puzzle',
     barWidth=0.1,
     save=True)
