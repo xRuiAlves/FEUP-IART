@@ -9,7 +9,8 @@ pieceWidth = 100
 pieceBorderWidth = 3
 specialPieceColor = color_rgb(220, 43, 43)
 wallColor = color_rgb(89, 44, 12)
-fixedBlockColor = color_rgb(0, 0, 0)
+fixedBlockFillColor = color_rgb(60, 60, 60)
+fixedBlockLineColor = color_rgb(0, 0, 0)
 backgroundColor = color_rgb(198, 185, 175)
 animationSpeed = 0.350
 
@@ -50,10 +51,20 @@ def drawFixedBlocks(blocks, window):
     for block in blocks:
         p1 = Point((block[0] + 1) * pieceWidth, (block[1] + 1) * pieceWidth)
         p2 = Point((block[0] + 2) * pieceWidth, (block[1] + 2) * pieceWidth)
+        p3 = Point((block[0] + 2) * pieceWidth, (block[1] + 1) * pieceWidth)
+        p4 = Point((block[0] + 1) * pieceWidth, (block[1] + 2) * pieceWidth)
         model = Rectangle(p1, p2)
         model.setWidth(3)
-        model.setFill(fixedBlockColor)
+        model.setFill(fixedBlockFillColor)
         model.draw(window)
+        line = Line(p1, p2)
+        line.setFill(fixedBlockLineColor)
+        line.setWidth(3)
+        line.draw(window)
+        line = Line(p3, p4)
+        line.setFill(fixedBlockLineColor)
+        line.setWidth(3)
+        line.draw(window)
 
 
 def initWindow():
