@@ -3,7 +3,7 @@ from solutionDisplay import drawSolution, drawSingleState
 from gameState import stateFromString
 from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
 from search import breadthSearch, depthSearch, progressiveDepth, informedSearch
-from heuristics import greedyBlockingPieces, aStarBlockingPieces
+from heuristics import greedyBlockingPieces, aStarBlockingPieces, greedyWeightedBP, aStarWeightedBP
 
 
 class Menu:
@@ -80,24 +80,25 @@ def getAlgorithmChoice(puzzle, puzzleNumber):
                               "DFS",
                               "BFS",
                               "Iterative Deepening",
-                              "Greedy Search",
-                              "A* Search"
+                              "Greedy Search H1",
+                              "A* Search H1",
+                              "Greedy Search H2",
+                              "A* Search H2"
                           ],
                           [
                               partial(performAlgorithm, puzzle, depthSearch),
                               partial(performAlgorithm, puzzle, breadthSearch),
                               partial(performAlgorithm, puzzle, progressiveDepth),
-                              partial(performAlgorithm, puzzle, informedSearch, heuristicInfo="greedy"),
-                              partial(performAlgorithm, puzzle, informedSearch, heuristicInfo="aStar")
+                              partial(performAlgorithm, puzzle, informedSearch, heuristic=greedyBlockingPieces),
+                              partial(performAlgorithm, puzzle, informedSearch, heuristic=aStarBlockingPieces),
+                              partial(performAlgorithm, puzzle, informedSearch, heuristic=greedyWeightedBP),
+                              partial(performAlgorithm, puzzle, informedSearch, heuristic=aStarWeightedBP)
                           ]
                           ).display()
 
 
-def performAlgorithm(puzzle, algorithm, heuristicInfo=""):
-    if (heuristicInfo == "aStar"):
-        puzzle.ordering = aStarBlockingPieces
-    elif (heuristicInfo == "greedy"):
-        puzzle.ordering = greedyBlockingPieces
+def performAlgorithm(puzzle, algorithm, heuristic=None):
+    puzzle.ordering = heuristic
         
     res = algorithm(puzzle)
     if res is None:

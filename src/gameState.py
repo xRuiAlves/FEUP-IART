@@ -127,7 +127,7 @@ class GameState:
 
     def getDistanceToEnd(self):
         return (6 - self.specialPiece.length - self.specialPiece.y)
-        
+
 
 def stateFromString(
         stateStr,
