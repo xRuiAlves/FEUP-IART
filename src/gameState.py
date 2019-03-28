@@ -125,6 +125,9 @@ class GameState:
     def __hash__(self):
         return str(self).__hash__()
 
+    def getDistanceToEnd(self):
+        return (6 - self.specialPiece.length - self.specialPiece.y)
+        
 
 def stateFromString(
         stateStr,
