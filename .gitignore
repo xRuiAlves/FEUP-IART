@@ -64,3 +64,4 @@ venv/
 *.vscode/
 rush.txt
 test.txt
+pypy-venv/

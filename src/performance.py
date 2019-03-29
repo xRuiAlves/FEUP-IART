@@ -1,10 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import json
 
 from gameState import stateFromString
 from search import breadthSearch, depthSearch, progressiveDepth, informedSearch
 from heuristics import greedyBlockingPieces, aStarBlockingPieces, greedyWeightedBlockingPieces, aStarWeightedBlockingPieces
 from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
+from sys import argv
 
 
 def calculate(initialState,
@@ -37,7 +39,7 @@ def getStats(puzzleString, algorithms):
     return results
 
 
-def getData(statistics, alg, field):
+def extractData(statistics, alg, field):
     data = []
     for puzzleId in statistics:
         stats = statistics[puzzleId]
@@ -65,7 +67,7 @@ def createGrapth(
 
     for alg_index in range(n_alg):
         alg = algs[alg_index]
-        executionData = getData(statistics, alg, field)
+        executionData = extractData(statistics, alg, field)
         rects1 = ax.bar(index + (alg_index + 1) * barWidth, executionData,
                         barWidth,
                         alpha=opacity,
@@ -89,84 +91,90 @@ def createGrapth(
         plt.show()
 
 
-allAlgorithms = [
-    ('breadth', breadthSearch, None),
-    ('depth', depthSearch, None),
-    ('p-depth', progressiveDepth, None),
-    ('greedy-bpieces', informedSearch, greedyBlockingPieces),
-    ('a*-bpieces', informedSearch, aStarBlockingPieces),
-    ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
-    ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
-]
+algGroups = {
+    'all': [
+        ('breadth', breadthSearch, None),
+        ('depth', depthSearch, None),
+        ('p-depth', progressiveDepth, None),
+        ('greedy-bpieces', informedSearch, greedyBlockingPieces),
+        ('a*-bpieces', informedSearch, aStarBlockingPieces),
+        ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
+        ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
+    ],
 
-fastAlgorithms = [
-    ('depth', depthSearch, None),
-    ('greedy-bpieces', informedSearch, greedyBlockingPieces),
-    ('a*-bpieces', informedSearch, aStarBlockingPieces),
-    ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
-    ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
-]
+    'medium': [
+        ('breadth', breadthSearch, None),
+        ('depth', depthSearch, None),
+        ('greedy-bpieces', informedSearch, greedyBlockingPieces),
+        ('a*-bpieces', informedSearch, aStarBlockingPieces),
+        ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
+        ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
+    ],
 
-statistics = {}
+    'fast': [
+        ('depth', depthSearch, None),
+        ('greedy-bpieces', informedSearch, greedyBlockingPieces),
+        ('a*-bpieces', informedSearch, aStarBlockingPieces),
+        ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
+        ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
+    ]
+}
 
-for puzzleId in easyPuzzles:
-    print(puzzleId)
-    statistics[puzzleId] = getStats(easyPuzzles[puzzleId], allAlgorithms)
+puzzles = {
+    'easy': easyPuzzles, 
+    'medium': mediumPuzzles, 
+    'hard': hardPuzzles, 
+    'long': longPuzzles
+}
 
-createGrapth(
-    statistics,
-    'executionTime',
-    'Execution Time (s)',
-    'Execution time in easy puzzles',
-    barWidth=0.1,
-    save=True,
-    saveName='executionTimeEasy')
 
-createGrapth(
-    statistics,
-    'expandedNodes',
-    'Expanded Nodes',
-    'Expanded nodes in easy puzzles',
-    barWidth=0.1,
-    save=True,
-    saveName='expandedNodesEasy')
+def getData(puzzleIdentifier, algorithmIdentifier):
+    puzzlesToBeAnalysed = puzzles[puzzleIdentifier]
+    algs = algGroups[algorithmIdentifier]
+    statistics = {}
 
-createGrapth(
-    statistics,
-    'answerLength',
-    'Answer Length',
-    'Answer length in easy puzzles',
-    barWidth=0.1,
-    save=True,
-    saveName='answerLengthEasy')
-
-statistics = {}
-
-for puzzleDict in [mediumPuzzles, hardPuzzles, longPuzzles]:
-    for puzzleId in puzzleDict:
+    for puzzleId in puzzlesToBeAnalysed:
         print(puzzleId)
-        statistics[puzzleId] = getStats(puzzleDict[puzzleId], fastAlgorithms)
+        statistics[puzzleId] = getStats(puzzlesToBeAnalysed[puzzleId], algs)
 
-createGrapth(
-    statistics,
-    'executionTime',
-    'Execution Time (s)',
-    'Execution Time by Puzzle',
-    barWidth=0.1,
-    save=True)
+    with open('../data/' + puzzleIdentifier + '.json', 'w') as outfile:
+        json.dump(statistics, outfile)
 
-createGrapth(
-    statistics,
-    'expandedNodes',
-    'Expanded Nodes',
-    'Expanded Nodes by Puzzle',
-    barWidth=0.1,
-    save=True)
 
-createGrapth(
-    statistics,
-    'answerLength',
-    'Answer Length',
-    'Answer Length by Puzzle',
-    barWidth=0.1,
-    save=True)
+def buildGraph(puzzleIdentifier, statistics):
+    createGrapth(
+        statistics,
+        'executionTime',
+        'Execution Time (s)',
+        'Execution Time (' + puzzleIdentifier + ')',
+        barWidth=0.1,
+        save=True,
+        saveName='executionTime-' + puzzleIdentifier)
+
+    createGrapth(
+        statistics,
+        'expandedNodes',
+        'Expanded Nodes',
+        'Expanded Nodes (' + puzzleIdentifier + ')',
+        barWidth=0.1,
+        save=True,
+        saveName='expandedNodes-' + puzzleIdentifier)
+
+    createGrapth(
+        statistics,
+        'answerLength',
+        'Answer Length',
+        'Answer Length (' + puzzleIdentifier + ')',
+        barWidth=0.1,
+        save=True,
+        saveName='answerLength-' + puzzleIdentifier)
+
+if len(argv) == 2:
+    name = argv[1]
+    with open('../data/' + name + '.json') as f:
+        data = json.load(f)
+        buildGraph(name, data)
+elif (len(argv) == 3):
+    getData(argv[1], argv[2])
+else:
+    print('Usage: python performance.py <puzzles> <algs>')

@@ -1,0 +1,298 @@
+{
+    "easy-1": {
+        "breadth": {
+            "executionTime": 0.10717892646789551,
+            "expandedNodes": 101.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.03480052947998047,
+            "expandedNodes": 43.0,
+            "answerLength": 43.0
+        },
+        "p-depth": {
+            "executionTime": 0.19374624888102213,
+            "expandedNodes": 809.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.06394839286804199,
+            "expandedNodes": 48.0,
+            "answerLength": 12.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.12490383783976237,
+            "expandedNodes": 105.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.06415836016337077,
+            "expandedNodes": 35.0,
+            "answerLength": 10.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.07650430997212727,
+            "expandedNodes": 58.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-2": {
+        "breadth": {
+            "executionTime": 0.042118469874064125,
+            "expandedNodes": 114.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.006264607111612956,
+            "expandedNodes": 41.0,
+            "answerLength": 41.0
+        },
+        "p-depth": {
+            "executionTime": 0.19838213920593262,
+            "expandedNodes": 1453.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.038065036137898765,
+            "expandedNodes": 36.0,
+            "answerLength": 9.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.11567751566569011,
+            "expandedNodes": 122.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.03047951062520345,
+            "expandedNodes": 36.0,
+            "answerLength": 9.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.0806902249654134,
+            "expandedNodes": 122.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-3": {
+        "breadth": {
+            "executionTime": 0.027819474538167317,
+            "expandedNodes": 114.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.007878780364990234,
+            "expandedNodes": 41.0,
+            "answerLength": 41.0
+        },
+        "p-depth": {
+            "executionTime": 0.15991568565368652,
+            "expandedNodes": 1453.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.022435903549194336,
+            "expandedNodes": 36.0,
+            "answerLength": 9.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.059407949447631836,
+            "expandedNodes": 122.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.02372900644938151,
+            "expandedNodes": 36.0,
+            "answerLength": 9.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.058745384216308594,
+            "expandedNodes": 122.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-4": {
+        "breadth": {
+            "executionTime": 0.019334157307942707,
+            "expandedNodes": 101.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.0029471715291341147,
+            "expandedNodes": 19.0,
+            "answerLength": 19.0
+        },
+        "p-depth": {
+            "executionTime": 0.12379248936971028,
+            "expandedNodes": 1212.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.03394794464111328,
+            "expandedNodes": 47.0,
+            "answerLength": 12.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.07234994570414226,
+            "expandedNodes": 118.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.02995602289835612,
+            "expandedNodes": 47.0,
+            "answerLength": 12.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.07746624946594238,
+            "expandedNodes": 99.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-5": {
+        "breadth": {
+            "executionTime": 0.01764051119486491,
+            "expandedNodes": 97.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.003231604894002279,
+            "expandedNodes": 22.0,
+            "answerLength": 22.0
+        },
+        "p-depth": {
+            "executionTime": 0.11523667971293132,
+            "expandedNodes": 1215.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.012776931126912435,
+            "expandedNodes": 27.0,
+            "answerLength": 8.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.03438210487365723,
+            "expandedNodes": 87.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.012950658798217773,
+            "expandedNodes": 22.0,
+            "answerLength": 8.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.03871997197469076,
+            "expandedNodes": 67.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-6": {
+        "breadth": {
+            "executionTime": 0.004222790400187175,
+            "expandedNodes": 24.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.0027546087900797525,
+            "expandedNodes": 23.0,
+            "answerLength": 20.0
+        },
+        "p-depth": {
+            "executionTime": 0.0174105167388916,
+            "expandedNodes": 279.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.00415809949239095,
+            "expandedNodes": 14.0,
+            "answerLength": 9.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.00699305534362793,
+            "expandedNodes": 29.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.005329291025797526,
+            "expandedNodes": 14.0,
+            "answerLength": 9.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.006381114323933919,
+            "expandedNodes": 29.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-7": {
+        "breadth": {
+            "executionTime": 0.004353761672973633,
+            "expandedNodes": 29.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.0016997655232747395,
+            "expandedNodes": 15.0,
+            "answerLength": 14.0
+        },
+        "p-depth": {
+            "executionTime": 0.01754140853881836,
+            "expandedNodes": 275.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.01640041669209798,
+            "expandedNodes": 19.0,
+            "answerLength": 8.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.01587398846944173,
+            "expandedNodes": 22.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.005203962326049805,
+            "expandedNodes": 12.0,
+            "answerLength": 9.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.008929252624511719,
+            "expandedNodes": 19.0,
+            "answerLength": 7.0
+        }
+    },
+    "easy-8": {
+        "breadth": {
+            "executionTime": 0.005219062169392903,
+            "expandedNodes": 33.0,
+            "answerLength": 7.0
+        },
+        "depth": {
+            "executionTime": 0.005524079004923503,
+            "expandedNodes": 32.0,
+            "answerLength": 17.0
+        },
+        "p-depth": {
+            "executionTime": 0.05251955986022949,
+            "expandedNodes": 571.0,
+            "answerLength": 7.0
+        },
+        "greedy-bpieces": {
+            "executionTime": 0.01779452959696452,
+            "expandedNodes": 32.0,
+            "answerLength": 11.0
+        },
+        "a*-bpieces": {
+            "executionTime": 0.021151065826416016,
+            "expandedNodes": 33.0,
+            "answerLength": 7.0
+        },
+        "greedy-wbpieces": {
+            "executionTime": 0.02047864596048991,
+            "expandedNodes": 32.0,
+            "answerLength": 11.0
+        },
+        "a*-wbpieces": {
+            "executionTime": 0.019414981206258137,
+            "expandedNodes": 33.0,
+            "answerLength": 7.0
+        }
+    }
+}
