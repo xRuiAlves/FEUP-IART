@@ -181,13 +181,13 @@ This game is also studied in the Computer Science MSc from the University of Pri
 Even though that the problem is not complex, the increasing of the board size quickly leads to a combinatorial explosion, being that a 6x6 board has over 27 billion possible states. Thus, it is not efficient to find a solution by exploring all the possible states, being a good heuristic for state exploration mandatory.
 
 \section{Game Implementation}
-aa
+Descrevendo o projeto e implementação, na linguagem selecionada, do jogo incluindo a forma de representação do estado do tabuleiro, operadores (verificação do cumprimento das regras do jogo) aplicáveis com determinadas pré-condições e que têm efeitos sobre o estado do jogo e um dado custo, teste objetivo (determinação do final do jogo). Entre outras devem ser implementadas funções: ler nível de ficheiro (lendo um dado nível/estado de um ficheiro de texto), visualizar em modo de texto/gráfico um dado estado, validar uma dada jogada/operador (tendo em conta as suas pré-condições), executar uma dada jogada/operador, num dado tabuleiro, tendo em conta os seus efeitos e gerando o respetivo estado sucessor, listar todas as jogadas/operadores disponíveis num dado tabuleiro, avaliar um dado estado (tendo em conta a sua “proximidade” à solução final), testar se um dado estado é solução (teste objetivo). Os métodos de pesquisa para cálculo das jogadas a realizar que permitam ao computador jogar sozinho e resolver os puzzles devem ser descritos na secção seguinte assim como o método geral para os chamar e resolver o puzzle (utilizando um dado método selecionado de entre os disponíveis).
 
 \section{Search Algorithms}
-aa
+Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).
 
 \section{Experiments (Tests?) and Results}
-aa
+Descrevendo as experiências realizadas com os vários algoritmos para resolver diversos puzzles e os resultados obtidos a nível de tempo e custo da solução obtida em cada nível, por cada um dos métodos experimentados. Devem ser incluídas tabelas comparativas dos resultados obtidos na aplicação dos vários métodos aos vários puzzles (níveis do jogo) e discutidos os resultados.
 
 \section{Conclusions and Future Work}
 As of yet, the problem has been completely formalized - it has been formally described, and formulated as a search problem (a Game State representation has been reached, the initial and goal states have been described and the operators and path cost have been stated).
@@ -214,6 +214,10 @@ For the informed search algorithms (Greedy and A*), several different heuristics
 \end{itemize}
 
 In order to evaluate the implemented algorithms, they will be assessed both in terms of the achieved solution's quality and in terms of the algorithm's performance. For the first metric, the main evaluation point will be the number of piece movements. For the latter, both the execution time and the number of evaluated states will be taken into account.
+
+--------
+
+Sumário do trabalho realizado e conclusões que retira deste projeto. Análise crítica dos resultados obtidos em comparação com os resultados teóricos que seriam esperados. Trabalho futuro, ou seja, formas de melhorar o trabalho desenvolvido.
 
 \begin{thebibliography}{00}
     
