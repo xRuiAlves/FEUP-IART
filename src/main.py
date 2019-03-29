@@ -3,7 +3,7 @@ from solutionDisplay import drawSolution, drawSingleState
 from gameState import stateFromString
 from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
 from search import breadthSearch, depthSearch, progressiveDepth, informedSearch
-from heuristics import greedyBlockingPieces, aStarBlockingPieces, greedyWeightedBP, aStarWeightedBP
+from heuristics import greedyBlockingPieces, aStarBlockingPieces, greedyWeightedBlockingPieces, aStarWeightedBlockingPieces
 
 
 class Menu:
@@ -91,8 +91,8 @@ def getAlgorithmChoice(puzzle, puzzleNumber):
                               partial(performAlgorithm, puzzle, progressiveDepth),
                               partial(performAlgorithm, puzzle, informedSearch, heuristic=greedyBlockingPieces),
                               partial(performAlgorithm, puzzle, informedSearch, heuristic=aStarBlockingPieces),
-                              partial(performAlgorithm, puzzle, informedSearch, heuristic=greedyWeightedBP),
-                              partial(performAlgorithm, puzzle, informedSearch, heuristic=aStarWeightedBP)
+                              partial(performAlgorithm, puzzle, informedSearch, heuristic=greedyWeightedBlockingPieces),
+                              partial(performAlgorithm, puzzle, informedSearch, heuristic=aStarWeightedBlockingPieces)
                           ]
                           ).display()
 

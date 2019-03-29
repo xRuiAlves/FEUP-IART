@@ -19,7 +19,7 @@ def aStarBlockingPieces(stateOne, stateTwo):
             ) < (len(stateTwo.movements) + calculateBlockingPieces(stateTwo))
 
 
-def calculateWeightedBP(state):
+def calculateWeightedBlockingPieces(state):
     piece = state.specialPiece
     x = piece.x
     yStart = piece.y + piece.length
@@ -27,22 +27,18 @@ def calculateWeightedBP(state):
     count = 0
     for p in state.listOfPieces:
         if p.inRange(x, yStart, 1, yEnd - yStart):
-            free = False
+            count += 2
             for extremityX, extremityY, dx, dy in piece.getExtremities():
                 if state.isEmpty(extremityX + dx, extremityY + dy):
-                    count += 1
-                    free = True
+                    count -= 1
                     break
-            
-            if not free:
-                count += 2
     return count
 
 
-def greedyWeightedBP(stateOne, stateTwo):
-    return (calculateWeightedBP(stateOne) + stateOne.getDistanceToEnd()) < (calculateWeightedBP(stateTwo) + stateTwo.getDistanceToEnd())
+def greedyWeightedBlockingPieces(stateOne, stateTwo):
+    return (calculateWeightedBlockingPieces(stateOne) + stateOne.getDistanceToEnd()) < (calculateWeightedBlockingPieces(stateTwo) + stateTwo.getDistanceToEnd())
 
 
-def aStarWeightedBP(stateOne, stateTwo):
-    return (len(stateOne.movements) + calculateWeightedBP(stateOne)
-            ) < (len(stateTwo.movements) + calculateWeightedBP(stateTwo))
+def aStarWeightedBlockingPieces(stateOne, stateTwo):
+    return (len(stateOne.movements) + calculateWeightedBlockingPieces(stateOne)
+            ) < (len(stateTwo.movements) + calculateWeightedBlockingPieces(stateTwo))

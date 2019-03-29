@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from gameState import stateFromString
 from search import breadthSearch, depthSearch, progressiveDepth, informedSearch
-from heuristics import greedyBlockingPieces, aStarBlockingPieces, greedyWeightedBP, aStarWeightedBP
+from heuristics import greedyBlockingPieces, aStarBlockingPieces, greedyWeightedBlockingPieces, aStarWeightedBlockingPieces
 from puzzles import easyPuzzles, mediumPuzzles, hardPuzzles, longPuzzles
 
 
@@ -95,16 +95,16 @@ allAlgorithms = [
     ('p-depth', progressiveDepth, None),
     ('greedy-bpieces', informedSearch, greedyBlockingPieces),
     ('a*-bpieces', informedSearch, aStarBlockingPieces),
-    ('greedy-wbpieces', informedSearch, greedyWeightedBP),
-    ('a*-wbpieces', informedSearch, aStarWeightedBP),
+    ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
+    ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
 ]
 
 fastAlgorithms = [
     ('depth', depthSearch, None),
     ('greedy-bpieces', informedSearch, greedyBlockingPieces),
     ('a*-bpieces', informedSearch, aStarBlockingPieces),
-    ('greedy-wbpieces', informedSearch, greedyWeightedBP),
-    ('a*-wbpieces', informedSearch, aStarWeightedBP),
+    ('greedy-wbpieces', informedSearch, greedyWeightedBlockingPieces),
+    ('a*-wbpieces', informedSearch, aStarWeightedBlockingPieces),
 ]
 
 statistics = {}
