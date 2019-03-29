@@ -3,7 +3,7 @@ from sys import maxsize
 from stats import Stats
 
 
-def breadthSearch(ini, debug=False, saveStates=True):
+def breadthSearch(ini):
     stats = Stats()
     states = Queue()
     states.put(ini)
@@ -11,21 +11,18 @@ def breadthSearch(ini, debug=False, saveStates=True):
     searchedStates = set()
 
     stats.startTimer()
-    while True:
-        if states.empty():
-            return None
-
+    while not states.empty():
         stateToAnalyze = states.get()
 
-        if debug:
-            print(str(stateToAnalyze))
+        if stateToAnalyze in searchedStates:
+            stats.nodeSkipped()
+            continue
 
-        if saveStates:
-            searchedStates.add(stateToAnalyze)
-
+        searchedStates.add(stateToAnalyze)
         stats.nodeExpanded()
+
         for nextState in stateToAnalyze.getAllStates():
-            if saveStates and nextState in searchedStates:
+            if nextState in searchedStates:
                 stats.nodeSkipped()
                 continue
 
@@ -35,16 +32,13 @@ def breadthSearch(ini, debug=False, saveStates=True):
             states.put(nextState)
 
 
-def depthSearch(ini, maxDepth=maxsize, debug=False):
+def depthSearch(ini, maxDepth=maxsize):
     stats = Stats()
     states = [ini]
     searchedStates = set()
 
     stats.startTimer()
-    while True:
-        if len(states) == 0:
-            return None
-
+    while not (len(states) == 0):
         stateToAnalyze = states.pop()
 
         if stateToAnalyze in searchedStates:
@@ -52,9 +46,6 @@ def depthSearch(ini, maxDepth=maxsize, debug=False):
             continue
 
         searchedStates.add(stateToAnalyze)
-
-        if debug:
-            print(str(stateToAnalyze))
 
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
@@ -70,17 +61,14 @@ def depthSearch(ini, maxDepth=maxsize, debug=False):
                 states.append(nextState)
 
 
-def pSearchStep(ini, stats, saveStates, debug, maxDepth):
+def pSearchStep(ini, stats, maxDepth):
     states = [ini]
     searchedStates = set()
 
-    while True:
-        if len(states) == 0:
-            return None
-
+    while not (len(states) == 0):
         stateToAnalyze = states.pop()
 
-        if saveStates and (stateToAnalyze, stateToAnalyze.depth()) in searchedStates:
+        if (stateToAnalyze, stateToAnalyze.depth()) in searchedStates:
             stats.nodeSkipped()
             continue
 
@@ -88,26 +76,20 @@ def pSearchStep(ini, stats, saveStates, debug, maxDepth):
             stats.endTimer()
             return stats.setState(stateToAnalyze)
 
-        if debug:
-            print(str(stateToAnalyze))
-
-        if saveStates:
-            searchedStates.add((stateToAnalyze, stateToAnalyze.depth()))
+        searchedStates.add((stateToAnalyze, stateToAnalyze.depth()))
 
         stats.nodeExpanded()
         if stateToAnalyze.depth() >= maxDepth:
             continue
 
         for nextState in stateToAnalyze.getAllStates():
-
-            if saveStates and (nextState, nextState.depth()) in searchedStates:
+            if (nextState, nextState.depth()) in searchedStates:
                 stats.nodeSkipped()
                 continue
-
             states.append(nextState)
 
 
-def progressiveDepth(ini, debug=False, saveStates=True):
+def progressiveDepth(ini):
     stats = Stats()
     sol = None
     depth = 0
@@ -115,12 +97,12 @@ def progressiveDepth(ini, debug=False, saveStates=True):
     stats.startTimer()
     while sol is None:
         depth += 1
-        sol = pSearchStep(ini, stats, saveStates, debug, depth)
+        sol = pSearchStep(ini, stats, depth)
 
     return sol
 
 
-def informedSearch(ini, debug=False):
+def informedSearch(ini):
     stats = Stats()
     states = PriorityQueue()
     states.put(ini)
@@ -138,9 +120,6 @@ def informedSearch(ini, debug=False):
             stats.nodeSkipped()
             continue
         searchedStates.add(stateToAnalyze)
-
-        if debug:
-            print(str(stateToAnalyze))
 
         stats.nodeExpanded()
         for nextState in stateToAnalyze.getAllStates():
