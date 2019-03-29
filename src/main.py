@@ -74,8 +74,8 @@ def puzzleChoice(puzzles):
                 "Invalid puzzle number. Please enter a puzzle number between 1 and " + str(len(puzzles)))
 
 
-def getAlgorithmChoice(puzzle, puzzleNumber):
-    algorithmsMenu = Menu("Choose Algorithm for Puzzle no. " + str(puzzleNumber),
+def getAlgorithmChoice(puzzle, puzzleNumber=None):
+    algorithmsMenu = Menu("Choose Algorithm" + ((" for Puzzle no. " + str(puzzleNumber)) if puzzleNumber else ""),
                           [
                               "DFS",
                               "BFS",
@@ -107,19 +107,38 @@ def performAlgorithm(puzzle, algorithm, heuristic=None):
         print(res)
         drawSolution(res.getSolution())
 
+def readPuzzleFromFile():
+    while True:
+        filename = input("Enter the filename: ")
+        try:
+            file = open(filename , "r")
+        except IOError:
+            print("File was not found.\n")
+            continue
+        puzzleText = file.readline()
+        if (len(puzzleText) != 36):
+            print("Invalid file content")
+            continue
+        puzzle = stateFromString(puzzleText)
+        drawSingleState(puzzle)
+        getAlgorithmChoice(puzzle)
+        return
+
 
 mainMenu = Menu("Unblock Me",
                 [
                     "Easy Puzzles",
                     "Medium Puzzles",
                     "Hard Puzzles",
-                    "Long Puzzles"
+                    "Long Puzzles",
+                    "Read Puzzle from file"
                 ],
                 [
                     partial(puzzleChoice, easyPuzzles),
                     partial(puzzleChoice, mediumPuzzles),
                     partial(puzzleChoice, hardPuzzles),
                     partial(puzzleChoice, longPuzzles),
+                    readPuzzleFromFile
                 ],
                 isMainMenu=True
                 ).display()
