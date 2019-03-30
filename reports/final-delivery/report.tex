@@ -43,9 +43,10 @@ up201606746@fe.up.pt}
     \item check if it is necessary to add more souces to Related Work (sources for code for example)
     \item Fix Operators - Move several cells with cost 1 instead of just 1
     \item Game implementation section
-    \item search algorithms section
-    \item experiments and results section
+    \item search algorithms section - Started it but need some technical details (Miguel)
+    \item experiments and results section - Started it but need some technical details (Miguel)
     \item update conclusion
+    \item Add something about pypy because of it improving the initial python performance?
 \end{itemize}
 
 
@@ -126,7 +127,7 @@ The initial state depends of the level in question, being represented by a game 
 \subsection{Goal State} \label{subsec:gs}
 The goal state consists of a piece configuration where the special piece reaches the level exit (\autoref{img:final_state}).
 
-\subsection{Operators}
+\subsection{Operators} \label{subsec:op}
 \begin{itemize}
     \item Move piece to the left:
     \begin{itemize}
@@ -184,10 +185,63 @@ Even though that the problem is not complex, increasing the board size quickly l
 \section{Game Implementation}
 Descrevendo o projeto e implementação, na linguagem selecionada, do jogo incluindo a forma de representação do estado do tabuleiro, operadores (verificação do cumprimento das regras do jogo) aplicáveis com determinadas pré-condições e que têm efeitos sobre o estado do jogo e um dado custo, teste objetivo (determinação do final do jogo). Entre outras devem ser implementadas funções: ler nível de ficheiro (lendo um dado nível/estado de um ficheiro de texto), visualizar em modo de texto/gráfico um dado estado, validar uma dada jogada/operador (tendo em conta as suas pré-condições), executar uma dada jogada/operador, num dado tabuleiro, tendo em conta os seus efeitos e gerando o respetivo estado sucessor, listar todas as jogadas/operadores disponíveis num dado tabuleiro, avaliar um dado estado (tendo em conta a sua “proximidade” à solução final), testar se um dado estado é solução (teste objetivo). Os métodos de pesquisa para cálculo das jogadas a realizar que permitam ao computador jogar sozinho e resolver os puzzles devem ser descritos na secção seguinte assim como o método geral para os chamar e resolver o puzzle (utilizando um dado método selecionado de entre os disponíveis).
 
-\section{Search Algorithms}
+\section{Search Algorithms} \label{sec:sa}
+As determined beforehand, the following algorithms were implemented:
+\begin{itemize}
+    \item BFS (Breadth-First Search)
+    \item DFS (Depth-First Search)
+    \item Iterative Deepening-First Search (nome certo?)
+    \item Greedy Search
+    \item A* Search
+\end{itemize}
+
+The \textbf{Uniform Cost Search} algorithm was not implemented, as all of the \textbf{Operators} (described in \autoref{subsec:op}) have the same cost - this algorithm would simply be a \textbf{Breadth-First Search (BFS)}.
+
+Furthermore, it was decided that, unlike initially planned, \textbf{Bi-Directional Search Algorithms} would not be implemented. This is due to the fact that despite the \textbf{Goal State} of \textit{Unblock Me} always featuring the special piece over the level exit, all of the other pieces might be in very different configurations. Thus it is not possible to start searching from the final state of the level, making these algorithms not applicable to the problem under consideration.
+
+\begin{bf}
+\textit{
+Falar aqui sobre detalhes de implementação e talvez expandir acima sobre a razão de não ter implementado alguns - Miguel
+}
+\end{bf}
+
+---
+
 Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).
 
 \section{Experiments (Tests?) and Results}
+Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles).
+
+A selection of some interesting levels of the game was grouped into four categories - Easy, Medium, Hard and Long. This grouping was done based on the number of possible states since the initial configuration and the length of the solution, as these are the main determinants on how difficult it is to find a solution, and furthermore the optimal one. 8 Easy and Hard and 10 Medium and Long levels were selected for evaluating the algorithms' performance, these presenting some of the most interesting initial piece configurations.
+
+\begin{bf}
+\textit{
+Falar aqui sobre o que quer dizer cada grupo, que eu não estou 100\% - Miguel
+}
+\end{bf}
+
+After running all of the implemented algorithms described in section \autoref{sec:sa} for each of the selected puzzles, the following data was collected:
+
+\begin{itemize}
+    \item Answer Length
+    \item Execution Time
+    \item Number of Expanded Nodes
+\end{itemize}
+
+By analyzing the \textbf{Answer Length}, it is possible to directly measure how good the algorithm's solution is, by checking against the optimal solution of the puzzle (that has the minimum amount of moves required to reach the \textbf{Goal State}). \textbf{\textit{As expected, Algorithm X and Y always reach an optimal solution, being that DFS almost never reaches a short solution - Fica aqui o stub for expanding later pls}}
+
+Additionally, by inspecting the \textbf{Execution Time}, some insight is gained on the algorithm's \textbf{Time Complexity}. \textbf{\textit{It was confirmed, as predicted, that Algorithm X and Y have very good runtimes, but almost never reach a good solution - Fica aqui o stub for expanding later pls}}
+
+Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. \textbf{\textit{The \textbf{Informed Search Algorithms} converge to a solution faster than all others, and thus end up exploring less states - Fica aqui o stub for expanding later pls}}
+
+\begin{bf}
+\textit{
+Parte para falar das heuristicas, principalmente da "falhada". Tamb\'em \'e preciso inserir os gr\'aficos depois, mas isso tem de se ver tamb\'em com o resto do conte\'udo onde fica melhor por causa de ter referências às pics no texto - Miguel
+}
+\end{bf}
+
+---
+
 Descrevendo as experiências realizadas com os vários algoritmos para resolver diversos puzzles e os resultados obtidos a nível de tempo e custo da solução obtida em cada nível, por cada um dos métodos experimentados. Devem ser incluídas tabelas comparativas dos resultados obtidos na aplicação dos vários métodos aos vários puzzles (níveis do jogo) e discutidos os resultados.
 
 \section{Conclusions and Future Work}
