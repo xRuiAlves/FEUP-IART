@@ -41,7 +41,7 @@ up201606746@fe.up.pt}
     \item Update abstract
     \item Update introduction
     \item check if it is necessary to add more souces to Related Work (sources for code for example)
-    \item Fix Operators - Move several cells with cost 1 instead of just 1
+    \item Fix Operators - Move several cells with cost 1 instead of just 1 -> Done, needs review (Miguel)
     \item Game implementation section
     \item search algorithms section - Started it but need some technical details (Miguel)
     \item experiments and results section - Started it but need some technical details (Miguel)
@@ -134,9 +134,9 @@ The goal state consists of a piece configuration where the special piece reaches
         \item Pre-conditions:
         \begin{itemize}
             \item Piece with horizontal orientation
-            \item Cell that is adjacent to the piece's left extremity must be empty
+            \item At least the cell that is adjacent to the piece's left extremity must be empty
         \end{itemize}
-        \item Results: The pieces position moves one cell to the left
+        \item Results: The piece is moved a number of cells to the left (at most the number of empty cells, at least one cell)
         \item Cost: 1 movement
     \end{itemize}
     \item Move piece to the right:
@@ -144,9 +144,9 @@ The goal state consists of a piece configuration where the special piece reaches
         \item Pre-conditions:
         \begin{itemize}
             \item Piece with horizontal orientation
-            \item Cell that is adjacent to the piece's right extremity must be empty
+            \item At least the cell that is adjacent to the piece's right extremity must be empty
         \end{itemize}
-        \item Results: The pieces position moves one cell to the right
+        \item Results: The piece is moved a number of cells to the right (at most the number of empty cells, at least one cell)
         \item Cost: 1 movement
     \end{itemize}
     \item Move piece up:
@@ -154,9 +154,9 @@ The goal state consists of a piece configuration where the special piece reaches
         \item Pre-conditions:
         \begin{itemize}
             \item Piece with vertical orientation
-            \item Cell that is adjacent to the piece's top extremity must be empty
+            \item At least the cell that is adjacent to the piece's top extremity must be empty
         \end{itemize}
-        \item Results: The pieces position moves one cell up
+        \item Results: The piece is moved a number of cells upwards (at most the number of empty cells, at least one cell)
         \item Cost: 1 movement
     \end{itemize}
     \item Move piece down:
@@ -164,9 +164,9 @@ The goal state consists of a piece configuration where the special piece reaches
         \item Pre-conditions:
         \begin{itemize}
             \item Piece with vertical orientation
-            \item Cell that is adjacent to the piece's bottom extremity must be empty
+            \item At least the cell that is adjacent to the piece's bottom extremity must be empty
         \end{itemize}
-        \item Results: The pieces position moves one cell down
+        \item Results: The piece is moved a number of cells downwards (at most the number of empty cells, at least one cell)
         \item Cost: 1 movement
     \end{itemize}
 \end{itemize}
