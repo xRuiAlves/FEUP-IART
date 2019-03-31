@@ -183,7 +183,24 @@ This game is also studied in the Computer Science MSc from the University of Pri
 Even though that the problem is not complex, increasing the board size quickly leads to a combinatorial explosion, being that a 6x6 board has over 27 billion possible states. Thus, it is not efficient to find a solution by exploring all the possible states, being a good heuristic for state exploration mandatory for complex game levels.
 
 \section{Game Implementation}
-Descrevendo o projeto e implementação, na linguagem selecionada, do jogo incluindo a forma de representação do estado do tabuleiro, operadores (verificação do cumprimento das regras do jogo) aplicáveis com determinadas pré-condições e que têm efeitos sobre o estado do jogo e um dado custo, teste objetivo (determinação do final do jogo). Entre outras devem ser implementadas funções: ler nível de ficheiro (lendo um dado nível/estado de um ficheiro de texto), visualizar em modo de texto/gráfico um dado estado, validar uma dada jogada/operador (tendo em conta as suas pré-condições), executar uma dada jogada/operador, num dado tabuleiro, tendo em conta os seus efeitos e gerando o respetivo estado sucessor, listar todas as jogadas/operadores disponíveis num dado tabuleiro, avaliar um dado estado (tendo em conta a sua “proximidade” à solução final), testar se um dado estado é solução (teste objetivo). Os métodos de pesquisa para cálculo das jogadas a realizar que permitam ao computador jogar sozinho e resolver os puzzles devem ser descritos na secção seguinte assim como o método geral para os chamar e resolver o puzzle (utilizando um dado método selecionado de entre os disponíveis).
+
+In the implementation of the game there are two classes: GameState and Piece. An instance of Piece contains the position of the top left corner, the length and the direction of the piece. Each of these is part of an instance of GameState, which besides a list of the pieces also contains a reference to the special piece and a boolean matrix, where each element of it represents the state of a given cell (empty or occupied). Using this implementation, the objective test is made by checking if the special piece intersects with the exit.
+
+To determine all adjacent states, the list of pieces is iterated and for each one the following steps are taken:
+
+\begin{enumerate}
+    \item Determine the position of the piece's extremities
+    \item For each extremity determine the direction of the directly adjacent cell (i.e. for the left extremity of an horizontal piece the adjacent cell it will be to the left)
+    \item Then create N new states with an updated matrix and an updated piece, where N is number of empty cells adjacent to the piece in direction determined in the previous step
+\end{enumerate}
+
+Each of the states created using this method has the cost of the original state plus one.
+
+\subsection{File representation}
+
+Each puzzle can represented by a single string, where 'o' represents an empty space, 'x' represents and immovable space and each piece is identified by an upper case letter, 'A' is reserved to represent the special piece.
+
+\textcolor{red}{Descrevendo o projeto e implementação, na linguagem selecionada, do jogo incluindo a forma de representação do estado do tabuleiro, operadores (verificação do cumprimento das regras do jogo) aplicáveis com determinadas pré-condições e que têm efeitos sobre o estado do jogo e um dado custo, teste objetivo (determinação do final do jogo). Entre outras devem ser implementadas funções: ler nível de ficheiro (lendo um dado nível/estado de um ficheiro de texto), visualizar em modo de texto/gráfico um dado estado, validar uma dada jogada/operador (tendo em conta as suas pré-condições), executar uma dada jogada/operador, num dado tabuleiro, tendo em conta os seus efeitos e gerando o respetivo estado sucessor, listar todas as jogadas/operadores disponíveis num dado tabuleiro, avaliar um dado estado (tendo em conta a sua “proximidade” à solução final), testar se um dado estado é solução (teste objetivo). Os métodos de pesquisa para cálculo das jogadas a realizar que permitam ao computador jogar sozinho e resolver os puzzles devem ser descritos na secção seguinte assim como o método geral para os chamar e resolver o puzzle (utilizando um dado método selecionado de entre os disponíveis).}
 
 \section{Search Algorithms} \label{sec:sa}
 As determined beforehand, the following algorithms were implemented:
