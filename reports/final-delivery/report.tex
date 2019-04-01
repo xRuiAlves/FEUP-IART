@@ -205,7 +205,7 @@ As determined beforehand, the following algorithms were implemented:
 \begin{itemize}
     \item BFS (Breadth-First Search)
     \item DFS (Depth-First Search)
-    \item Iterative Deepening-First Search (nome certo?)
+    \item Iterative Deepening Depth-First Search
     \item Greedy Search
     \item A* Search
 \end{itemize}
@@ -222,10 +222,50 @@ Falar aqui sobre detalhes de implementação e talvez expandir acima sobre a raz
 
 \subsection{Breadth-First Search}
 
-The algorithm analyzes all states with a depth inferior to N prior to analyzing states with a depth of N, to acomplish this task all nodes that need to be analyzed are kept in a queue. The next state to be analyzed is in the front of the queue and the calculated neighbours are appended to the end of this structure.
+\textbf{Breadth-First Search (BFS)} analyzes all of the states with a depth lower than N prior to analyzing states with a depth of N. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Queue}. The next state to be analyzed is at the front of the \textit{Queue}. When analyzing a state, the next possible states are generated and appended to the end of this structure.
 
-This approach has exponential complexity in both time and space, this makes the algorithm consume copius amounts of memory, making it hard to run in puzzles that have a solution size bigger than 10. However, using a set of searched states to avoid the expansion of nodes already visited, the algorithm can run in a reasonable amount of time, due to the small search space and a high frequency of repeated states. 
+The time and space complexity of this approach is exponential, making the algorithm consume copius amounts of memory. This makes it hard to run for puzzles that have a solution size bigger than 10. However, by using a \textit{Set} of searched states to avoid the expansion of visited nodes, the algorithm can be run in a reasonable amount of time, due to the small search space and high frequency of repeated states.
 
+\textbf{BFS} guarantees an optimal solution due to expanding each level of the state search tree sequentially, always choosing the smallest possible solution.
+
+\subsection{Depth-First Search}
+
+\textbf{Depth-First Search (DFS)} analyzes all of the states for a certain branching path before backtracking to another branch. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Stack}. The next state to be analyzed is on the top of the \textit{Stack}. When analyzing a state, the next possible states are generated and placed on top of this structure.
+
+However, this approach does not always reach a solution, due to the possibility of loops in the state search tree, which leads to infinite exploration of the same looping states.
+In order to avoid this, an auxiliary \textit{Set} was used to keep track of visited nodes, thus excluding the possibility of loops.
+
+\textbf{DFS} does not guarantee and optimal solution due to the order in which it expands the search tree - a deeper level can be expanded before a more shallow level and thus a larger (and therefore non-optimal) solution reached before a smaller one.
+
+\subsection{Iterative-Deepening Depth-First Search}
+
+\textbf{Iterative-Deepening Depth-First Search (IDDFS)} executes a \textbf{DFS} with a certain limited depth, repeating this process with a larger value for this limit each time until it reaches a solution.
+
+Unlike \textbf{BFS}, this algorithm does not need to store all of the states to explore in memory simultaneously and unlike \textbf{DFS} it cannot enter an infinite loop.
+
+\textbf{IDDFS} guarantees an optimal solution due to expanding each node of a given level before moving to the next level of the search tree, gurantying the smallest possible solution.
+
+\subsection{Greedy Search}
+
+\textbf{Greedy Search} expands the next node based on the value given to it by the chosen \textit{Heuristic}, always expanding the node with the lower value. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Priority Queue}. The next state to be analyzed is on top of the \textit{Priority Queue}. When analyzing a state, the next possible states are generated and inserted into this structure, which will reorder them as needed.
+
+This algorithm's efficiency depends on the chosen \textit{Heuristic}. Even when using an \textit{Admissible Heuristic}, this algorithm does not guarantee an optimal solution due to not necessarily expandsing the nodes in a more shallow level before expanding nodes at a deeper level.
+
+\subsection{A* Search}
+
+TODO
+
+\subsection{Heuristics}
+
+TODO
+
+\textbf{\textit{Explain what is an admissible heuristic.}}
+
+\subsubsection{Heuristic #1}
+TODO
+
+\subsubsection{Heuristic #2}
+TODO
 
 \textcolor{red}{Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).}
 
