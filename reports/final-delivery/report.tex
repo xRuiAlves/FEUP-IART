@@ -13,7 +13,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Unblock Me}
+\title{Unblock Me - Group 19}
 
 \author{\IEEEauthorblockN{Guilherme Silva (201603647)}
 \IEEEauthorblockA{\textit{IART} \\
@@ -36,13 +36,11 @@ up201606746@fe.up.pt}
 
 \maketitle
 
-% TODO
+TODO:
 \begin{itemize}
     \item Update abstract
-    \item Update introduction
-    \item check if it is necessary to add more souces to Related Work (sources for code for example)
-    \item Fix Operators - Move several cells with cost 1 instead of just 1 -> Done, needs review (Miguel)
-    \item Game implementation section
+    \item Update introduction - Will do it later on (Miguel)
+    \item Game implementation section - Guilherme started
     \item search algorithms section - Started it but need some technical details (Miguel)
     \item experiments and results section - Started it but need some technical details (Miguel)
     \item update conclusion
@@ -226,10 +224,18 @@ Falar aqui sobre detalhes de implementação e talvez expandir acima sobre a raz
 
 Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).
 
-\section{Experiments (Tests?) and Results}
-Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles).
+\section{Experiments and Results}
+Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles) for different \textit{Categories of Puzzles}.
 
-A selection of some interesting levels of the game was grouped into four categories - Easy, Medium, Hard and Long. This grouping was done based on the number of possible states since the initial configuration and the length of the solution, as these are the main determinants on how difficult it is to find a solution, and furthermore the optimal one. 8 Easy and Hard and 10 Medium and Long levels were selected for evaluating the algorithms' performance, these presenting some of the most interesting initial piece configurations.
+\subsection{Puzzle Categorization}
+
+A selection of some interesting levels of the game was grouped into four categories - Easy, Medium, Hard and Long. This grouping was done based on the number of possible states since the initial configuration and the length of the solution, as these are the main determinants on how difficult it is to find a solution, and furthermore the optimal one. Eight Easy and Hard and ten Medium and Long levels were selected for evaluating the algorithms' performance, these presenting some of the most interesting initial piece configurations.
+
+\textbf{Easy} and \textbf{Medium} levels have simillar lengths for their optimal solutions (around 10 moves), differing in the number of possible states - \textbf{Easy} levels have several hundreds of possible states while \textbf{Medium} levels have tens of thousands.
+
+\textbf{Hard} levels have a much higher number of possible states (hundreds of thousands) and a larger solution length (around 20 moves).
+
+Finally, \textbf{Long} levels do not necessarily have a large amount of possible states (ranging between thousands and tens of thousands), but instead have a much larger solution length (around 50 moves).
 
 \begin{bf}
 \textit{
