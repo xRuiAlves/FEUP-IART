@@ -220,9 +220,14 @@ Falar aqui sobre detalhes de implementação e talvez expandir acima sobre a raz
 }
 \end{bf}
 
----
+\subsection{Breadth-First Search}
 
-Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).
+The algorithm analyzes all states with a depth inferior to N prior to analyzing states with a depth of N, to acomplish this task all nodes that need to be analyzed are kept in a queue. The next state to be analyzed is in the front of the queue and the calculated neighbours are appended to the end of this structure.
+
+This approach has exponential complexity in both time and space, this makes the algorithm consume copius amounts of memory, making it hard to run in puzzles that have a solution size bigger than 10. However, using a set of searched states to avoid the expansion of nodes already visited, the algorithm can run in a reasonable amount of time, due to the small search space and a high frequency of repeated states. 
+
+
+\textcolor{red}{Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).}
 
 \section{Experiments and Results}
 Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles) for different \textit{Categories of Puzzles}.
