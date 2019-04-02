@@ -36,15 +36,6 @@ up201606746@fe.up.pt}
 
 \maketitle
 
-TODO:
-\begin{itemize}
-    \item Update abstract
-    \item Update introduction - Will do it later on (Miguel)
-    \item update conclusion
-    \item Add something about pypy because of it improving the initial python performance?
-\end{itemize}
-
-
 \begin{abstract}
 The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving the game \textit{Unblock Me}, in which rectangular pieces block the path of a red special piece. The objective of the game is for the special piece to reach the exit of the level, which is achieved by moving it and the other pieces.
 The problem will be described and then formulated as a \textit{Search Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process.
@@ -317,7 +308,7 @@ Additionally, by inspecting the \textbf{Execution Time}, some insight is gained 
     \caption{Solution execution time in hard puzzles}
 \end{figure}
 
-In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. \textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimization made to \textbf{BFS} resulted in a drastic increase of permance of the algorithm's execution time, it consisting of using a \textit{Set} to save all of the visited nodes, avoiding the expansion of visited nodes in the search tree. Due to the fact that the considered problem has a very large amount of repeated states (it is possible to reverse any movement done at any given moment), this increase in performance allows \textbf{BFS} to achieve the overall best performance when it comes to execution time.
+In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. The same applies to the \textbf{Greedy} algorithms, that also provide a solution in a short time, although with a much better quality (not optimal, but with a much shorter length that DFS).\textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimization made to \textbf{BFS} resulted in a drastic increase of permance of the algorithm's execution time, it consisting of using a \textit{Set} to save all of the visited nodes, avoiding the expansion of visited nodes in the search tree. Due to the fact that the considered problem has a very large amount of repeated states (it is possible to reverse any movement done at any given moment), this increase in performance allows \textbf{BFS} to achieve the overall best performance when it comes to execution time.
 
 Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. The number of expanded nodes in the solutions achieved by all of the algorithms in the medium puzzles were the following:
 
@@ -339,14 +330,13 @@ In order to study the upsides and downsides of each of the algorithms, a thoroug
 
 \begin{itemize}
     \item Considering the answer length, the \textbf{BFS}, \textbf{Iterative Deepening} and \textbf{A*}(using heuristic 1) algorithms achieved optimal solutions and the \textbf{DFS} algorithm achieved the longest solutions.
-    \item Considering the execution time required to reach a solution, 
-    \item Number of Expanded Nodes
+    \item Considering the execution time required to reach a solution, the \textbf{DFS} and \textbf{Greedy} algorithms achieved solution in short execution times (although not optimal). The \textbf{Iterative Deepening} algorithm originated the longest execution times for most of the studied puzzles.
+    \item Finally, considering the number of expanded states, the \textbf{A*} and \textbf{BFS} algorithms achieved the solutions with the fewest states expanded. On the other hand, the \textbf{Iterative Deepening} algorithm originated, by a large margin, solutions with the highest number of expanded states, due to the fact that, in this algorithm, multiple iterations (for different depths) of the \textbf{DFS} algorithm are applied.
 \end{itemize}
 
+In conclusion, the algorithms that achieved the best solutions according to the previously described methods where the \textbf{A*} and \textbf{BFS} algorithms, which were able to achieve optimal solutions in short execution times, without requiring the expansion of many states.
 
-
-
-\textcolor{red}{Sumário do trabalho realizado e conclusões que retira deste projeto. Análise crítica dos resultados obtidos em comparação com os resultados teóricos que seriam esperados. Trabalho futuro, ou seja, formas de melhorar o trabalho desenvolvido.}
+All of the objectives were successfully completed and future improvements could include the studying of the different heuristics in this problem and the exploration of the studied algorithms in puzzles of bigger sizes.
 
 \begin{thebibliography}{00}
     
