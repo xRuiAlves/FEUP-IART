@@ -54,7 +54,7 @@ Secondly, it will be formulated as a \textit{Search Problem}, with the approach 
 
 Thirdly, the game implementation will be touched upon, being some of the main aspects of it described, namely the representation of the initial game state in the text files that can be loaded by the program.
 
-Moreover, the \textit{Search Algorithms} that were used to approach the problem being studied will be succintly described, also focusing on the description of the implemented \textit{Heuristics}.
+Moreover, the \textit{Search Algorithms} that were used to approach the problem being studied will be succinctly described, also focusing on the description of the implemented \textit{Heuristics}.
 
 Additionally, the performed experiments and their results will be presented and some conclusions extrapolated from them.
 
@@ -75,7 +75,7 @@ The game's objective is to move a special piece to the level's exit, by moving t
     \caption{Piece moving down one cell}
 \end{figure}
 
-Levels are fully surrounded by walls, except for the level's exit door that is alligned with the special piece and by which only the special piece can go through. The level is completed once the piece goes through the exit door.
+Levels are fully surrounded by walls, except for the level's exit door that is aligned with the special piece and by which only the special piece can go through. The level is completed once the piece goes through the exit door.
  
 \begin{figure}[H]
     \centerline{\includegraphics[width=100px]{img3.png}}
@@ -87,7 +87,7 @@ Some levels may even contain fixed blocks that can not be moved, representing ob
  
 \begin{figure}[H]
     \centerline{\includegraphics[width=100px]{img4.png}}
-    \caption{Example of an \textit{Unblock Me} level containg fixed blocks}
+    \caption{Example of an \textit{Unblock Me} level containing fixed blocks}
 \end{figure}
 
 \section{Problem Formulation}
@@ -111,7 +111,7 @@ This representation of the game state makes the generation of valid movements ea
 \begin{itemize}
     \item Using a list of pieces makes it trivial to determine which of them can be moved in a given state;
     \item Using a matrix (of booleans, that state if a cell is occupied or not) makes it trivial to check if adjacent cells to the pieces extremities are empty;
-    \item Finnaly, using a reference to the special piece allows accessing it in constant time, which will be useful to heuristic related operations and determine if the goal state (\autoref{subsec:gs}) is achieved.
+    \item Finally, using a reference to the special piece allows accessing it in constant time, which will be useful to heuristic related operations and determine if the goal state (\autoref{subsec:gs}) is achieved.
 \end{itemize}
 
 \subsection{Initial State}
@@ -211,7 +211,7 @@ Furthermore, it was decided that, unlike initially planned, \textbf{Bi-Direction
 
 \textbf{Breadth-First Search (BFS)} analyzes all of the states with a depth lower than N prior to analyzing states with a depth of N. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Queue}. The next state to be analyzed is at the front of the \textit{Queue}. When analyzing a state, the next possible states are generated and appended to the end of this structure.
 
-The time and space complexity of this approach is exponential, making the algorithm consume copius amounts of memory. This makes it hard to run for puzzles that have a solution size bigger than 10. However, by using a \textit{Set} of searched states to avoid the expansion of visited nodes, the algorithm can be run in a reasonable amount of time, due to the small search space and high frequency of repeated states.
+The time and space complexity of this approach is exponential, making the algorithm consume copious amounts of memory. This makes it hard to run for puzzles that have a solution size bigger than 10. However, by using a \textit{Set} of searched states to avoid the expansion of visited nodes, the algorithm can be run in a reasonable amount of time, due to the small search space and high frequency of repeated states.
 
 \textbf{BFS} guarantees an optimal solution due to expanding each level of the state search tree sequentially, always choosing the smallest possible solution.
 
@@ -230,13 +230,13 @@ In order to avoid this, an auxiliary \textit{Set} was used to keep track of visi
 
 Unlike \textbf{BFS}, this algorithm does not need to store all of the states to explore in memory simultaneously and unlike \textbf{DFS} it cannot enter an infinite loop.
 
-\textbf{IDDFS} guarantees an optimal solution due to expanding each node of a given level before moving to the next level of the search tree, gurantying the smallest possible solution.
+\textbf{IDDFS} guarantees an optimal solution due to expanding each node of a given level before moving to the next level of the search tree, guarantying the smallest possible solution.
 
 \subsection{Greedy Search}
 
 \textbf{Greedy Search} expands the next node based on the value given to it by the chosen \textit{Heuristic}, always expanding the node with the lower value. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Priority Queue}. The next state to be analyzed is on top of the \textit{Priority Queue}. When analyzing a state, the next possible states are generated and inserted into this structure, which will reorder them as needed.
 
-This algorithm's efficiency depends on the chosen \textit{Heuristic}. Even when using an \textit{Admissible Heuristic}, this algorithm does not guarantee an optimal solution due to not necessarily expandsing the nodes in a more shallow level before expanding nodes at a deeper level.
+This algorithm's efficiency depends on the chosen \textit{Heuristic}. Even when using an \textit{Admissible Heuristic}, this algorithm does not guarantee an optimal solution due to not necessarily expanding the nodes in a more shallow level before expanding nodes at a deeper level.
 
 \subsection{A* Search}
 
@@ -268,13 +268,13 @@ Several tests were ran, using all of the implemented algorithms and heuristics (
 
 A selection of some interesting levels of the game was grouped into four categories - Easy, Medium, Hard and Long. This grouping was done based on the number of possible states since the initial configuration and the length of the solution, as these are the main determinants on how difficult it is to find a solution, and furthermore the optimal one. Eight Easy and Hard and ten Medium and Long levels were selected for evaluating the algorithms' performance, these presenting some of the most interesting initial piece configurations.
 
-\textbf{Easy} and \textbf{Medium} levels have simillar lengths for their optimal solutions (around 10 moves), differing in the number of possible states - \textbf{Easy} levels have several hundreds of possible states while \textbf{Medium} levels have tens of thousands.
+\textbf{Easy} and \textbf{Medium} levels have similar lengths for their optimal solutions (around 10 moves), differing in the number of possible states - \textbf{Easy} levels have several hundreds of possible states while \textbf{Medium} levels have tens of thousands.
 
 \textbf{Hard} levels have a much higher number of possible states (hundreds of thousands) and a larger solution length (around 20 moves).
 
 Finally, \textbf{Long} levels do not necessarily have a large amount of possible states (ranging between thousands and tens of thousands), but instead have a much larger solution length (around 50 moves).
 
-\subsection{Perfomance analysis}
+\subsection{Performance analysis}
 
 After running all of the implemented algorithms described in \autoref{sec:sa} for each of the selected puzzles, the following data was collected:
 
