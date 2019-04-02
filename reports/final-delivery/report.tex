@@ -40,7 +40,6 @@ TODO:
 \begin{itemize}
     \item Update abstract
     \item Update introduction - Will do it later on (Miguel)
-    \item experiments and results section - Started it but need some technical details (Miguel)
     \item update conclusion
     \item Add something about pypy because of it improving the initial python performance?
 \end{itemize}
@@ -59,13 +58,17 @@ Artificial Intelligence, Search Problems, Path-finding algorithms, Decision-maki
 \section{Introduction}
 The game that is the subject of study in this paper (\textit{Unblock Me}) will be approached with several different \textit{Search Algorithms}, implemented in \textit{Python}, in order to conclude what is the best approach for solving it using \textit{Artificial Intelligence Algorithms}.
 
-Firstly, the game will be described in further detail, ensuring that all non-formal aspects of it are well documented. Secondly, it will be formulated as a \textit{Search Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken.
+Firstly, the game will be described in further detail, ensuring that all non-formal aspects of it are well documented.
 
-Thirdly, the game implementation
+Secondly, it will be formulated as a \textit{Search Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken.
 
-Thirdly, a research on related work on this topic will be presented, giving some insight on the problem from other points of view.
+Thirdly, the game implementation will be touched upon, being some of the main aspects of it described, namely the representation of the initial game state in the text files that can be loaded by the program.
 
-Finally, a small section will cover the conclusions and future work, by expanding on the already developed tasks and elaborating on the planned approach.
+Moreover, the \textit{Search Algorithms} that were used to approach the problem being studied will be succintly described, also focusing on the description of the implemented \textit{Heuristics}.
+
+Additionally, the performed experiments and their results will be presented and some conclusions extrapolated from them.
+
+Finally, a section will cover the conclusions and future work, by expanding on the already developed tasks and elaborating on what can be done to further develop work related to this topic.
 
 \section{Problem Description}
 \textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. It is an adapted version of \textit{Rush Hour}, a puzzle game invented by Nobuyuki Yoshigahara in the 1970s. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit) \cite{b1}.
@@ -184,7 +187,7 @@ Even though that the problem is not complex, increasing the board size quickly l
 
 \section{Game Implementation}
 
-In the implementation of the game there are two classes: GameState and Piece. An instance of Piece contains the position of the top left corner, the length and the direction of the piece. Each of these is part of an instance of GameState, which besides a list of the pieces also contains a reference to the special piece and a boolean matrix, where each element of it represents the state of a given cell (empty or occupied). Using this implementation, the objective test is made by checking if the special piece intersects with the exit.
+In the implementation of the game there are two classes: \textbf{GameState} and \textbf{Piece}. An instance of \textbf{Piece} contains the position of the top left corner, the length and the direction of the piece. Each of these is part of an instance of GameState, which besides a list of the pieces also contains a reference to the special piece and a boolean matrix, where each element of it represents the state of a given cell (empty or occupied). Using this implementation, the objective test is made by checking if the special piece intersects with the exit.
 
 To determine all adjacent states, the list of pieces is iterated and for each one the following steps are taken:
 
@@ -198,9 +201,7 @@ Each of the states created using this method has the cost of the original state 
 
 \subsection{File representation}
 
-Each puzzle can represented by a single string, where 'o' represents an empty space, 'x' represents and immovable space and each piece is identified by an upper case letter, 'A' is reserved to represent the special piece.
-
-\textcolor{red}{Descrevendo o projeto e implementação, na linguagem selecionada, do jogo incluindo a forma de representação do estado do tabuleiro, operadores (verificação do cumprimento das regras do jogo) aplicáveis com determinadas pré-condições e que têm efeitos sobre o estado do jogo e um dado custo, teste objetivo (determinação do final do jogo). Entre outras devem ser implementadas funções: ler nível de ficheiro (lendo um dado nível/estado de um ficheiro de texto), visualizar em modo de texto/gráfico um dado estado, validar uma dada jogada/operador (tendo em conta as suas pré-condições), executar uma dada jogada/operador, num dado tabuleiro, tendo em conta os seus efeitos e gerando o respetivo estado sucessor, listar todas as jogadas/operadores disponíveis num dado tabuleiro, avaliar um dado estado (tendo em conta a sua “proximidade” à solução final), testar se um dado estado é solução (teste objetivo). Os métodos de pesquisa para cálculo das jogadas a realizar que permitam ao computador jogar sozinho e resolver os puzzles devem ser descritos na secção seguinte assim como o método geral para os chamar e resolver o puzzle (utilizando um dado método selecionado de entre os disponíveis).}
+Each puzzle can represented by a single string, where 'o' represents an empty space, 'x' represents an immovable space and each piece is identified by an upper case letter, 'A' being reserved for the representation of the special piece.
 
 \section{Search Algorithms} \label{sec:sa}
 As determined beforehand, the following algorithms were implemented:
@@ -268,9 +269,9 @@ The first heuristic consists of counting the number of pieces between the specia
 
 The second heuristic consists of attributing a value to every piece between the special piece and the exit. This value is 1 for pieces that can move and 2 for pieces that are blocked. This heuristic is not \textbf{Admissible}, because moving one piece can free 2 pieces at the same time, therefore the heuristic can overestimate a state's value when multiple pieces can be freed by one movement. Despite this, this heuristic can reach the optimal solution for most puzzles when used in the \textbf{A* Search Algorithm}.
 
-\textcolor{red}{Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).}
-
 \section{Experiments and Results}
+\textbf{Note:} All of the below described tests were ran using \textit{pypy} version 3.6.\\
+
 Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles) for different \textit{Categories of Puzzles}.
 
 \subsection{Puzzle Categorization}
@@ -355,9 +356,7 @@ For the informed search algorithms (Greedy and A*), several different heuristics
 
 In order to evaluate the implemented algorithms, they will be assessed both in terms of the achieved solution's quality and in terms of the algorithm's performance. For the first metric, the main evaluation point will be the number of piece movements. For the latter, both the execution time and the number of evaluated states will be taken into account.
 
---------
-
-Sumário do trabalho realizado e conclusões que retira deste projeto. Análise crítica dos resultados obtidos em comparação com os resultados teóricos que seriam esperados. Trabalho futuro, ou seja, formas de melhorar o trabalho desenvolvido.
+\textcolor{red}{Sumário do trabalho realizado e conclusões que retira deste projeto. Análise crítica dos resultados obtidos em comparação com os resultados teóricos que seriam esperados. Trabalho futuro, ou seja, formas de melhorar o trabalho desenvolvido.}
 
 \begin{thebibliography}{00}
     
