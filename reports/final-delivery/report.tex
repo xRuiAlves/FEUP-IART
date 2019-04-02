@@ -253,7 +253,10 @@ This algorithm's efficiency depends on the chosen \textit{Heuristic}. Even when 
 
 \subsection{A* Search}
 
-TODO
+\textbf{A* Search} expands the next node based based on the value given to it by the sum of the current state's weight and the chosen heuristic. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Priority Queue}. The next state to be analyzed is on top of the \textit{Priority Queue}. When analyzing a state, the next possible states are generated and inserted into this structure, which will reorder them as needed.
+
+Both the algorithm's efficiency and solution length depend on the chosen \textit{Heuristic}. In order for this algorithm to achieve the optimal solution, the chosen heuristic must be an \textit{Admissible Heuristic}.
+
 
 \subsection{Heuristics}
 
@@ -262,12 +265,19 @@ Heuristics are problem specific functions that estimate the cost to reach the ob
 For an heuristic to be \textbf{Admissible} it cannot, at any point, overestimate the number of steps it takes to reach the goal state. Thus, when evaluating a state, the calculated value must be lower than or equal to the state's real value, never overshooting the solution.
 
 \subsubsection{Heuristic 1}
+<<<<<<< f84d4c7787c6960aceaf58f00117423200bdc53f
 
 The first heuristic consists of counting the number of pieces between the special piece and the exit. These pieces need to move at least once so the piece can have a clear path to the exit, making this heuristic \textbf{Admissible}.
 
 \subsubsection{Heuristic 2}
 
 The second heuristic consists of atributing 
+=======
+TODO
+
+\subsubsection{Heuristic 2}
+TODO
+>>>>>>> Made progress in chapter 7
 
 \textcolor{red}{Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).}
 
@@ -284,11 +294,7 @@ A selection of some interesting levels of the game was grouped into four categor
 
 Finally, \textbf{Long} levels do not necessarily have a large amount of possible states (ranging between thousands and tens of thousands), but instead have a much larger solution length (around 50 moves).
 
-\begin{bf}
-\textit{
-Falar aqui sobre o que quer dizer cada grupo, que eu não estou 100\% - Miguel
-}
-\end{bf}
+\subsection{Perfomance analysis}
 
 After running all of the implemented algorithms described in section \autoref{sec:sa} for each of the selected puzzles, the following data was collected:
 
@@ -298,9 +304,31 @@ After running all of the implemented algorithms described in section \autoref{se
     \item Number of Expanded Nodes
 \end{itemize}
 
-By analyzing the \textbf{Answer Length}, it is possible to directly measure how good the algorithm's solution is, by checking against the optimal solution of the puzzle (that has the minimum amount of moves required to reach the \textbf{Goal State}). \textbf{\textit{As expected, Algorithm X and Y always reach an optimal solution, being that DFS almost never reaches a short solution - Fica aqui o stub for expanding later pls}}
 
-Additionally, by inspecting the \textbf{Execution Time}, some insight is gained on the algorithm's \textbf{Time Complexity}. \textbf{\textit{It was confirmed, as predicted, that Algorithm X and Y have very good runtimes, but almost never reach a good solution - Fica aqui o stub for expanding later pls}}
+\textbf{\textit{ACRESCENTAR AQUI ALGUMA COISA A DIZER QUE TODOS OS CHARTS ESTAO NOS ANEXOS}}
+
+By analyzing the \textbf{Answer Length}, it is possible to directly measure how good the algorithm's solution is, by checking against the optimal solution of the puzzle (that has the minimum amount of moves required to reach the \textbf{Goal State}). The solution lengths achieved with all algorithms in the easy puzzles were the following:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-easy.png}}
+    \caption{Solution length in easy puzzles}
+\end{figure}
+
+As expected, the \textbf{BFS}, \textbf{Iterative Deepening} and \textbf{A*} algorithms always reached an optimal solution, being that \textbf{DFS} almost never reaches a short solution. This difference is even more visible in the long puzzles:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-long.png}}
+    \caption{Solution length in long puzzles}
+\end{figure}
+
+Additionally, by inspecting the \textbf{Execution Time}, some insight is gained on the algorithm's \textbf{Time Complexity}, which differs for each different algorithm. The solution execution times achieved with all algorithms in the hard puzzles were the following:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-hard.png}}
+    \caption{Solution length in long puzzles}
+\end{figure}
+
+In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. \textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimizations that were made to \textbf{BFS} caused a drastic increase of permance in the algorithm's execution time. The optimization consisted in adding the usage of a set structure to save all the visited nodes, which removes the expansion of already known branches in the search tree. Due to this increase of performance, \textbf{BFS} achieves the overall best performance when it comes to execution time.
 
 Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. \textbf{\textit{The \textbf{Informed Search Algorithms} converge to a solution faster than all others, and thus end up exploring less states - Fica aqui o stub for expanding later pls}}
 
