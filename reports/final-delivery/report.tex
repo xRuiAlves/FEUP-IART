@@ -331,30 +331,20 @@ In most of the puzzles, \textbf{Iterative Deepening} expanded the most states, d
 The algorithms with the best overall performance for the problems were, therefore, \textbf{BFS} and \textbf{A*} algorithms, which are able to achieve optimal solutions in a very short period of time (with low time complexity) and without needing to expand a large number of states (with low space complexity).
 
 \section{Conclusions and Future Work}
-As of yet, the problem has been completely formalized - it has been formally described, and formulated as a search problem (a Game State representation has been reached, the initial and goal states have been described and the operators and path cost have been stated).
+In this project, all of the applicable algorithms that were proposed were implemented and studied (except for the Uniform-Cost search, which explores the states in the exact same order that Breadth-First search does for this specific problem and was, therefore, not necessary for the best solution study, and for the Bi-Directional algorithms, which were not possible to be applied since the final objective state is not known \textit{a priori}).
 
-The chosen programming language was Python, and a simple graphical interface has been implemented, in order to show the solutions of the different algorithms when they are implemented.
+A graphical user interface was developed to visualize the different puzzles and the solutions produced by each of the algorithms.
 
-In order to study the best possible approach for solving \textit{Unblock Me} puzzles, the following algorithms will be the subject of various tests:
-\begin{itemize}
-    \item Breadth-First Search
-    \item Depth-First Search
-    \item Iterative Deepening
-    \item Uniform Cost Search
-    \item Greedy Search
-    \item A*
-    \item Bi-Directional Search (using Greedy Search)
-    \item Bi-Directional Search (using A*)
-\end{itemize}
-
-For the informed search algorithms (Greedy and A*), several different heuristics will be experimented with, such as:
+In order to study the upsides and downsides of each of the algorithms, a thorough examination of their performance using different metrics (solution length, execution time and number of expanded states). When analysing the produced solutions, it was concluded that they matched with the theoretical expectations:
 
 \begin{itemize}
-    \item The number of pieces between the special piece and the level exit
-    \item The number of cells (distance) between the special piece and the level exit
+    \item Considering the answer length, the \textbf{BFS}, \textbf{Iterative Deepening} and \textbf{A*}(using heuristic 1) algorithms achieved optimal solutions and the \textbf{DFS} algorithm achieved the longest solutions.
+    \item Considering the execution time required to reach a solution, 
+    \item Number of Expanded Nodes
 \end{itemize}
 
-In order to evaluate the implemented algorithms, they will be assessed both in terms of the achieved solution's quality and in terms of the algorithm's performance. For the first metric, the main evaluation point will be the number of piece movements. For the latter, both the execution time and the number of evaluated states will be taken into account.
+
+
 
 \textcolor{red}{Sumário do trabalho realizado e conclusões que retira deste projeto. Análise crítica dos resultados obtidos em comparação com os resultados teóricos que seriam esperados. Trabalho futuro, ou seja, formas de melhorar o trabalho desenvolvido.}
 
