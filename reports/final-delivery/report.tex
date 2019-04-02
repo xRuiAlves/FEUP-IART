@@ -216,12 +216,6 @@ The \textbf{Uniform Cost Search} algorithm was not implemented, as all of the \t
 
 Furthermore, it was decided that, unlike initially planned, \textbf{Bi-Directional Search Algorithms} would not be implemented. This is due to the fact that despite the \textbf{Goal State} of \textit{Unblock Me} always featuring the special piece over the level exit, all of the other pieces might be in very different configurations. Thus it is not possible to start searching from the final state of the level, making these algorithms not applicable to the problem under consideration.
 
-\begin{bf}
-\textit{
-Falar aqui sobre detalhes de implementação e talvez expandir acima sobre a razão de não ter implementado alguns - Miguel
-}
-\end{bf}
-
 \subsection{Breadth-First Search}
 
 \textbf{Breadth-First Search (BFS)} analyzes all of the states with a depth lower than N prior to analyzing states with a depth of N. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Queue}. The next state to be analyzed is at the front of the \textit{Queue}. When analyzing a state, the next possible states are generated and appended to the end of this structure.
@@ -291,7 +285,7 @@ Finally, \textbf{Long} levels do not necessarily have a large amount of possible
 
 \subsection{Perfomance analysis}
 
-After running all of the implemented algorithms described in section \autoref{sec:sa} for each of the selected puzzles, the following data was collected:
+After running all of the implemented algorithms described in \autoref{sec:sa} for each of the selected puzzles, the following data was collected:
 
 \begin{itemize}
     \item Answer Length
