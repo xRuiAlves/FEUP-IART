@@ -38,12 +38,11 @@ up201606746@fe.up.pt}
 
 \begin{abstract}
 The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving the game \textit{Unblock Me}, in which rectangular pieces block the path of a red special piece. The objective of the game is for the special piece to reach the exit of the level, which is achieved by moving it and the other pieces.
-The problem will be described and then formulated as a \textit{Search Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process.
-Several algorithms will be investigated, along with testing them against levels with varying difficulty and branching factors. Both the efficiency in reaching a solution and the cost of the calculated solution will be taken into account in the pursuit for the optimal \textit{Search Algorithm}.
+The problem will be described and then formulated as a \textit{Search Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process. In the pursuit of the optimal \textit{Search Algorithm}, several algorithms were implemented and tested, which resulted in a study of their performance, being that different metrics were taken into account. This study was applied to puzzles of varying complexity and difficulty.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Artificial Intelligence, Search Problems, Path-finding algorithms, Decision-making Heuristics, Graph Algorithms, Depth-First Search, Breadth-First Search, Iterative Deepening, Greedy Search, A*, pypy, python
+Artificial Intelligence, Search Problems, Path-finding algorithms, Decision-making Heuristics, Graph Algorithms, Depth-First Search, Breadth-First Search, Iterative Deepening, Greedy Search, A*, PyPy, Python
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -261,7 +260,7 @@ The first heuristic consists of counting the number of pieces between the specia
 The second heuristic consists of attributing a value to every piece between the special piece and the exit. This value is 1 for pieces that can move and 2 for pieces that are blocked. This heuristic is not \textbf{Admissible}, because moving one piece can free 2 pieces at the same time, therefore the heuristic can overestimate a state's value when multiple pieces can be freed by one movement. Despite this, this heuristic can reach the optimal solution for most puzzles when used in the \textbf{A* Search Algorithm}.
 
 \section{Experiments and Results}
-\textbf{Note:} All of the below described tests were ran using \textit{pypy} version 3.6.\\
+\textbf{Note:} All of the below described tests were ran using \textit{PyPy} version 3.6.\\
 
 Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles) for different \textit{Categories of Puzzles}.
 
