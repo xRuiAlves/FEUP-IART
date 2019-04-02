@@ -1,6 +1,9 @@
 Versão de python utilizada: 
 Python 3.6
 
+Pacotes necessários:
+tkinter
+
 Como correr o programa:
 python3 main.py
 
