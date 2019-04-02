@@ -299,8 +299,7 @@ After running all of the implemented algorithms described in section \autoref{se
     \item Number of Expanded Nodes
 \end{itemize}
 
-
-\textbf{\textit{ACRESCENTAR AQUI ALGUMA COISA A DIZER QUE TODOS OS CHARTS ESTAO NOS ANEXOS}}
+The full experimental data obtained in all the different experiments, using the above described metrics, can be be found in \autoref{sec:annex}.
 
 By analyzing the \textbf{Answer Length}, it is possible to directly measure how good the algorithm's solution is, by checking against the optimal solution of the puzzle (that has the minimum amount of moves required to reach the \textbf{Goal State}). The solution lengths achieved with all algorithms in the easy puzzles were the following:
 
@@ -334,9 +333,7 @@ Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's
 
 In most of the puzzles, \textbf{Iterative Deepening} expanded the most states, due to the fact that in each iteration a full DFS is performed (up to a given depth). The \textbf{DFS} and \textbf{Greedy} algorithms also achieved solutions without expanding a large number of nodes, although not achieving optimal solutions. The \textbf{A*}(with heuristic 1) and \textbf{BFS} algorithms achieved optimal solutions without expanding an excessively large amount of nodes.
 
----
-
-Descrevendo as experiências realizadas com os vários algoritmos para resolver diversos puzzles e os resultados obtidos a nível de tempo e custo da solução obtida em cada nível, por cada um dos métodos experimentados. Devem ser incluídas tabelas comparativas dos resultados obtidos na aplicação dos vários métodos aos vários puzzles (níveis do jogo) e discutidos os resultados.
+The algorithms with the best overall performance for the problems were, therefore, \textbf{BFS} and \textbf{A*} algorithms, which are able to achieve optimal solutions in a very short period of time (with low time complexity) and without needing to expand a large number of states (with low space complexity).
 
 \section{Conclusions and Future Work}
 As of yet, the problem has been completely formalized - it has been formally described, and formulated as a search problem (a Game State representation has been reached, the initial and goal states have been described and the operators and path cost have been stated).
@@ -376,5 +373,79 @@ Sumário do trabalho realizado e conclusões que retira deste projeto. Análise 
 \bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. \href{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/}{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments\\/programs/rushhour/}.
 \bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. \href{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}.
 \end{thebibliography}
+
+\section{Annex} \label{sec:annex}
+
+\subsection{Answer Length in Easy puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-easy.png}}
+    \caption{Answer Length in Easy puzzles}
+\end{figure}
+
+\subsection{Answer Length in Medium puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-medium.png}}
+    \caption{Answer Length in Medium puzzles}
+\end{figure}
+
+\subsection{Answer Length in Hard puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-hard.png}}
+    \caption{Answer Length in Hard puzzles}
+\end{figure}
+
+\subsection{Answer Length in Long puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-long.png}}
+    \caption{Answer Length in Long puzzles}
+\end{figure}
+
+\subsection{Execution time in Easy puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-easy.png}}
+    \caption{Execution time in Easy puzzles}
+\end{figure}
+
+\subsection{Execution time in Medium puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-medium.png}}
+    \caption{Execution time in Medium puzzles}
+\end{figure}
+
+\subsection{Execution time in Hard puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-hard.png}}
+    \caption{Execution time in Hard puzzles}
+\end{figure}
+
+\subsection{Execution time in Long puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-long.png}}
+    \caption{Execution time in Long puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Easy puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-easy.png}}
+    \caption{Number of expanded states in Easy puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Medium puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-medium.png}}
+    \caption{Number of expanded states in Medium puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Hard puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-hard.png}}
+    \caption{Number of expanded states in Hard puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Long puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-long.png}}
+    \caption{Number of expanded states in Long puzzles}
+\end{figure}
 
 \end{document}
