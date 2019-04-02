@@ -40,8 +40,6 @@ TODO:
 \begin{itemize}
     \item Update abstract
     \item Update introduction - Will do it later on (Miguel)
-    \item Game implementation section - Guilherme started
-    \item search algorithms section - Started it but need some technical details (Miguel)
     \item experiments and results section - Started it but need some technical details (Miguel)
     \item update conclusion
     \item Add something about pypy because of it improving the initial python performance?
@@ -55,13 +53,17 @@ Several algorithms will be investigated, along with testing them against levels 
 \end{abstract}
 
 \begin{IEEEkeywords}
-Artificial Intelligence, Search Problems, Path-finding algorithms, Decision-making Heuristics, Graph Algorithms, Depth-First Search, Breadth-First Search, Uniform Cost Search, Iterative Deepening, Greedy Search, A*, Bi-Directional Search
+Artificial Intelligence, Search Problems, Path-finding algorithms, Decision-making Heuristics, Graph Algorithms, Depth-First Search, Breadth-First Search, Iterative Deepening, Greedy Search, A*, pypy, python
 \end{IEEEkeywords}
 
 \section{Introduction}
 The game that is the subject of study in this paper (\textit{Unblock Me}) will be approached with several different \textit{Search Algorithms}, implemented in \textit{Python}, in order to conclude what is the best approach for solving it using \textit{Artificial Intelligence Algorithms}.
 
-Firstly, the game will be described in further detail, ensuring that all non-formal aspects of it are well documented. Secondly, it will be formulated as a \textit{Search Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken. Thirdly, a research on related work on this topic will be presented, giving some insight on the problem from other points of view.
+Firstly, the game will be described in further detail, ensuring that all non-formal aspects of it are well documented. Secondly, it will be formulated as a \textit{Search Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken.
+
+Thirdly, the game implementation
+
+Thirdly, a research on related work on this topic will be presented, giving some insight on the problem from other points of view.
 
 Finally, a small section will cover the conclusions and future work, by expanding on the already developed tasks and elaborating on the planned approach.
 
@@ -270,7 +272,7 @@ The first heuristic consists of counting the number of pieces between the specia
 
 \subsubsection{Heuristic 2}
 
-The second heuristic consists of atributing 
+The second heuristic consists of attributing a value to every piece between the special piece and the exit. This value is 1 for pieces that can move and 2 for pieces that are blocked. This heuristic is not \textbf{Admissible}, because moving one piece can free 2 pieces at the same time, therefore the heuristic can overestimate a state's value when multiple pieces can be freed by one movement. Despite this, this heuristic can reach the optimal solution for most puzzles when used in the \textbf{A* Search Algorithm}.
 
 \textcolor{red}{Descrevendo os vários algoritmos de pesquisa utilizados e a sua implementação de modo a calcular a próxima jogada do PC ou retornar a solução final (conjunto de operações para transformar o estado inicial no estado objetivo). Devem ser implementados algoritmos para cálculo da solução utilizando pesquisa em largura, pesquisa em profundidade (se aplicável), aprofundamento progressivo, custo uniforme (se aplicável), pesquisa gulosa e Algoritmo A* (estes último método utilizando várias heurísticas).}
 
@@ -318,18 +320,19 @@ Additionally, by inspecting the \textbf{Execution Time}, some insight is gained 
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=260px]{../../graphics/executionTime-hard.png}}
-    \caption{Solution length in long puzzles}
+    \caption{Solution execution time in hard puzzles}
 \end{figure}
 
 In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. \textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimizations that were made to \textbf{BFS} caused a drastic increase of permance in the algorithm's execution time. The optimization consisted in adding the usage of a set structure to save all the visited nodes, which removes the expansion of already known branches in the search tree. Due to this increase of performance, \textbf{BFS} achieves the overall best performance when it comes to execution time.
 
-Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. \textbf{\textit{The \textbf{Informed Search Algorithms} converge to a solution faster than all others, and thus end up exploring less states - Fica aqui o stub for expanding later pls}}
+Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. The achieved solution number of expanded nodes with all algorithms in the medium puzzles were the following:
 
-\begin{bf}
-\textit{
-Parte para falar das heuristicas, principalmente da "falhada". Tamb\'em \'e preciso inserir os gr\'aficos depois, mas isso tem de se ver tamb\'em com o resto do conte\'udo onde fica melhor por causa de ter referências às pics no texto - Miguel
-}
-\end{bf}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-medium.png}}
+    \caption{Solution number of expanded nodes in medium puzzles}
+\end{figure}
+
+In most of the puzzles, \textbf{Iterative Deepening} expanded the most states, due to the fact that in each iteration a full DFS is performed (up to a given depth). The \textbf{DFS} and \textbf{Greedy} algorithms also achieved solutions without expanding a large number of nodes, although not achieving optimal solutions. The \textbf{A*}(with heuristic 1) and \textbf{BFS} algorithms achieved optimal solutions without expanding an excessively large amount of nodes.
 
 ---
 
