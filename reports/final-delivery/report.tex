@@ -316,9 +316,9 @@ Additionally, by inspecting the \textbf{Execution Time}, some insight is gained 
     \caption{Solution execution time in hard puzzles}
 \end{figure}
 
-In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. \textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimizations that were made to \textbf{BFS} caused a drastic increase of permance in the algorithm's execution time. The optimization consisted in adding the usage of a set structure to save all the visited nodes, which removes the expansion of already known branches in the search tree. Due to this increase of performance, \textbf{BFS} achieves the overall best performance when it comes to execution time.
+In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. \textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimization made to \textbf{BFS} resulted in a drastic increase of permance of the algorithm's execution time, it consisting of using a \textit{Set} to save all of the visited nodes, avoiding the expansion of visited nodes in the search tree. Due to the fact that the considered problem has a very large amount of repeated states (it is possible to reverse any movement done at any given moment), this increase in performance allows \textbf{BFS} to achieve the overall best performance when it comes to execution time.
 
-Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. The achieved solution number of expanded nodes with all algorithms in the medium puzzles were the following:
+Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. The number of expanded nodes in the solutions achieved by all of the algorithms in the medium puzzles were the following:
 
 \begin{figure}[H]
     \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-medium.png}}
@@ -367,6 +367,8 @@ Sumário do trabalho realizado e conclusões que retira deste projeto. Análise 
 \bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. \href{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/}{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments\\/programs/rushhour/}.
 \bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. \href{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}.
 \end{thebibliography}
+
+\newpage
 
 \section{Annex} \label{sec:annex}
 
