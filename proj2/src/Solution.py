@@ -1,4 +1,5 @@
 import random
+from ProblemData import ProblemData
 
 NUM_DAYS = 5
 NUM_TIMESLOTS_PER_DAY = 9
@@ -11,15 +12,13 @@ NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
 # if there were 3 rooms, there could be 12 events taking place in total (4 timeslots * 3 rooms)
 
 class Solution:
-    def __init__(self, num_events, num_rooms, solution=[]):
+    def __init__(self, solution=[]):
         self.solution = solution
-        self.num_events = num_events
-        self.num_rooms = num_rooms
         if (len(self.solution) == 0):
             self.randomize()
 
     def randomize(self):
-        self.solution = [random.randint(0, self.num_events - 1) for i in range(NUM_TIMESLOTS * self.num_rooms)]
+        self.solution = [random.randint(0, ProblemData.getNumEvents() - 1) for i in range(NUM_TIMESLOTS * ProblemData.getNumRooms())]
 
     def __str__(self):
         return "{}".format(self.solution)

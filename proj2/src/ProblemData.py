@@ -4,13 +4,13 @@ from Student import Student
 from Event import Event
 from Room import Room
 
-class FileReader:
-    def __init__(self):
-        self.students = []
-        self.events = []
-        self.rooms = []
+class ProblemData:
+    students = []
+    events = []
+    rooms = []
 
-    def readFile(self, file_name):
+    @staticmethod
+    def readFile( file_name):
         try:
             file = open(file_name , "r")
         except IOError:
@@ -22,35 +22,47 @@ class FileReader:
         # Parse rooms
         for i in range(num_rooms):
             room_size = int(file.readline())
-            self.rooms.append(Room(i, room_size))
+            ProblemData.rooms.append(Room(i, room_size))
 
-        self.events = [Event(i) for i in range(num_events)]
+        ProblemData.events = [Event(i) for i in range(num_events)]
 
         # Parse students
         for i in range(num_students):
-            self.students.append(Student(i))
+            ProblemData.students.append(Student(i))
             for j in range(num_events):
                 is_participating = int(file.readline())
                 if is_participating:
-                    self.students[i].events.add(j)
-                    self.events[j].num_attendees += 1
+                    ProblemData.students[i].events.add(j)
+                    ProblemData.events[j].num_attendees += 1
         
         # Parse rooms
         for i in range(num_rooms):
             for j in range(num_features):
                 contains_feature = int(file.readline())
                 if contains_feature:
-                    self.rooms[i].features.add(j)
+                    ProblemData.rooms[i].features.add(j)
         
         # Parse events
         for i in range(num_events):
             for j in range(num_features):
                 needs_feature = int(file.readline())
                 if needs_feature:
-                    self.events[i].features.add(j)
+                    ProblemData.events[i].features.add(j)
             
         print("Input parsing completed.\nNumber of students: {}\nNumber of events: {}\nNumber of rooms: {}".format(
-            len(self.students), 
-            len(self.events),
-            len(self.rooms)
+            len(ProblemData.students), 
+            len(ProblemData.events),
+            len(ProblemData.rooms)
         ))
+
+    @staticmethod
+    def getNumStudents():
+        return len(ProblemData.students)
+
+    @staticmethod
+    def getNumEvents():
+        return len(ProblemData.events)
+
+    @staticmethod
+    def getNumRooms():
+        return len(ProblemData.rooms)
