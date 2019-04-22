@@ -24,6 +24,8 @@ class FileReader:
             room_size = int(file.readline())
             self.rooms.append(Room(i, room_size))
 
+        self.events = [Event(i) for i in range(num_events)]
+
         # Parse students
         for i in range(num_students):
             self.students.append(Student(i))
@@ -31,6 +33,7 @@ class FileReader:
                 is_participating = int(file.readline())
                 if is_participating:
                     self.students[i].events.add(j)
+                    self.events[j].num_attendees += 1
         
         # Parse rooms
         for i in range(num_rooms):
@@ -41,7 +44,6 @@ class FileReader:
         
         # Parse events
         for i in range(num_events):
-            self.events.append(Event(i))
             for j in range(num_features):
                 needs_feature = int(file.readline())
                 if needs_feature:
