@@ -23,3 +23,5 @@ class Event:
     
     def hasAttendee(self, attendee_id):
         return self.attendees[attendee_id]
+
+    

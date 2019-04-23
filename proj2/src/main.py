@@ -21,6 +21,7 @@ def main():
     print(s)
     validity = str(s.isValid())
     print("Is valid: " + validity)
+    print(s.penaltyEndOfDayClass())
 
 
 
