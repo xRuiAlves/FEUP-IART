@@ -5,6 +5,9 @@ from Event import Event
 from Room import Room
 
 class ProblemData:
+    NUM_DAYS = 2
+    NUM_TIMESLOTS_PER_DAY = 3
+    NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
     students = []
     events = []
     rooms = []
@@ -18,11 +21,18 @@ class ProblemData:
         try:
             file = open(file_name , "r")
         except IOError:
-            sys.stderr.write("Input file not found.\n")
+            sys.stderr.write("Error: Input file not found.\n")
             sys.exit(2)
 
         [ProblemData.num_events, ProblemData.num_rooms, ProblemData.num_features, ProblemData.num_students] = list(map(int, file.readline().rstrip().split(" ")))
         
+        if (ProblemData.num_events > ProblemData.NUM_TIMESLOTS):
+            sys.stderr.write("Error: Number of events ({}) is higher than the number of rooms multiplied by number of available timeslots ({}).".format(
+                ProblemData.num_events,
+                ProblemData.NUM_TIMESLOTS * ProblemData.num_rooms
+            ))
+            sys.exit(3)
+
         # Create rooms
         for i in range(ProblemData.num_rooms):
             room_size = int(file.readline())

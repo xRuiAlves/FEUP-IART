@@ -24,4 +24,9 @@ class Event:
     def hasAttendee(self, attendee_id):
         return self.attendees[attendee_id]
 
-    
+    def canTakePlaceInRoom(self, room):
+        for feature_num in range(len(self.features)):
+            if self.features[feature_num]:
+                if not room.hasFeature(feature_num):
+                    return False
+        return True

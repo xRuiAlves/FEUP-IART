@@ -19,9 +19,11 @@ def main():
     print("\nRandom solution example:")
     s = Solution()
     print(s)
-    validity = str(s.isValid())
-    print("Is valid: " + validity)
-    print(s.penaltyEndOfDayClass())
+    validity = s.isValid()
+    print("\nIs valid: " + str(validity))
+
+    penalty = s.penaltyEndOfDayClass()
+    print("Soft constaints penalty: " + str(penalty))
 
 
 
