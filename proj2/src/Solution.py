@@ -24,9 +24,12 @@ class Solution:
     def __str__(self):
         return "{}".format(self.solution)
 
+    # Verify if the solution respects all the Hard Constraints
     def isValid(self):
         return self.validStudentConstraint() and self.validRoomSizesConstraint()
 
+    # Hard Constraint
+    # Verify if a student isn't "trying" to attend two different events in the same timeslot
     def validStudentConstraint(self):
         for student in ProblemData.students:
             for timeslot_num in range(NUM_TIMESLOTS):
@@ -41,6 +44,9 @@ class Solution:
                             return False 
                         else:
                             is_attending = True
+
+    # Hard Constraint
+    # Verify if the rooms which the events were allocated to are big enough to hold the number of attendees of the event
     def validRoomSizesConstraint(self):
         for timeslot_num in range(NUM_TIMESLOTS):
             for room_num in range(ProblemData.num_rooms):
@@ -54,15 +60,23 @@ class Solution:
                     return False
         return True
 
+    # Verify solution Soft Constraints and compute the amount of penalty for the ones that are not respected
     def penalty(self):
         return  self.penalty1() + self.penalty2() + self.penaltyEndOfDayClass()
 
+    # Soft Constraint
+    # TODO
     def penalty1(self):
         return 0
 
+    # Soft Constraint
+    # TODO
     def penalty2(self):
         return 0
 
+    # Soft Constraint
+    # Count the number of occurrences of a student attending an event in the last timeslot of the day (number of attendees of each 
+    # event that takes place in the last timeslot of each day)
     def penaltyEndOfDayClass(self):
         penalty = 0
         for day_num in range(NUM_DAYS):
