@@ -33,7 +33,7 @@ class ProblemData:
                 is_participating = int(file.readline())
                 if is_participating:
                     ProblemData.students[i].events.add(j)
-                    ProblemData.events[j].num_attendees += 1
+                    ProblemData.events[j].attendees.add(i)
         
         # Parse rooms
         for i in range(num_rooms):
