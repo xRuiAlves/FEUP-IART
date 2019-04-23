@@ -5,8 +5,8 @@ from Event import Event
 from Room import Room
 
 class ProblemData:
-    NUM_DAYS = 2
-    NUM_TIMESLOTS_PER_DAY = 4
+    NUM_DAYS = 4
+    NUM_TIMESLOTS_PER_DAY = 3
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
     students = []
     events = []
@@ -15,6 +15,7 @@ class ProblemData:
     num_rooms = None
     num_features = None
     num_students = None
+    num_events_per_day = None
 
     @staticmethod
     def readFile( file_name):
@@ -25,6 +26,8 @@ class ProblemData:
             sys.exit(2)
 
         [ProblemData.num_events, ProblemData.num_rooms, ProblemData.num_features, ProblemData.num_students] = list(map(int, file.readline().rstrip().split(" ")))
+
+        ProblemData.num_events_per_day = ProblemData.NUM_TIMESLOTS_PER_DAY * ProblemData.num_rooms
         
         if (ProblemData.num_events > ProblemData.NUM_TIMESLOTS):
             sys.stderr.write("Error: Number of events ({}) is higher than the number of rooms multiplied by number of available timeslots ({}).".format(
