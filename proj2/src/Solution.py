@@ -73,12 +73,35 @@ class Solution:
 
     # Verify solution Soft Constraints and compute the amount of penalty for the ones that are not respected
     def penalty(self):
-        return  self.penalty1() + self.penalty2() + self.penaltyEndOfDayClass()
+        return  self.penalty1() + self.penalty2() + self.penaltyEndOfDayEvent()
 
     # Soft Constraint
     # TODO
-    def penalty1(self):
-        return 0
+    def penaltySingleEvent(self):
+        only_1_class_count = 0
+        consecutive_penalty = 0
+        for student in ProblemData.students:
+            for day_num in range(ProblemData.NUM_DAYS):
+                num_events_this_day = 0
+                consecutive_timeslot_with_event = 0
+                for timeslot_num in range(ProblemData.NUM_TIMESLOTS_PER_DAY):
+                    is_participating = False
+                    for room_num in range(ProblemData.num_rooms):
+                        event_num = self.solution[
+                            day_num*ProblemData.NUM_TIMESLOTS_PER_DAY*ProblemData.num_rooms + timeslot_num*ProblemData.num_rooms + room_num
+                        ]
+                        if (event_num is not None):
+                            num_events_this_day += student.attends(event_num)
+                            consecutive_timeslot_with_event += 1
+                            is_participating = True
+                            if (consecutive_timeslot_with_event >= 3):
+                                consecutive_penalty += 1
+                    if not is_participating:
+                        consecutive_timeslot_with_event = 0
+                only_1_class_count += 1 if (num_events_this_day == 1) else 0
+        print("DBG::penalty1()::only_1_class_count:: " + str(only_1_class_count))
+        print("DBG::penalty1()::consecutive_penalty:: " + str(consecutive_penalty))
+        return only_1_class_count + consecutive_penalty
 
     # Soft Constraint
     # TODO
@@ -88,7 +111,7 @@ class Solution:
     # Soft Constraint
     # Count the number of occurrences of a student attending an event in the last timeslot of the day (number of attendees of each 
     # event that takes place in the last timeslot of each day)
-    def penaltyEndOfDayClass(self):
+    def penaltyEndOfDayEvent(self):
         penalty = 0
         for day_num in range(ProblemData.NUM_DAYS):
             for room_num in range(ProblemData.num_rooms):
@@ -96,4 +119,5 @@ class Solution:
                 if (event_num is None):
                     continue
                 penalty += ProblemData.events[event_num].num_attendees
+        print("DBG::penaltyEndOfDayEvent():: " + str(penalty))
         return penalty

@@ -13,7 +13,11 @@ def main():
         return 1
         
     input_file = sys.argv[1]
-    ProblemData.readFile(input_file)
+    try:
+        ProblemData.readFile(input_file)
+    except:
+        sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
+        return 2
 
     # Generate a random solution (temporary)
     print("\nRandom solution example:")
@@ -22,7 +26,10 @@ def main():
     validity = s.isValid()
     print("\nIs valid: " + str(validity))
 
-    penalty = s.penaltyEndOfDayClass()
+    if not validity:
+        return 2
+
+    penalty = s.penalty()
     print("Soft constaints penalty: " + str(penalty))
 
 
