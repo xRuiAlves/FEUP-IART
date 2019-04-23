@@ -18,7 +18,7 @@ class Solution:
             self.randomize()
 
     def randomize(self):
-        self.solution = [random.randint(0, ProblemData.getNumEvents() - 1) for i in range(NUM_TIMESLOTS * ProblemData.getNumRooms())]
+        self.solution = [random.randint(0, ProblemData.num_events - 1) for i in range(NUM_TIMESLOTS * ProblemData.num_rooms)]
 
     def __str__(self):
         return "{}".format(self.solution)
