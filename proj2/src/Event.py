@@ -3,8 +3,7 @@ class Event:
         self.id = id
         self.features = [0] * num_features
         self.attendees = [0] * num_students
-        print(len(self.features))
-        print(len(self.attendees))
+        self.num_attendees = 0
 
     def __eq__(self, value):
         return self.id == value.id
@@ -20,6 +19,7 @@ class Event:
 
     def addAttendee(self, attendee_id):
         self.attendees[attendee_id] = 1
+        self.num_attendees += 1
     
     def hasAttendee(self, attendee_id):
         return self.attendees[attendee_id]

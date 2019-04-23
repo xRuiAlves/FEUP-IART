@@ -19,6 +19,8 @@ def main():
     print("\nRandom solution example:")
     s = Solution()
     print(s)
+    validity = str(s.isValid())
+    print("Is valid: " + validity)
 
 
 
