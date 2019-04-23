@@ -28,7 +28,19 @@ class Solution:
         return self.validStudentConstraint() and self.validRoomSizesConstraint()
 
     def validStudentConstraint(self):
-        return True
+        for s in ProblemData.students:
+            for timeslot_num in range(NUM_TIMESLOTS):
+                is_attending = False
+                for room_num in range(ProblemData.num_rooms): 
+                    event_num = self.solution[timeslot_num*ProblemData.num_rooms + room_num]
+                    if (s.attends(event_num)):
+                        if is_attending:    # Attending two events in same timeslot!!
+                            err = "\nError in timeslot {}:\nStudent {} is attending more than 1 event.".format(
+                                timeslot_num, s.id)
+                            print(err)
+                            return False 
+                        else:
+                            is_attending = True
 
     def validRoomSizesConstraint(self):
         for timeslot_num in range(NUM_TIMESLOTS):

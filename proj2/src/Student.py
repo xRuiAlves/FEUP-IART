@@ -12,5 +12,5 @@ class Student:
     def addEvent(self, event_id):
         self.events[event_id] = 1
     
-    def needsFeature(self, event_id):
+    def attends(self, event_id):
         return self.events[event_id]
