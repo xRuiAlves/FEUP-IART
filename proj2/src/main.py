@@ -20,17 +20,18 @@ def main():
         return 2
 
     # Generate a random solution (temporary)
-    print("\nRandom solution example:")
-    s = Solution()
-    print(s)
-    validity = s.isValid()
-    print("\nIs valid: " + str(validity))
+    print("\nGenerating solution until solution is valid . . .\n")
+    solution_is_valid = False
+    while not solution_is_valid:
+        s = Solution()
+        solution_is_valid = s.isValid()
 
-    if not validity:
-        return 2
+    print("\nGenerated Valid Solution:")
+    print(s)
+    print()
 
     penalty = s.penalty()
-    print("Soft constaints penalty: " + str(penalty))
+    print("\nSoft constaints penalty: " + str(penalty))
 
 
 

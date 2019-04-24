@@ -5,8 +5,8 @@ from Event import Event
 from Room import Room
 
 class ProblemData:
-    NUM_DAYS = 4
-    NUM_TIMESLOTS_PER_DAY = 3
+    NUM_DAYS = 3
+    NUM_TIMESLOTS_PER_DAY = 4
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
     students = []
     events = []
