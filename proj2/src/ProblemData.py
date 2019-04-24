@@ -5,8 +5,8 @@ from Event import Event
 from Room import Room
 
 class ProblemData:
-    NUM_DAYS = 3
-    NUM_TIMESLOTS_PER_DAY = 4
+    NUM_DAYS = 5
+    NUM_TIMESLOTS_PER_DAY = 9
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
     students = []
     events = []
@@ -29,7 +29,7 @@ class ProblemData:
 
         ProblemData.num_events_per_day = ProblemData.NUM_TIMESLOTS_PER_DAY * ProblemData.num_rooms
         
-        if (ProblemData.num_events > ProblemData.NUM_TIMESLOTS):
+        if (ProblemData.num_events > ProblemData.NUM_TIMESLOTS * ProblemData.num_rooms):
             sys.stderr.write("Error: Number of events ({}) is higher than the number of rooms multiplied by number of available timeslots ({}).".format(
                 ProblemData.num_events,
                 ProblemData.NUM_TIMESLOTS * ProblemData.num_rooms
