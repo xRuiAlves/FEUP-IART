@@ -1,4 +1,5 @@
 import random
+import math
 import numpy as np
 from ProblemData import ProblemData
 
@@ -31,6 +32,15 @@ class Solution:
     def mutate(self):
         for i in range(len(self.solution)):
             self.solution[i] = random.randint(0, ProblemData.NUM_TIMESLOTS*ProblemData.num_rooms - 1)
+
+    def crossover(self, other):
+        half_size = len(self.solution)/2
+        choice_list = ([0] * math.ceil(half_size)) + ([1] * math.floor(half_size))
+        random.shuffle(choice_list)
+        new_solution = []
+        for i in range(len(self.solution)):
+            new_solution.append(self.solution[i] if choice_list[i] else other.solution[i])
+        return new_solution
 
     def __str__(self):
         return "{}".format(self.solution)
