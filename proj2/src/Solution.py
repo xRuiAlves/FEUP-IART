@@ -28,6 +28,10 @@ class Solution:
         self.solution = list(sol)
         random.shuffle(self.solution)
 
+    def mutate(self):
+        for i in range(len(self.solution)):
+            self.solution[i] = random.randint(0, ProblemData.NUM_TIMESLOTS*ProblemData.num_rooms - 1)
+
     def __str__(self):
         return "{}".format(self.solution)
 

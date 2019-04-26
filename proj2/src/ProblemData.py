@@ -5,12 +5,18 @@ from Event import Event
 from Room import Room
 
 class ProblemData:
-    NUM_DAYS = 5
-    NUM_TIMESLOTS_PER_DAY = 9
+    NUM_DAYS = 3
+    NUM_TIMESLOTS_PER_DAY = 5
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
+    MUTATION_PROB = 0.2
+    ELITISM_FACTOR = None #TODO
+    GENERATION_SIZE = None #TODO
+    TOURNAMENT_SIZE = None #TODO
+
     students = []
     events = []
     rooms = []
+
     num_events = None
     num_rooms = None
     num_features = None
