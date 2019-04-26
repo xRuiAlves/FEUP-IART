@@ -35,7 +35,10 @@ class Generation:
 
     def getNextGeneration(self):
         new_population = []
-        for i in range(ProblemData.POPULATION_SIZE):
+        if (ProblemData.ELITISM_FACTOR > 0):
+            new_population = self.getBestN(ProblemData.ELITISM_FACTOR)
+            
+        for i in range(ProblemData.POPULATION_SIZE - ProblemData.ELITISM_FACTOR):
             parent1 = self.performTournament()
             parent2 = self.performTournament()
             child = parent1.crossover(parent2)
