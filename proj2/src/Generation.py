@@ -22,3 +22,23 @@ class Generation:
 
     def getBestN(self, n):
         return sorted(self.population, key=lambda solution: solution.fitness, reverse=True)[:n]
+
+    def getBest(self, solutions_list=None):
+        return max(solutions_list if solutions_list != None else self.population, key=lambda solution: solution.fitness)
+
+    def hasOptimal(self):
+        return self.getBest().fitness == 0
+
+    def performTournament(self):
+        tournament_sample = [self.population[random.randint(0, ProblemData.POPULATION_SIZE-1)] for i in range(ProblemData.TOURNAMENT_SIZE)] 
+        return self.getBest(tournament_sample)
+
+    def getNextGeneration(self):
+        new_population = []
+        for i in range(ProblemData.POPULATION_SIZE):
+            parent1 = self.performTournament()
+            parent2 = self.performTournament()
+            child = parent1.crossover(parent2)
+            child.mutate()
+            new_population.append(child)
+        return Generation(new_population)

@@ -29,8 +29,14 @@ def main():
     print("Generation population valid solutions:")
     print(Generation(gen.getValidSolutions()))
 
+    print("Generation best solution: ", end="")
+    print(gen.getBest())
+    print()
+
     print("Generation best 3 solutions:")
     print(Generation(gen.getBestN(3)))
+
+
 
 
 # Entry point

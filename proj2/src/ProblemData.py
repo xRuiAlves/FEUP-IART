@@ -11,7 +11,7 @@ class ProblemData:
     MUTATION_PROB = 0.2
     ELITISM_FACTOR = None #TODO
     POPULATION_SIZE = 20
-    TOURNAMENT_SIZE = None #TODO
+    TOURNAMENT_SIZE = 5
 
     students = []
     events = []
