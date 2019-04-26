@@ -21,6 +21,8 @@ class Solution:
         self.solution = solution
         if (len(self.solution) == 0):
             self.randomize()
+        self.is_valid = self.calculateValidity()
+        self.fitness = -self.penalty() if self.is_valid else float('-inf')
 
     def randomize(self):
         sol = set()
@@ -32,6 +34,7 @@ class Solution:
     def mutate(self):
         for i in range(len(self.solution)):
             self.solution[i] = random.randint(0, ProblemData.NUM_TIMESLOTS*ProblemData.num_rooms - 1)
+        self.fitness = -self.penalty()
 
     def crossover(self, other):
         half_size = len(self.solution)/2
@@ -40,13 +43,13 @@ class Solution:
         new_solution = []
         for i in range(len(self.solution)):
             new_solution.append(self.solution[i] if choice_list[i] else other.solution[i])
-        return new_solution
+        return Solution(new_solution)
 
     def __str__(self):
-        return "{}".format(self.solution)
+        return "{}, fitness={}".format(self.solution, self.fitness)
 
     # Verify if the solution respects all the Hard Constraints
-    def isValid(self):
+    def calculateValidity(self):
         return self.validStudentConstraint() and self.validRoomSizesConstraint() and self.repeatedEventConstraint()
 
     # Hard Constraint
@@ -63,8 +66,8 @@ class Solution:
                 if student.attends(event_num):
                     event_timeslot = self.solution[event_num]//ProblemData.num_rooms
                     if student_occupied_timeslots[event_timeslot]:
-                        print("\nError: Student {} can't participate in more than one event in timeslot {}.".format(
-                            student.id, event_timeslot))
+                        # print("\nError: Student {} can't participate in more than one event in timeslot {}.".format(
+                            # student.id, event_timeslot))
                         return False
                     student_occupied_timeslots[event_timeslot] = True
         return True
@@ -76,12 +79,12 @@ class Solution:
             room = ProblemData.rooms[self.solution[i] % ProblemData.num_rooms]
             event = ProblemData.events[i]
             if (event.num_attendees > room.size):
-                print("\nError in timeslot {}:\nEvent {} ({} attendees) can't take place in room {} (size {}).".format(
-                    timeslot_num, event_num, event.num_attendees, room_num, room.size))
+                # print("\nError in timeslot {}:\nEvent {} ({} attendees) can't take place in room {} (size {}).".format(
+                    # timeslot_num, event_num, event.num_attendees, room_num, room.size))
                 return False
             if not event.canTakePlaceInRoom(room):
-                print("\nError in timeslot {}:\nEvent {} can't take place in room {} due to incompatibility.".format(
-                    timeslot_num, event_num, event.num_attendees))
+                # print("\nError in timeslot {}:\nEvent {} can't take place in room {} due to incompatibility.".format(
+                    # timeslot_num, event_num, event.num_attendees))
                 return False
         return True
 
@@ -109,8 +112,8 @@ class Solution:
             only_1_class_count += events_per_day.count(1)
             consecutive_penalty += self.penaltyConsecutiveEvents(events_per_timeslot_per_day)
             
-        print("DBG::penaltySingleEventAndConcutiveEvents()::consecutive_penalty:: " + str(consecutive_penalty))
-        print("DBG::penaltySingleEventAndConcutiveEvents()::only_1_class_count:: " + str(only_1_class_count))
+        # print("DBG::penaltySingleEventAndConcutiveEvents()::consecutive_penalty:: " + str(consecutive_penalty))
+        # print("DBG::penaltySingleEventAndConcutiveEvents()::only_1_class_count:: " + str(only_1_class_count))
         return only_1_class_count
 
     # Soft constraint part -> Count the number of consecutive class blocks within each day
@@ -137,5 +140,5 @@ class Solution:
         for event_num in range(len(self.solution)):
             if (self.solution[event_num] % ProblemData.num_events_per_day in range(ProblemData.num_events_per_day - ProblemData.num_rooms, ProblemData.num_events_per_day)):
                 penalty += ProblemData.events[event_num].num_attendees
-        print("DBG::penaltyEndOfDayEvent():: " + str(penalty))
+        # print("DBG::penaltyEndOfDayEvent():: " + str(penalty))
         return penalty
