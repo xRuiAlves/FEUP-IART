@@ -20,24 +20,14 @@ def main():
         sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
         return 2
 
-    # Generate a random solution (temporary)
-    print("\nGenerating solution until solution is valid . . .\n")
-    solution_is_valid = False
-    while not solution_is_valid:
-        s = Solution()
-        solution_is_valid = s.isValid()
-
-    print("\nGenerated Valid Solution:")
-    print(s)
-    print()
-
-    penalty = s.penalty()
-    print("\nSoft constaints penalty: " + str(penalty))
-
-    print("\n-----------\n")
     print("Generating a random generation . . .")
     gen = Generation()
+
+    print("Generation:")
     print(gen)
+
+    print("Generation population valid solutions:")
+    print(Generation(gen.getValidSolutions()))
 
 
 # Entry point
