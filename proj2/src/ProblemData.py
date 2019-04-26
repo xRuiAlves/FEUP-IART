@@ -10,7 +10,7 @@ class ProblemData:
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
     MUTATION_PROB = 0.2
     ELITISM_FACTOR = None #TODO
-    GENERATION_SIZE = None #TODO
+    POPULATION_SIZE = 20
     TOURNAMENT_SIZE = None #TODO
 
     students = []

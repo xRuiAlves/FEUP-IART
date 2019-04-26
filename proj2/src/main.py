@@ -5,6 +5,7 @@ from Event import Event
 from Room import Room
 from ProblemData import ProblemData
 from Solution import Solution
+from Generation import Generation
 
 def main():
     if (len(sys.argv) < 2):
@@ -33,6 +34,10 @@ def main():
     penalty = s.penalty()
     print("\nSoft constaints penalty: " + str(penalty))
 
+    print("\n-----------\n")
+    print("Generating a random generation . . .")
+    gen = Generation()
+    print(gen)
 
 
 # Entry point
