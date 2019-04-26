@@ -19,3 +19,6 @@ class Generation:
 
     def getValidSolutions(self):
         return [solution for solution in self.population if solution.is_valid]
+
+    def getBestN(self, n):
+        return sorted(self.population, key=lambda solution: solution.fitness, reverse=True)[:n]
