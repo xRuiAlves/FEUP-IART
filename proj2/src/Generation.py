@@ -3,7 +3,8 @@ from Solution import Solution
 from ProblemData import ProblemData
 
 class Generation:
-    def __init__(self, population=None):
+    def __init__(self, population=None, number=1):
+        self.number = number
         if (population  == None):
             self.population = []
             self.randomize()
@@ -38,10 +39,14 @@ class Generation:
         if (ProblemData.ELITISM_FACTOR > 0):
             new_population = self.getBestN(ProblemData.ELITISM_FACTOR)
             
-        for i in range(ProblemData.POPULATION_SIZE - ProblemData.ELITISM_FACTOR):
-            parent1 = self.performTournament()
-            parent2 = self.performTournament()
-            child = parent1.crossover(parent2)
-            child.mutate()
-            new_population.append(child)
-        return Generation(new_population)
+        while (len(new_population) < ProblemData.POPULATION_SIZE):
+            new_population.append(self.generateSolution())
+            
+        return Generation(new_population,number=self.number+1)
+
+    def generateSolution(self):
+        parent1 = self.performTournament()
+        parent2 = self.performTournament()
+        child = parent1.crossover(parent2)
+        child.mutate()
+        return child

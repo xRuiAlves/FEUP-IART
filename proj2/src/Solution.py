@@ -1,6 +1,5 @@
 import random
 import math
-import numpy as np
 from ProblemData import ProblemData
 
 # TODO: Discuss
@@ -17,12 +16,13 @@ from ProblemData import ProblemData
 # event 2 is taking place in timeslot 3, in room number 1 (3*5 + 1 = 16)
 
 class Solution:
-    def __init__(self, solution=[]):
+    def __init__(self, solution=[], calc_fitness=True):
         self.solution = solution
         if (len(self.solution) == 0):
             self.randomize()
-        self.is_valid = self.calculateValidity()
-        self.fitness = -self.penalty() if self.is_valid else float('-inf')
+        if calc_fitness:
+            self.is_valid = self.calculateValidity()
+            self.fitness = -self.penalty() if self.is_valid else float('-inf')
 
     def randomize(self):
         sol = set()
@@ -31,10 +31,14 @@ class Solution:
         self.solution = list(sol)
         random.shuffle(self.solution)
 
+    def isOptimal(self):
+        return self.fitness == 0
+
     def mutate(self):
         for i in range(len(self.solution)):
             self.solution[i] = random.randint(0, ProblemData.NUM_TIMESLOTS*ProblemData.num_rooms - 1)
-        self.fitness = -self.penalty()
+        self.is_valid = self.calculateValidity()
+        self.fitness = -self.penalty() if self.is_valid else float('-inf')
 
     def crossover(self, other):
         half_size = len(self.solution)/2
@@ -43,7 +47,7 @@ class Solution:
         new_solution = []
         for i in range(len(self.solution)):
             new_solution.append(self.solution[i] if choice_list[i] else other.solution[i])
-        return Solution(new_solution)
+        return Solution(new_solution, calc_fitness=False)
 
     def __str__(self):
         return "{}, fitness={}".format(self.solution, self.fitness)
@@ -55,7 +59,7 @@ class Solution:
     # Hard Constraint
     # Verify if only one event is in each room at any timeslot.
     def repeatedEventConstraint(self):
-        return np.unique(self.solution).size == len(self.solution)
+        return len(set(self.solution)) == len(self.solution)
         
     # Hard Constraint
     # Verify if a student isn't "trying" to attend two different events in the same timeslot
