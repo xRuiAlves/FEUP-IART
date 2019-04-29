@@ -63,32 +63,35 @@ class Solution:
         
     # Hard Constraint
     # Verify if a student isn't "trying" to attend two different events in the same timeslot
-    def validStudentConstraint(self):
+    def validStudentConstraint(self, debug=False):
         for student in ProblemData.students:
             student_occupied_timeslots = [False] * ProblemData.NUM_TIMESLOTS
             for event_num in range(len(self.solution)):
                 if student.attends(event_num):
                     event_timeslot = self.solution[event_num]//ProblemData.num_rooms
                     if student_occupied_timeslots[event_timeslot]:
-                        # print("\nError: Student {} can't participate in more than one event in timeslot {}.".format(
-                            # student.id, event_timeslot))
+                        if debug:
+                            print("\nError: Student {} can't participate in more than one event in timeslot {}.".format(
+                                student.id, event_timeslot))
                         return False
                     student_occupied_timeslots[event_timeslot] = True
         return True
 
     # Hard Constraint
     # Verify if the rooms which the events were allocated to are big enough to hold the number of attendees of the event
-    def validRoomSizesConstraint(self):
+    def validRoomSizesConstraint(self, debug=False):
         for i in range(len(self.solution)):
             room = ProblemData.rooms[self.solution[i] % ProblemData.num_rooms]
             event = ProblemData.events[i]
             if (event.num_attendees > room.size):
-                # print("\nError in timeslot {}:\nEvent {} ({} attendees) can't take place in room {} (size {}).".format(
-                    # timeslot_num, event_num, event.num_attendees, room_num, room.size))
+                if debug:
+                    print("\nError:\nEvent {} ({} attendees) can't take place in room {} (size {}).".format(
+                        event.id, event.num_attendees, room.id, room.size))
                 return False
             if not event.canTakePlaceInRoom(room):
-                # print("\nError in timeslot {}:\nEvent {} can't take place in room {} due to incompatibility.".format(
-                    # timeslot_num, event_num, event.num_attendees))
+                if debug:
+                    print("\nError:\nEvent {} can't take place in room {} due to incompatibility.".format(
+                        event.id, event.num_attendees))
                 return False
         return True
 
@@ -100,7 +103,7 @@ class Solution:
     # Computes 2 soft constraints: 
     # 1) Count the number of times each student has a single class in each of the days
     # 2) Count the number of consecutive class blocks within each day and compute its penalty
-    def penaltySingleEventAndConcutiveEvents(self):
+    def penaltySingleEventAndConcutiveEvents(self, debug=False):
         only_1_class_count = 0
         consecutive_penalty = 0
         for student in ProblemData.students:
@@ -115,9 +118,10 @@ class Solution:
                     events_per_timeslot_per_day[event_day][timeslot_in_day] += 1
             only_1_class_count += events_per_day.count(1)
             consecutive_penalty += self.penaltyConsecutiveEvents(events_per_timeslot_per_day)
-            
-        # print("DBG::penaltySingleEventAndConcutiveEvents()::consecutive_penalty:: " + str(consecutive_penalty))
-        # print("DBG::penaltySingleEventAndConcutiveEvents()::only_1_class_count:: " + str(only_1_class_count))
+
+        if debug:   
+            print("DBG::penaltySingleEventAndConcutiveEvents()::consecutive_penalty:: " + str(consecutive_penalty))
+            print("DBG::penaltySingleEventAndConcutiveEvents()::only_1_class_count:: " + str(only_1_class_count))
         return only_1_class_count
 
     # Soft constraint part -> Count the number of consecutive class blocks within each day
@@ -139,10 +143,11 @@ class Solution:
     # Soft Constraint
     # Count the number of occurrences of a student attending an event in the last timeslot of the day (number of attendees of each 
     # event that takes place in the last timeslot of each day)
-    def penaltyEndOfDayEvent(self):
+    def penaltyEndOfDayEvent(self, debug=False):
         penalty = 0
         for event_num in range(len(self.solution)):
             if (self.solution[event_num] % ProblemData.num_events_per_day in range(ProblemData.num_events_per_day - ProblemData.num_rooms, ProblemData.num_events_per_day)):
                 penalty += ProblemData.events[event_num].num_attendees
-        # print("DBG::penaltyEndOfDayEvent():: " + str(penalty))
+        if debug:
+            print("DBG::penaltyEndOfDayEvent():: " + str(penalty))
         return penalty
