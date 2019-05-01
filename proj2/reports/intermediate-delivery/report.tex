@@ -41,7 +41,7 @@ TODO: Abstract
 \end{abstract}
 
 \begin{IEEEkeywords}
-Artificial Intelligence, Scheduling Problems, Optimization Problems, Optimization algorithms, Hill climbing, Simulated annealing, Genetic Algorithms
+Artificial Intelligence, Scheduling Problems, Optimization Problems, Optimization algorithms, Hill climbing, Simulated annealing, Genetic Algorithms, Python3, Pypy
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -79,7 +79,80 @@ The soft constraints are used to evaluate the quality of a valid solution (a sol
 
 \section{Problem Formulation}
 
-TODO: Problem Formulation
+The given scheduling problem can be formulated as an optimization problem, in which the goal is to minimize the penalty of the given solution (or to maximize the symmetrical of the penalty).
+
+\subsection{Solution Representation}
+
+The optimization problem will be solved using different algorithms, such as Hill climbing and Genetic algorithms. To do so, the solution representation should allow an efficient way to be evaluated and manipulated (mutated and crossed over). 
+
+For this reason, a solution consists in an array with size equal to the number of events to be allocated. The array's index represents the id of the event. The array value in that index contains a number representing the \textbf{timeslot identifier}. This number consists in the sum between the room number (between 0 and the number of available rooms - 1) and the timeslot number (between 0 and 44) multiplied by the number of available rooms. Example:
+
+Assuming that there are 2 days with 3 timeslots each (6 timeslots total). There are 5 different rooms. There are 3 events to be allocated and a possible solution is represented by the array [8, 25, 16]. The solution is interpreted in the following way:
+
+\begin{itemize}
+    \item Event 0 was assigned timeslot identifier 8. The timeslot number is equal to 8 divided by the number of available rooms (8 / 5 = 1). The room number is equal to the remainder of 8 divided by the number of available rooms (8 \% 5 = 3).
+    \item Event 1 was assigned timeslot identifier 25. The timeslot number is equal to 25 divided by the number of available rooms (25 / 5 = 5). The room number is equal to the remainder of 25 divided by the number of available rooms (25 \% 5 = 0).
+    \item Event 2 was assigned timeslot identifier 16. The timeslot number is equal to 16 divided by the number of available rooms (16 / 5 = 3). The room number is equal to the remainder of 16 divided by the number of available rooms (16 \% 5 = 1).
+\end{itemize}
+
+This representation may be easily evaluted and may also be easily manipulated (both mutated and crossed over).
+
+\subsection{Data Representation}
+
+In order to represent the problem's data (that is obtained by parsing a given input file, which follows a format as specified in the problem's specification website \textbf{\textit{INSERIR REF}}), an object-oriented approach is being used, being that all of the input entities (Events, Rooms and Students) are represented by different classes.
+
+An event is composed by the following attributes:
+\begin{itemize}
+    \item The event's id number
+    \item An boolean array of required features, which has size equal to the total number of existing features. Each index is assigned the value of 1 (true) if the event needs that features and 0 otherwise.
+    \item A boolean array of attending students, which has size equal to the total number of students. Each index is assigned the value of 1 (true) if the student is attending that event.
+    \item A numeric variable containing the number of students that are attending the event (in order to access the number of attendees in constant time instead of traversing the attendance array)
+\end{itemize}
+
+\subsubsection{Events}
+
+An event is composed by the following attributes:
+\begin{itemize}
+    \item The event's id number
+    \item A boolean array of required features, which has size equal to the total number of existing features. Each index is assigned the value of 1 (true) if the event needs that feature and 0 otherwise.
+    \item A boolean array of attending students, which has size equal to the total number of students. Each index is assigned the value of 1 (true) if the student is attending that event.
+    \item A numeric variable containing the number of students that are attending the event (in order to access the number of attendees in constant time instead of traversing the attendance array)
+\end{itemize}
+
+\subsubsection{Rooms}
+
+A room is composed by the following attributes:
+\begin{itemize}
+    \item The rooms's id number
+    \item A boolean array of the features the room possesses, which has size equal to the total number of existing features. Each index is assigned the value of 1 (true) if the room possesses that feature and 0 otherwise.
+    \item The room's size
+\end{itemize}
+
+\subsubsection{Students}
+
+A student is composed by the following attributes:
+\begin{itemize}
+    \item The student's id number
+    \item An boolean array of the events the student is attending, which has size equal to the total number of existing events. Each index is assigned the value of 1 (true) if the student is attending that event and 0 otherwise.
+    \item The room's size
+\end{itemize}
+
+\subsection{Solution neighbor states}
+
+In order to solve this optimization problem using the Hill climbing and Simulated annealing algorithms, the concept of a solution's (state) neighbor states has to be defined.
+
+Using the representation that was described in the previous subsection, a neighbor is a state where one of the event's (and only one) is assigned a different timeslot identifier (if more than one event's timeslot identifier is allowed to be changed, the evaluation process would decay into brute-force computation). For example:
+
+Assuming that there are 2 events and 3 timeslot identifiers (between 0 and 2. Only one room is available, only one day will be used with three active hours). If a given solution was [0, 0], the neighbor states would be [1, 0], [2, 0], [0, 1] and [0, 2]. Note that [2, 1], [1, 2] and [2, 2] are \textbf{not} valid neighbor states because more than one of the event's assigned timeslot identifier needs to be changed to achieve such states.
+
+\subsection{Genetic Algorithm Approach}
+
+In order to solve this optimization problem using Genetic Algorithms, a set of input variables are manipulated: The population size of each of the generations, the probability of a mutation ocurring in a solution, the tournament size (given the fact that the tournament is being applied in the selection process of the algorithm) and the number of elite solutions that are preserved between generations.
+
+A generation consists in an array of solutions, with size equal to the generation's population size.
+
+The process of generating a new generation assures that the population size remais constant between generations. Given that fact, in order to generate a solution, two parents are selected from the current generation using the tournament method (that is, a random subset with a given size is extracted from the population and evaluated, choosing the best individual of that subset). The parents are then crossed over in order to generate a child solution, that has a probability of being mutated. This process is repeated until the number of individuals in the new generation is equal to the previous one (note that if elites are being preserved, this process may occur a smaller number of times).
+
 
 \section{Related Work}
 
