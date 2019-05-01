@@ -50,7 +50,36 @@ TODO: Introduction
 
 \section{Problem Description}
 
-TODO: Problem Description
+The \textit{Timetabling Problem} that is subject of study in this project was designd by Ben Paechter, a professor in the Edinburgh University and consists in a reduction of a typical university course timetabling problem.
+
+In this problem, a given set of events has to be scheduled into one hour timeslots, over the course of 5 days with 9 hours of active time each (totaling 45 timeslots). The events take place in a given set of rooms, each with its own size (number of sets), and require certain features (which may or not be available in a room). The students attend a given set of these events. 
+
+The goal is to assign the events to the available rooms, in a such a way that the given \textbf{Hard Constraints} are respected and that the given \textbf{Soft Constraints} are as respected as possible. A given proposed solution is assigned a certain penalty based on the constraints that are not being respected. The optimal solution (if existent for a given input) has a penalty of 0.
+
+\subsection{Hard Constraints}
+
+The hard constraints must be respected by any solution. If any of them are not respected, a penalty of value equal to infinity is assigned to the solution, being them the following:
+
+\begin{itemize}
+    \item Only one event can take place in a room at any given timeslot
+    \item A student can only attend one event at the same time
+    \item The room must be big enough for all the student that are attending the event
+    \item The room must satisfy all the features that are required for the event
+\end{itemize}
+
+\subsection{Soft Constraints}
+
+The soft constraints are used to evaluate the quality of a valid solution (a solution that respects all the hard constraints), assigning a penalty based on that quality. The assigned penalty is equal to the sum of the penalties of each soft constraint constraint violation, being them the following: 
+
+\begin{itemize}
+    \item A student attends an event in the last timeslot of the day. For each student that only attends an event in a given day, a penalty of value 1 is assigned.
+    \item A student attends more than two events consecutively. For each consecutively attended event (above 2), a penalty of value 1 is assigned (e.g. 3 consecutive events result in a penalty of 1, 4 consecutive events result in a penalty of 2, an so on). 
+    \item A student has a single class on a day. For each student that attends only one event in a given day, a penalty of 1 is assigned.
+\end{itemize}
+
+\section{Problem Formulation}
+
+TODO: Problem Formulation
 
 \section{Related Work}
 
