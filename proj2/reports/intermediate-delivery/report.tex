@@ -137,6 +137,8 @@ A student is composed by the following attributes:
     \item The room's size
 \end{itemize}
 
+The usage of the boolean array data structure to represent the described attribute allows for data access in constant time, which makes the constraints verification and penalty calculation an efficient process. 
+
 \subsection{Solution neighbor states}
 
 In order to solve this optimization problem using the Hill climbing and Simulated annealing algorithms, the concept of a solution's (state) neighbor states has to be defined.
@@ -160,7 +162,18 @@ TODO: Related Work
 
 \section{Conclusions and Future Work}
 
-TODO: Conclusions and Future Work
+As of yet, the problem has been completely formalized - it has been formally described, and formulated as an optimization problem (a Solution representation has been specified and the chosen data structures to store that input data have been stated).
+
+The chosen programming language to developed the solving algorithms was Python3.
+
+In order to study the best possible approach for solving the \textit{Scheduling Problem}, the following algorithms will be the subject of various tests:
+\begin{itemize}
+    \item Hill Climbing
+    \item Simulated Annealing
+    \item Genetic Algorithms
+\end{itemize}
+
+In order to evaluate the implemented algorithms, they will be assessed both in terms of the achieved solution's quality and in terms of the algorithm's performance, measuring the execution time to reach the optimal solution (if existant). When it comes to space efficiency, in the Hill climbing and Simulated annealing algorithms the number of evaluated states will be taken into account and in the Genetic Algorithm the number of generations will be analyzed.
 
 \begin{thebibliography}{00}
     
