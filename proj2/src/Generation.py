@@ -25,7 +25,7 @@ class Generation:
         return sorted(self.population, key=lambda solution: solution.fitness, reverse=True)[:n]
 
     def getBest(self, solutions_list=None):
-        return max(solutions_list if solutions_list != None else self.population, key=lambda solution: solution.fitness)
+        return max(solutions_list if solutions_list is not None else self.population, key=lambda solution: solution.fitness)
 
     def hasOptimal(self):
         return self.getBest().fitness == 0
