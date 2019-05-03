@@ -87,7 +87,7 @@ The given scheduling problem can be formulated as an optimization problem, in wh
 
 \subsection{Solution Representation}
 
-The optimization problem will be solved using different algorithms, such as Hill climbing and Genetic algorithms. To do so, the solution representation should provide efficient methods for evaluation and manipulation (mutations and cross-over).
+The optimization problem will be solved using different algorithms, such as \textit{Hill Climbing} and \textit{Genetic Algorithms}. Thus, the solution representation should provide efficient methods for evaluation and manipulation (mutations and cross-over).
 
 For this reason, a solution consists in an array with size equal to the number of events to be allocated. The array's index represents the id of the event. The array value in that index contains a number representing the \textbf{time slot identifier}. This number consists in the sum between the room number (between 0 and the number of available rooms - 1) and the time slot number (between 0 and 44) multiplied by the number of available rooms. Example:
 
@@ -99,27 +99,19 @@ Assuming that there are 2 days with 3 time slots each (6 time slots total). Ther
     \item Event 2 was assigned time slot identifier 16. The time slot number is equal to 16 divided by the number of available rooms (16 / 5 = 3). The room number is equal to the remainder of 16 divided by the number of available rooms (16 \% 5 = 1).
 \end{itemize}
 
-This representation may be easily evaluated and may also be easily manipulated (both mutated and crossed over).
+This representation can be easily evaluted and manipulated (both mutated and crossed over).
 
 \subsection{Data Representation}
 
-In order to represent the problem's data (that is obtained by parsing a given input file, which follows a format as specified in the problem's specification website \textbf{\textit{INSERIR REF}}), an object-oriented approach is being used, being that all of the input entities (Events, Rooms and Students) are represented by different classes.
-
-An event is composed by the following attributes:
-\begin{itemize}
-    \item The event's id number
-    \item An boolean array of required features, which has size equal to the total number of existing features. Each index is assigned the value of 1 (true) if the event needs that features and 0 otherwise.
-    \item A boolean array of attending students, which has size equal to the total number of students. Each index is assigned the value of 1 (true) if the student is attending that event.
-    \item A numeric variable containing the number of students that are attending the event (in order to access the number of attendees in constant time instead of traversing the attendance array)
-\end{itemize}
+In order to represent the problem's data (that is obtained by parsing a given input file, which follows a format as specified in the problem's specification website \textbf{\textit{INSERIR REF}}), an object-oriented approach is being used, being that all of the problem's entities (Events, Rooms and Students) are represented by different classes.
 
 \subsubsection{Events}
 
-An event is composed by the following attributes:
+An event is composed of the following attributes:
 \begin{itemize}
     \item The event's id number
-    \item A boolean array of required features, which has size equal to the total number of existing features. Each index is assigned the value of 1 (true) if the event needs that feature and 0 otherwise.
-    \item A boolean array of attending students, which has size equal to the total number of students. Each index is assigned the value of 1 (true) if the student is attending that event.
+    \item An boolean array of required features, which has size equal to the total number of existing features. Each index is assigned the value of true if the event needs that feature and false otherwise.
+    \item A boolean array of attending students, which has size equal to the total number of students. Each index is assigned the value of true if the student is attending that event, being false otherwise.
     \item A numeric variable containing the number of students that are attending the event (in order to access the number of attendees in constant time instead of traversing the attendance array)
 \end{itemize}
 
@@ -127,8 +119,8 @@ An event is composed by the following attributes:
 
 A room is composed by the following attributes:
 \begin{itemize}
-    \item The room's id number
-    \item A boolean array of the features the room possesses, which has size equal to the total number of existing features. Each index is assigned the value of 1 (true) if the room possesses that feature and 0 otherwise.
+    \item The rooms's id number
+    \item A boolean array of the features the room possesses, which has size equal to the total number of existing features. Each index is assigned the value of true if the room possesses that feature and false otherwise.
     \item The room's size
 \end{itemize}
 
@@ -137,11 +129,11 @@ A room is composed by the following attributes:
 A student is composed by the following attributes:
 \begin{itemize}
     \item The student's id number
-    \item An boolean array of the events the student is attending, which has size equal to the total number of existing events. Each index is assigned the value of 1 (true) if the student is attending that event and 0 otherwise.
-    \item The room's size
+    \item An boolean array of the events the student is attending, which has size equal to the total number of existing events. Each index is assigned the value of true if the student is attending that event and false otherwise.
+    \item The room's size \large Diria que n\~ao \'e isto, TODO: Fix
 \end{itemize}
 
-The usage of the boolean array data structure to represent the described attribute allows for data access in constant time, which makes the constraints verification and penalty calculation an efficient process. 
+The usage of the boolean array data structure to represent the described attributes allows data access in constant time, which makes the verification of constraints and calculation of penalties an efficient process.
 
 \subsection{Solution neighbor states}
 
