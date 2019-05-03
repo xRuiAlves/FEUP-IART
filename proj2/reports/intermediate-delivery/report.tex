@@ -162,7 +162,11 @@ The process of generating a new generation assures that the population size rema
 
 \section{Related Work}
 
-TODO: Related Work
+Scheduling problems are extremely prevalent in computer science to help address problems in a variety of areas where some limited resource needs to be distributed over a number of users.
+
+One such resource can be the access to airport docks and runways, this scheduling problem has the additional difficulty of having to provide real time updates. The paper by V. Ciesielski and P. Scerri \cite{air} tries to solve this problem by employing a genetic algorithm that provides real time solution and takes advantage of previously generated populations when the requirements of the solution change (a departure or a new request for landing changes the solution's requirements).
+
+Although the problem tackled by this report is suitable for a genetic approach, the participants of the 1st International Timetabling Competition choose to use optimization algorithms, such as Tabu Search \cite{sol2} or Simulated Annealing\cite{sol1}, in combination with a series of defined heuristics and an heuristics based method of generating the initial assignment. 
 
 \section{Conclusions and Future Work}
 
@@ -181,11 +185,11 @@ In order to evaluate the implemented algorithms, they will be assessed both in t
 
 \begin{thebibliography}{00}
     
-\bibitem{b1} "Unblock me FREE.". Google Play. February 28, 2019.\href{https://play.google.com/store/apps/details?id=com.kiragames.unblockmefree}{https://play.google.com/store/apps/details?id=com.kiragames.unblo\\ckmefree}.
-\bibitem{b2} Fogleman, Michael. "Solving Rush Hour, the Puzzle.". July, 2018. \href{https://www.michaelfogleman.com/rush/}{https://www.michaelfogleman.com/rush/}.
-\bibitem{b3} "Bitboard.". Wikipedia - The free Encyclopedia. December 6, 2018. \href{https://en.wikipedia.org/wiki/Bitboard}{https://en.wikipedia.org/wiki/Bitboard}.
-\bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. \href{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/}{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments\\/programs/rushhour/}.
-\bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. \href{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}.
+\bibitem{air}{V. Ciesielski and P. Scerri, "Real time genetic scheduling of aircraft landing times," 1998 IEEE International Conference on Evolutionary Computation Proceedings. IEEE World Congress on Computational Intelligence (Cat. No.98TH8360), Anchorage, AK, USA, 1998, pp. 360-364.}
+
+\bibitem{sol1}{Philipp Kostuch, "Timetabling Competition - SA-based Heuristic" in 1st International Timetabling Competition, January 2003.}
+
+\bibitem{sol2}{Halvard Arntzen, Arne Lokketangen, "A local search heuristic for a university timetabling problem" in 1st International Timetabling Competition, January 2003}
 
 \end{thebibliography}
 
