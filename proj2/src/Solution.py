@@ -16,13 +16,13 @@ from ProblemData import ProblemData
 # event 2 is taking place in timeslot 3, in room number 1 (3*5 + 1 = 16)
 
 class Solution:
-    def __init__(self, solution=[], calc_fitness=True):
+    def __init__(self, solution=[]):
         self.solution = solution
         if (len(self.solution) == 0):
-            self.randomize()
-        if calc_fitness:
-            self.is_valid = self.calculateValidity()
-            self.fitness = -self.penalty() if self.is_valid else float('-inf')
+            self.randomize()    
+        self.is_valid = self.calculateValidity()
+        self.penalty = self.calcPenalty()
+        self.fitness = 1/(self.penalty+1) if self.is_valid else 0
 
     def randomize(self):
         sol = set()
@@ -32,25 +32,33 @@ class Solution:
         random.shuffle(self.solution)
 
     def isOptimal(self):
-        return self.fitness == 0
+        return self.fitness == 1
 
     def mutate(self):
         for i in range(len(self.solution)):
             self.solution[i] = random.randint(0, ProblemData.NUM_TIMESLOTS*ProblemData.num_rooms - 1)
         self.is_valid = self.calculateValidity()
-        self.fitness = -self.penalty() if self.is_valid else float('-inf')
+        self.penalty = self.calcPenalty()
+        self.fitness = 1/(self.penalty+1) if self.is_valid else 0
 
-    def crossover(self, other):
-        half_size = len(self.solution)/2
+    @staticmethod
+    def crossover(s1, s2):
+        half_size = len(s1.solution)/2
         choice_list = ([0] * math.ceil(half_size)) + ([1] * math.floor(half_size))
         random.shuffle(choice_list)
-        new_solution = []
-        for i in range(len(self.solution)):
-            new_solution.append(self.solution[i] if choice_list[i] else other.solution[i])
-        return Solution(new_solution, calc_fitness=False)
+        child1 = []
+        child2 = []
+        for i in range(len(s1.solution)):
+            if (choice_list[i]):
+                child1.append(s1.solution[i])
+                child2.append(s2.solution[i])
+            else:
+                child1.append(s2.solution[i])
+                child2.append(s1.solution[i])
+        return [Solution(child1), Solution(child2)]
 
     def __str__(self):
-        return "{}, fitness={}".format(self.solution, self.fitness)
+        return "{}\tpenalty={}, fitness={}".format(self.solution, self.penalty, self.fitness)
 
     # Verify if the solution respects all the Hard Constraints
     def calculateValidity(self):
@@ -96,7 +104,7 @@ class Solution:
         return True
 
     # Verify solution Soft Constraints and compute the amount of penalty for the ones that are not respected
-    def penalty(self):
+    def calcPenalty(self):
         return  self.penaltySingleEventAndConcutiveEvents() + self.penaltyEndOfDayEvent()
 
     # Soft Constraint

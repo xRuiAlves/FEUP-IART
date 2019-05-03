@@ -8,10 +8,9 @@ class ProblemData:
     NUM_DAYS = 5
     NUM_TIMESLOTS_PER_DAY = 9
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
-    MUTATION_PROB = 0.2
+    MUTATION_PROB = 0.1
     ELITISM_FACTOR = 5
-    POPULATION_SIZE = 100
-    TOURNAMENT_SIZE = 10
+    POPULATION_SIZE = 50
 
     students = []
     events = []

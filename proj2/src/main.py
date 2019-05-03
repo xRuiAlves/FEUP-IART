@@ -20,18 +20,17 @@ def main():
         sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
         return 2
 
-    print("\nGenerating a random generation . . .")
+    print("\nGenerating a random generation . . .\n")
     gen = Generation()
-
-    print("Starting to genetic algorith . . .")
     best = gen.getBest()
-    while not best.isOptimal():
-        print("Generation no. {}, best fitness={}.".format(gen.number, best.fitness))
+    print(best)
+
+    while best.fitness != 1:
         gen = gen.getNextGeneration()
         best = gen.getBest()
+        print(best)
 
-    print("\nFound optimal in generation no. {}.\nSolution: {}.\n".format(gen.number, best))
-
+    print("Found solution in generation " + str(gen.number))
 
 
 
