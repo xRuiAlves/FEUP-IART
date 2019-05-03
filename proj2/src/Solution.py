@@ -43,18 +43,9 @@ class Solution:
 
     @staticmethod
     def crossover(s1, s2):
-        half_size = len(s1.solution)/2
-        choice_list = ([0] * math.ceil(half_size)) + ([1] * math.floor(half_size))
-        random.shuffle(choice_list)
-        child1 = []
-        child2 = []
-        for i in range(len(s1.solution)):
-            if (choice_list[i]):
-                child1.append(s1.solution[i])
-                child2.append(s2.solution[i])
-            else:
-                child1.append(s2.solution[i])
-                child2.append(s1.solution[i])
+        mid_point = random.randint(0, ProblemData.num_events)
+        child1 = s1.solution[0:mid_point] + s2.solution[mid_point:ProblemData.num_events]
+        child2 = s2.solution[0:mid_point] + s1.solution[mid_point:ProblemData.num_events]
         return [Solution(child1), Solution(child2)]
 
     def __str__(self):
