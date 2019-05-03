@@ -109,7 +109,7 @@ This representation can be easily evaluted and manipulated (both mutated and cro
 
 \subsection{Data Representation}
 
-In order to represent the problem's data (that is obtained by parsing a given input file, which follows a format as specified in the problem's specification website \textbf{\textit{INSERIR REF}}), an object-oriented approach is being used, being that all of the problem's entities (Events, Rooms and Students) are represented by different classes.
+In order to represent the problem's data (that is obtained by parsing a given input file, which follows a format as specified in the problem's specification website), an object-oriented approach is being used, being that all of the problem's entities (Events, Rooms and Students) are represented by different classes.
 
 \subsubsection{Events}
 
@@ -136,7 +136,6 @@ A student is composed by the following attributes:
 \begin{itemize}
     \item The student's id number
     \item An boolean array of the events the student is attending, which has size equal to the total number of existing events. Each index is assigned the value of true if the student is attending that event and false otherwise.
-    \item The room's size \large Diria que n\~ao \'e isto, TODO: Fix
 \end{itemize}
 
 The usage of the boolean array data structure to represent the described attributes allows data access in constant time, which makes the verification of constraints and calculation of penalties an efficient process.
@@ -151,11 +150,11 @@ Assuming that there are 2 events and 3 time slot identifiers (between 0 and 2. O
 
 \subsection{Genetic Algorithm Approach}
 
-In order to solve this optimization problem using \textit{Genetic Algorithms}, a set of input variables are manipulated: The population size of each of the generations, the probability of a mutation occurring in a solution, the tournament size (given the fact that the tournament is being applied in the selection process of the algorithm) and the number of elite solutions that are preserved between generations.
+In order to solve this optimization problem using \textit{Genetic Algorithms}, a set of input variables are manipulated: The population size of each of the generations, the probability of a mutation occurring in a solution and the number of elite solutions that are preserved between generations.
 
 A generation consists in an array of solutions, with size equal to the generation's population size.
 
-The process of producing a new generation ensures that the population size remains constant between generations. Given that fact, in order to generate a new solution, two parents are selected from the current generation using the tournament method (that is, a random subset with a given size is extracted from the population and evaluated, choosing the best individual of that subset). The parents are then crossed over in order to generate a child solution, that has a probability of being mutated. This process is repeated until the number of individuals in the new generation is equal to the previous one (note that if elites are being preserved, this process may occur a smaller number of times).
+The process of producing a new generation ensures that the population size remains constant between generations. Given that fact, in order to generate a new solution, all the population's solutions fitness is computed. Using that fitness, a probability of being chosen is assigned to each solution (for the selection process), being that probability proportional to how good the solution is. A set of numbers equal to the population's size is randomly generated in order to decide which solutions will be chosen to generate the next generation (according to the probability assigned to each solution). The chosen solutions are then randomly combined in pairs, generating two new children solutions that may or may not be mutated. This process is repeated until the new generation is complete.
 
 \section{Related Work}
 
