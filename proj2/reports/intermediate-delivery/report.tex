@@ -135,9 +135,9 @@ A student is composed by the following attributes:
 
 The usage of the boolean array data structure to represent the described attributes allows data access in constant time, which makes the verification of constraints and calculation of penalties an efficient process.
 
-\subsection{Solution neighbor states}
+\subsection{Solution Neighbor States}
 
-In order to solve this optimization problem using the Hill climbing and Simulated annealing algorithms, the concept of a solution's (state) neighbor states has to be defined.
+In order to solve this optimization problem using the \textit{Hill Climbing} and \textit{Simulated Annealing} algorithms, the concept of a solution's (state) \textbf{Neighbor States} has to be defined.
 
 Using the representation that was described in the previous subsection, a neighbor is a state where one of the event's (and only one) is assigned a different time slot identifier (if more than one event's time slot identifier is allowed to be changed, the evaluation process would decay into brute-force computation). For example:
 
@@ -145,20 +145,19 @@ Assuming that there are 2 events and 3 time slot identifiers (between 0 and 2. O
 
 \subsection{Genetic Algorithm Approach}
 
-In order to solve this optimization problem using Genetic Algorithms, a set of input variables are manipulated: The population size of each of the generations, the probability of a mutation occurring in a solution, the tournament size (given the fact that the tournament is being applied in the selection process of the algorithm) and the number of elite solutions that are preserved between generations.
+In order to solve this optimization problem using \textit{Genetic Algorithms}, a set of input variables are manipulated: The population size of each of the generations, the probability of a mutation occurring in a solution, the tournament size (given the fact that the tournament is being applied in the selection process of the algorithm) and the number of elite solutions that are preserved between generations.
 
 A generation consists in an array of solutions, with size equal to the generation's population size.
 
-The process of generating a new generation assures that the population size remains constant between generations. Given that fact, in order to generate a solution, two parents are selected from the current generation using the tournament method (that is, a random subset with a given size is extracted from the population and evaluated, choosing the best individual of that subset). The parents are then crossed over in order to generate a child solution, that has a probability of being mutated. This process is repeated until the number of individuals in the new generation is equal to the previous one (note that if elites are being preserved, this process may occur a smaller number of times).
-
+The process of producing a new generation ensures that the population size remains constant between generations. Given that fact, in order to generate a new solution, two parents are selected from the current generation using the tournament method (that is, a random subset with a given size is extracted from the population and evaluated, choosing the best individual of that subset). The parents are then crossed over in order to generate a child solution, that has a probability of being mutated. This process is repeated until the number of individuals in the new generation is equal to the previous one (note that if elites are being preserved, this process may occur a smaller number of times).
 
 \section{Related Work}
 
 Scheduling problems are extremely prevalent in computer science to help address problems in a variety of areas where some limited resource needs to be distributed over a number of users.
 
-One such resource can be the access to airport docks and runways, this scheduling problem has the additional difficulty of having to provide real time updates. The paper by V. Ciesielski and P. Scerri \cite{air} tries to solve this problem by employing a genetic algorithm that provides real time solution and takes advantage of previously generated populations when the requirements of the solution change (a departure or a new request for landing changes the solution's requirements).
+One such resource can be the access to airport docks and runways - This scheduling problem has the additional difficulty of having to provide real time updates. The paper by V. Ciesielski and P. Scerri \cite{air} tries to solve this problem by employing a genetic algorithm that provides real time solutions and takes advantage of previously generated populations when the requirements of the solution change (a departure or a new request for landing changes the solution's requirements).
 
-Although the problem tackled by this report is suitable for a genetic approach, the participants of the 1st International Timetabling Competition choose to use optimization algorithms, such as Tabu Search \cite{sol2} or Simulated Annealing\cite{sol1}, in combination with a series of defined heuristics and an heuristics based method of generating the initial assignment. 
+Although the problem tackled by this report is suitable for a genetic approach, the participants of the 1st International Timetabling Competition chose to use optimization algorithms, such as Tabu Search \cite{sol2} or Simulated Annealing\cite{sol1}, in combination with a series of defined heuristics and an heuristics based method of generating the initial assignment. 
 
 \section{Conclusions and Future Work}
 
