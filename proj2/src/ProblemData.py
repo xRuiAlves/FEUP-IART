@@ -8,9 +8,13 @@ class ProblemData:
     NUM_DAYS = 5
     NUM_TIMESLOTS_PER_DAY = 9
     NUM_TIMESLOTS = NUM_DAYS * NUM_TIMESLOTS_PER_DAY
+
     MUTATION_PROB = 0.1
     ELITISM_FACTOR = 5
     POPULATION_SIZE = 50
+
+    ANNEALING_INITIAL_PROB = 0.7
+    ANNEALING_PROB_STEP = 0.02
 
     students = []
     events = []

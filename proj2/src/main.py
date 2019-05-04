@@ -1,5 +1,6 @@
 import sys
 import time
+import random
 
 from Student import Student
 from Event import Event
@@ -83,7 +84,30 @@ def hillClimbing():
     return
 
 def simulatedAnnealing():
-    print("\nTODO\n")
+    print("\nStarting Simulated Annealing algorithm . . .\n")
+
+    solution = Solution()
+    annealing_prob = ProblemData.ANNEALING_INITIAL_PROB
+    while not solution.isOptimal():
+        old_fitness = solution.fitness
+        print(solution)
+
+        if (random.random() < annealing_prob):
+            neighbors = solution.getNeighborStates()
+            solution = neighbors[random.randint(0, len(neighbors) - 1)]
+        else:
+            solution = solution.getBestNeighbor()
+        
+        new_fitness = solution.fitness
+
+        if annealing_prob <= 0 and new_fitness <= old_fitness:
+            print("\nCould not improve solution, local maximum reached.")        
+            return
+
+        annealing_prob -= ProblemData.ANNEALING_PROB_STEP
+
+    print("\nFound optimal solution:")
+    print(solution)
     return
 
 # Entry point
