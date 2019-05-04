@@ -1,4 +1,5 @@
 import sys
+import time
 
 from Student import Student
 from Event import Event
@@ -20,7 +21,36 @@ def main():
         sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
         return 2
 
-    print("\nGenerating a random generation . . .\n")
+    print("--------------------------------------")
+    print("---  Timetable Scheduling Problem  ---")
+    print("--------------------------------------\n")
+    print("1. Genetic Algorithm")
+    print("2. Hill Climbing")
+    print("3. Simulated Annealing\n")
+
+    while True:
+        try:
+            option = int(input("Choose the desired algorithm: "))
+            if option in [1, 2, 3]:
+                break
+        except ValueError:
+            continue
+    
+    t1 = time.time()
+
+    if option == 1:
+        geneticAlgorithm()
+    elif option == 2:
+        hillClimbing()
+    elif option == 3:
+        simulatedAnnealing()
+
+    t2 = time.time()
+
+    print("Execution time: {:.4f} seconds".format(t2-t1))
+
+def geneticAlgorithm():
+    print("\nStarting genetic algorithm . . .\n")
     gen = Generation()
     best = gen.getBest()
     print(best)
@@ -30,9 +60,16 @@ def main():
         best = gen.getBest()
         print(best)
 
-    print("Found solution in generation " + str(gen.number))
+    print("\nFound solution in generation " + str(gen.number))
+    return
 
+def hillClimbing():
+    print("\nTODO\n")
+    return
 
+def simulatedAnnealing():
+    print("\nTODO\n")
+    return
 
 # Entry point
 main()
