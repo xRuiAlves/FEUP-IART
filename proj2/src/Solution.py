@@ -150,3 +150,18 @@ class Solution:
         if debug:
             print("DBG::penaltyEndOfDayEvent():: " + str(penalty))
         return penalty
+
+    def getNeighborStates(self):
+        neighbor_states = []
+        timeslot_identifier_index = 0
+        for timeslot_identifier in self.solution:
+            for i in range(0, ProblemData.NUM_TIMESLOTS * ProblemData.num_rooms):
+                if i not in self.solution:  # Avoiding creating invalid solutions (with repeated timeslot identifiers to improve performance)
+                    neighbor_state = list(self.solution)
+                    neighbor_state[timeslot_identifier_index] = i
+                    neighbor_states.append(Solution(neighbor_state))
+            timeslot_identifier_index += 1
+        return neighbor_states
+
+    def getBestNeighbor(self):
+        return max(self.getNeighborStates(), key=lambda solution: solution.fitness)
