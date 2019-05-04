@@ -50,7 +50,8 @@ def main():
     print("Execution time: {:.4f} seconds".format(t2-t1))
 
 def geneticAlgorithm():
-    print("\nStarting genetic algorithm . . .\n")
+    print("\nStarting Genetic algorithm . . .\n")
+
     gen = Generation()
     best = gen.getBest()
     print(best)
@@ -64,7 +65,21 @@ def geneticAlgorithm():
     return
 
 def hillClimbing():
-    print("\nTODO\n")
+    print("\nStarting Hill Climbing algorithm . . .\n")
+
+    solution = Solution()
+    while not solution.isOptimal():
+        old_fitness = solution.fitness
+        print(solution)
+        solution = solution.getBestNeighbor()
+        new_fitness = solution.fitness
+
+        if new_fitness <= old_fitness:
+            print("\nCould not improve solution, local maximum reached.")        
+            return
+
+    print("\nFound optimal solution:")
+    print(solution)
     return
 
 def simulatedAnnealing():

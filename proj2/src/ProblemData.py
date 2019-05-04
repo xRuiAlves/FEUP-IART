@@ -23,7 +23,7 @@ class ProblemData:
     num_events_per_day = None
 
     @staticmethod
-    def readFile( file_name):
+    def readFile(file_name):
         try:
             file = open(file_name , "r")
         except IOError:
