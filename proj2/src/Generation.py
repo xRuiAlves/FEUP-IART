@@ -41,7 +41,7 @@ class Generation:
         return self.getBest(tournament_sample)
 
     def getNextGeneration(self):
-        # Compute probabilty of each solution being selected
+        # Compute probability of each solution being selected
         total_fitness = self.getTotalFitness()
         
         # Selection process for next generation parents
