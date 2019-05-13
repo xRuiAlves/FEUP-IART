@@ -51,18 +51,32 @@ def main():
     print("Execution time: {:.4f} seconds".format(t2-t1))
 
 def geneticAlgorithm():
+    print()
+    while True:
+        try:
+            maximum_generation_number = int(input("Please enter the maximum generation number: "))
+            break
+        except ValueError:
+            continue
+    
     print("\nStarting Genetic algorithm . . .\n")
 
     gen = Generation()
     best = gen.getBest()
-    print(best)
 
     while best.fitness != 1:
+        if (gen.number > maximum_generation_number):
+            print("\nMaximum generation number reached. Aborting.")
+            print("Best obtained solution:")
+            print(best)
+            return
+        print("Generation no. {}: ".format(gen.number), end="")
+        print(best)
         gen = gen.getNextGeneration()
         best = gen.getBest()
-        print(best)
 
-    print("\nFound solution in generation " + str(gen.number))
+    print("\nFound optimal solution in generation {}:".format(gen.number))
+    print(best)
     return
 
 def hillClimbing():
@@ -76,7 +90,9 @@ def hillClimbing():
         new_fitness = solution.fitness
 
         if new_fitness <= old_fitness:
-            print("\nCould not improve solution, local maximum reached.")        
+            print("\nCould not improve solution, local maximum reached.\n")    
+            print("Best obtained solution:")
+            print(solution)        
             return
 
     print("\nFound optimal solution:")
