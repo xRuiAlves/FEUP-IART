@@ -87,6 +87,7 @@ def simulatedAnnealing():
     print("\nStarting Simulated Annealing algorithm . . .\n")
 
     solution = Solution()
+    best_obtained_solution = solution
     annealing_prob = ProblemData.ANNEALING_INITIAL_PROB
     while not solution.isOptimal():
         old_fitness = solution.fitness
@@ -100,8 +101,15 @@ def simulatedAnnealing():
         
         new_fitness = solution.fitness
 
+        if (new_fitness > best_obtained_solution.fitness):
+            best_obtained_solution = solution
+
         if annealing_prob <= 0 and new_fitness <= old_fitness:
-            print("\nCould not improve solution, local maximum reached.")        
+            print("\nCould not further improve solution (local maximum reached with temperature equal to 0).\n")  
+            print("Local minimum solution:")
+            print(solution)
+            print("Best obtained solution:")
+            print(best_obtained_solution)      
             return
 
         annealing_prob -= ProblemData.ANNEALING_PROB_STEP
