@@ -157,7 +157,7 @@ def generateSolution():
         solution.append(slot)
     
     randomizeNone(solution)
-    return solution
+    return Solution(solution)
 
 def generatePopulation(size, print_progress=False):
     roomsByFeatures = buildRoomTree()

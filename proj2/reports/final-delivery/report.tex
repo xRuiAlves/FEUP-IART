@@ -158,7 +158,20 @@ Although the problem tackled by this report is suitable for a genetic approach, 
 
 \section{Project Implementation}
 
-DO THIS?
+The implemented project consists in program developed using Python3, accessible with via a command-line interface. In order to run the program, the following syntax is used (may be ran using Python3 or PyPy):
+
+\textbf{python3 optimization.py \textless input\_file\textgreater}
+\\\\
+The input file assumes the following strucutre:
+\begin{itemize}
+    \item A line containing the number of events, the number of rooms, the number of features and the number of students
+    \item For each room, a line containing the room's size
+    \item For each student, for each existing event, a line containing a 0 (meaning the student does not attend the event) or a 1 (meaning the student attends the event)
+    \item For each room, for each existing feature, a line containing a 0 (meaning the room does not satisfy the feature) or a 1 (meaning the room satisfies the feature)
+    \item For each event, for each existing feature, a line containing a 0 (meaning the event does not need the feature) or a 1 (meaning the event needs the feature)
+\end{itemize}
+
+The program offers a set of menus, allowing the user to choose which algorithm they want to solve the input problem, presenting the obtained solution and the execution time. 
 
 \section{Optimization Algorithms}
 
