@@ -173,6 +173,12 @@ The input file assumes the following strucutre:
 
 The program offers a set of menus, allowing the user to choose which algorithm they want to solve the input problem, presenting the obtained solution and the execution time. 
 
+When Genetic Algorithm is chosen, the maximum number of desired generations is specified by the user. In each iteration, the current best solution in the population is presented and a verification is made is order to test if the optimal solution was reached. If so, the algorithm stops. After the optimal solution is reached (or if the maximum number of generations is reached), the execution time and number of generated solutions are presented to user.
+
+When the Hill Climbing or Simulated Annealing algorithms are chosen, the algorithm execution starts and the current solution is displayed in each iteration. After the optimal solution is reached or a local maximum is reached (and if the current temperature is equal to 0 in the simulated annealing algorithm), the execution time to reach the solution and the number of explored states are presented to the user.
+
+In order to improve the algorithms performance, the initial solutions are being pre-computed instead of being randomly generated, as will be further expanded in \autoref{sec:ear}
+
 \section{Optimization Algorithms}
 
 As determined beforehand, the following algorithms were implemented:
@@ -210,7 +216,7 @@ The algorithm may also use other concepts, such as \textit{Elitism}, which prese
 
 The algorithm allows the manipulation of a set of variables, such as the population size of each generation, the probability to mutate a solution and the number of elite solution that are preserved from the previous generation. The optimal values for these variables depends on the problem instance.
 
-\section{Experiments and Results}
+\section{Experiments and Results} \label{sec:ear}
 
 \textbf{\textit{TODO}}
 
