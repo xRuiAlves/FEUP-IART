@@ -86,32 +86,36 @@ def geneticAlgorithm():
 def hillClimbing():
     print("\nStarting Hill Climbing algorithm . . .\n")
 
+    iteration_number = 1
     solution = generateSolution()
     while not solution.isOptimal():
         old_fitness = solution.fitness
-        print(solution)
+        print("Iteration no. {}: {}".format(iteration_number, solution))
         solution = solution.getBestNeighbor()
         new_fitness = solution.fitness
 
         if new_fitness <= old_fitness:
             print("\nCould not improve solution, local maximum reached.\n")    
-            print("Best obtained solution:")
+            print("Best obtained solution (in {} iterations):".format(iteration_number))
             print(solution)        
             return
 
-    print("\nFound optimal solution:")
+        iteration_number += 1
+
+    print("\nFound optimal solution in iteration {}:".format(iteration_number))
     print(solution)
     return
 
 def simulatedAnnealing():
     print("\nStarting Simulated Annealing algorithm . . .\n")
 
+    iteration_number = 1
     solution = generateSolution()
     best_obtained_solution = solution
     annealing_prob = ProblemData.ANNEALING_INITIAL_PROB
     while not solution.isOptimal():
         old_fitness = solution.fitness
-        print(solution)
+        print("Iteration no. {}: {}".format(iteration_number, solution))
 
         if (random.random() < annealing_prob):
             neighbors = solution.getNeighborStates()
@@ -125,16 +129,17 @@ def simulatedAnnealing():
             best_obtained_solution = solution
 
         if annealing_prob <= 0 and new_fitness <= old_fitness:
-            print("\nCould not further improve solution (local maximum reached with temperature equal to 0).\n")  
+            print("\nCould not further improve solution (local maximum reached with temperature equal to 0 in iteration no. {}).\n". format(iteration_number))  
             print("Local minimum solution:")
             print(solution)
             print("Best obtained solution:")
             print(best_obtained_solution)      
             return
 
+        iteration_number += 1
         annealing_prob -= ProblemData.ANNEALING_PROB_STEP
 
-    print("\nFound optimal solution:")
+    print("\nFound optimal solution in iteration {}:".format(iteration_number))
     print(solution)
     return
 
