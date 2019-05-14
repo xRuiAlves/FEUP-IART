@@ -87,29 +87,33 @@ def hillClimbing():
     print("\nStarting Hill Climbing algorithm . . .\n")
 
     iteration_number = 1
+    num_explored_states = 0
     solution = generateSolution()
     while not solution.isOptimal():
         old_fitness = solution.fitness
         print("Iteration no. {}: {}".format(iteration_number, solution))
-        solution = solution.getBestNeighbor()
+        neighbor_states = solution.getNeighborStates()
+        num_explored_states += len(neighbor_states)
+        solution = max(neighbor_states, key=lambda solution: solution.fitness)
         new_fitness = solution.fitness
 
         if new_fitness <= old_fitness:
             print("\nCould not improve solution, local maximum reached.\n")    
-            print("Best obtained solution (in {} iterations):".format(iteration_number))
-            print(solution)        
+            print("Best obtained solution (in {} iterations): {}".format(iteration_number, solution))
+            print("Number of explored states: {}".format(num_explored_states))
             return
 
         iteration_number += 1
 
-    print("\nFound optimal solution in iteration {}:".format(iteration_number))
-    print(solution)
+    print("\nFound optimal solution in iteration {}: {}".format(iteration_number, solution))
+    print("Number of explored states: {}".format(num_explored_states))
     return
 
 def simulatedAnnealing():
     print("\nStarting Simulated Annealing algorithm . . .\n")
 
     iteration_number = 1
+    num_explored_states = 0
     solution = generateSolution()
     best_obtained_solution = solution
     annealing_prob = ProblemData.ANNEALING_INITIAL_PROB
@@ -117,11 +121,13 @@ def simulatedAnnealing():
         old_fitness = solution.fitness
         print("Iteration no. {}: {}".format(iteration_number, solution))
 
+        neighbor_states = solution.getNeighborStates()
+        num_explored_states += len(neighbor_states)
+
         if (random.random() < annealing_prob):
-            neighbors = solution.getNeighborStates()
-            solution = neighbors[random.randint(0, len(neighbors) - 1)]
+            solution = neighbor_states[random.randint(0, len(neighbor_states) - 1)]
         else:
-            solution = solution.getBestNeighbor()
+            solution = max(neighbor_states, key=lambda solution: solution.fitness)
         
         new_fitness = solution.fitness
 
@@ -130,17 +136,15 @@ def simulatedAnnealing():
 
         if annealing_prob <= 0 and new_fitness <= old_fitness:
             print("\nCould not further improve solution (local maximum reached with temperature equal to 0 in iteration no. {}).\n". format(iteration_number))  
-            print("Local minimum solution:")
-            print(solution)
-            print("Best obtained solution:")
-            print(best_obtained_solution)      
+            print("Local minimum solution: {}\nBest obtained solution: {}".format(solution, best_obtained_solution))
+            print("Number of explored states: {}".format(num_explored_states))
             return
 
         iteration_number += 1
         annealing_prob -= ProblemData.ANNEALING_PROB_STEP
 
-    print("\nFound optimal solution in iteration {}:".format(iteration_number))
-    print(solution)
+    print("\nFound optimal solution in iteration {}: {}".format(iteration_number, solution))
+    print("Number of explored states: {}".format(num_explored_states))
     return
 
 # Entry point

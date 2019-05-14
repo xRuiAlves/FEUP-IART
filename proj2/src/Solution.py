@@ -49,7 +49,10 @@ class Solution:
         return [Solution(child1), Solution(child2)]
 
     def __str__(self):
-        return "{}\tpenalty={}, fitness={}".format(self.solution, self.penalty, self.fitness)
+        if (self.fitness != 0):
+            return "{}\tpenalty={}, fitness={}".format(self.solution, self.penalty, self.fitness)
+        else:
+            return "{}\tInvalid Solution".format(self.solution)
 
     # Verify if the solution respects all the Hard Constraints
     def calculateValidity(self):
@@ -162,6 +165,3 @@ class Solution:
                     neighbor_states.append(Solution(neighbor_state))
             timeslot_identifier_index += 1
         return neighbor_states
-
-    def getBestNeighbor(self):
-        return max(self.getNeighborStates(), key=lambda solution: solution.fitness)
