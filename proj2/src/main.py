@@ -60,9 +60,12 @@ def geneticAlgorithm():
         except ValueError:
             continue
     
+    print("\nGenerating initial population . . .\n")
+
+    gen = generatePopulation(50, print_progress=True)
+
     print("\nStarting Genetic algorithm . . .\n")
 
-    gen = generatePopulation(50)
     best = gen.getBest()
 
     while best.fitness != 1:

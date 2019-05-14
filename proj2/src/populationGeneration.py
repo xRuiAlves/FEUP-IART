@@ -3,6 +3,7 @@ import time
 import random
 from copy import copy
 from collections import deque
+from math import floor
 
 from Student import Student
 from Event import Event
@@ -158,12 +159,14 @@ def generateSolution():
     randomizeNone(solution)
     return solution
 
-def generatePopulation(size):
+def generatePopulation(size, print_progress=False):
     roomsByFeatures = buildRoomTree()
     events = ProblemData.events
     population = []
 
     for i in range(size):
+        if(print_progress):
+            printProgress(i/size)
         slotsOccupied = createSlotMatrix()
         solution = []
         for event in events:
@@ -174,20 +177,13 @@ def generatePopulation(size):
             for key in roomsByFeatures:
                 roomsByFeatures[key].reset()
         population.append(Solution(solution))
+    if (print_progress):
+        printProgress(1, carriage_return=False)
     return Generation(population)
 
-if __name__ == "__main__":
-    if (len(sys.argv) < 2):
-        sys.stderr.write("Error: Not enough arguments.\n")
-        sys.stderr.write("usage: " + sys.argv[0] + " <input_file>\n")
-        sys.exit(-1)
-    
-    input_file = sys.argv[1]
-    try:
-        ProblemData.readFile(input_file)
-    except:
-        sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
-        sys.exit(-2)
+def printProgress(progress, carriage_return=True):
+    progress_bar_total_size = 20
 
-    print(generatePopulation(50))
-    # print(generateSolution())
+    progress_bar_size = floor(progress * progress_bar_total_size)
+
+    print("[" + progress_bar_size * "#" + (progress_bar_total_size - progress_bar_size) * "." + "], " + str(int(progress*100)) + "%", end=("\r" if carriage_return else "\n"))
