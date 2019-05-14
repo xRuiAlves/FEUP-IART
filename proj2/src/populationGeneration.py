@@ -13,18 +13,25 @@ from Generation import Generation
 
 class Room:
     def __init__(self, room):
-        self.occupancy = 0
         self.room = room
-        self.usedTimeslots =  random.sample(range(0,ProblemData.NUM_TIMESLOTS), ProblemData.NUM_TIMESLOTS)
+        self.size = self.room.size
+        self.reset()
 
-    def reserveSlot(self):
-        if self.occupancy >= ProblemData.NUM_TIMESLOTS:
+    def reserveSlot(self, attendees, slotsOccupied):
+        if len(self.freeTimeslots) == 0:
             return None
-        self.occupancy += 1
-        reservedSlot = self.usedTimeslots[self.occupancy - 1] * ProblemData.num_rooms + self.room.id
-        if reservedSlot is None:
-            raise BaseException("Coding error")
-        return reservedSlot
+        for slot in self.freeTimeslots:
+            collisions = sum([i*j for (i, j) in zip(slotsOccupied[slot], attendees)])
+            if collisions == 0:
+                slotsOccupied[slot] = [i+j for (i, j) in zip(slotsOccupied[slot], attendees)]
+                self.usedTimeslots.add(slot)
+                self.freeTimeslots.remove(slot)
+                return slot*ProblemData.num_rooms + self.room.id 
+        return None
+
+    def reset(self):
+        self.usedTimeslots = set()
+        self.freeTimeslots = set(random.sample(range(0,ProblemData.NUM_TIMESLOTS), ProblemData.NUM_TIMESLOTS))
 
     def __str__(self):
         return "{} - {}".format(self.occupancy, self.room)
@@ -47,32 +54,36 @@ class RoomNode:
     def __str__(self):
         return str(self.key)
 
-    def getRoom(self):
+    def getRoom(self, event, slotsOccupied):
         roomNumber = None
         randomRooms = random.sample(self.rooms, len(self.rooms))
         for room in randomRooms:
-            roomNumber = room.reserveSlot()
+            if room.size >= event.num_attendees:
+                roomNumber = room.reserveSlot(event.attendees, slotsOccupied)
             if roomNumber is not None:
                 return roomNumber
         return roomNumber
 
-    def getRoomRecursively(self):
-        roomNumber = self.getRoom()
+    def getRoomRecursively(self, event, slotsOccupied):
+        roomNumber = self.getRoom(event, slotsOccupied)
         if roomNumber is not None:
             return roomNumber
         childrenNodes = deque(copy(self.children))
         while len(childrenNodes) > 0:
             node = childrenNodes.popleft()
-            roomNumber = node.getRoom()
+            roomNumber = node.getRoom(event, slotsOccupied)
             if roomNumber is not None:
                 return roomNumber
             for child in node.children:
                 childrenNodes.append(child)
+
+        # if roomNumber is None:
+        #     raise BaseException('Implement random when not found')
         return roomNumber
     
     def reset(self):
         for room in self.rooms:
-            room.occupancy = 0
+            room.reset()
 
 def oneStepAway(firstKey, secondKey):
     differences = 0
@@ -90,10 +101,10 @@ def generateCombination(size):
         return [[0], [1]]
     sols = []
     for sol in generateCombination(size - 1):
-        c = sol.copy()
+        c = copy(sol)
         c.append(0)
         sols.append(c)
-        c = sol.copy()
+        c = copy(sol)
         c.append(1)
         sols.append(c)
     return sols
@@ -117,14 +128,35 @@ def buildRoomTree():
 
     return roomsByFeatures
 
+def createSlotMatrix():
+    return [[0] * ProblemData.num_students for i in range(ProblemData.NUM_TIMESLOTS)]
+
+def randomizeNone(solution):
+    taken = set(solution)
+
+    for i in range(len(solution)):
+        s = solution[i]
+        if s is not None:
+            continue
+        r = random.randint(0, ProblemData.NUM_TIMESLOTS * ProblemData.num_rooms - 1)
+        while (len(taken & set([r])) != 0):
+            r = random.randint(0, ProblemData.NUM_TIMESLOTS * ProblemData.num_rooms - 1)
+        solution[i] = r
+
+
+
 def generateSolution():
     roomsByFeatures = buildRoomTree()
+    slotsOccupied = createSlotMatrix()
     events = ProblemData.events
     solution = []
 
     for event in events:
-        solution.append(roomsByFeatures[tuple(event.features)].getRoomRecursively())
-    return Solution(solution)
+        slot = roomsByFeatures[tuple(event.features)].getRoomRecursively(event, slotsOccupied)
+        solution.append(slot)
+    
+    randomizeNone(solution)
+    return solution
 
 def generatePopulation(size):
     roomsByFeatures = buildRoomTree()
@@ -132,10 +164,12 @@ def generatePopulation(size):
     population = []
 
     for i in range(size):
+        slotsOccupied = createSlotMatrix()
         solution = []
         for event in events:
-            solution.append(roomsByFeatures[tuple(event.features)].getRoomRecursively())
-
+            slot = roomsByFeatures[tuple(event.features)].getRoomRecursively(event, slotsOccupied)
+            solution.append(slot)
+        randomizeNone(solution)
         if i != size - 1:
             for key in roomsByFeatures:
                 roomsByFeatures[key].reset()
@@ -147,7 +181,7 @@ if __name__ == "__main__":
         sys.stderr.write("Error: Not enough arguments.\n")
         sys.stderr.write("usage: " + sys.argv[0] + " <input_file>\n")
         sys.exit(-1)
-        
+    
     input_file = sys.argv[1]
     try:
         ProblemData.readFile(input_file)
@@ -155,4 +189,5 @@ if __name__ == "__main__":
         sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
         sys.exit(-2)
 
-    print(generatePopulation(100))
+    print(generatePopulation(50))
+    # print(generateSolution())

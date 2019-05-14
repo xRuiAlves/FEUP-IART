@@ -22,7 +22,7 @@ class Generation:
         return [solution for solution in self.population if solution.is_valid]
 
     def getBestN(self, n):
-        return sorted(self.population, key=lambda solution: solution.fitness, reverse=True)[:n]
+        return sorted(self.population, key=lambda solution: (solution.fitness, -solution.penalty), reverse=True)[:n]
 
     def getBest(self, solutions_list=None):
         return max(solutions_list if solutions_list is not None else self.population, key=lambda solution: solution.fitness)

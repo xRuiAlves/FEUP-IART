@@ -8,6 +8,7 @@ from Room import Room
 from ProblemData import ProblemData
 from Solution import Solution
 from Generation import Generation
+from populationGeneration import generateSolution, generatePopulation
 
 def main():
     if (len(sys.argv) < 2):
@@ -61,7 +62,7 @@ def geneticAlgorithm():
     
     print("\nStarting Genetic algorithm . . .\n")
 
-    gen = Generation()
+    gen = generatePopulation(50)
     best = gen.getBest()
 
     while best.fitness != 1:
@@ -82,7 +83,7 @@ def geneticAlgorithm():
 def hillClimbing():
     print("\nStarting Hill Climbing algorithm . . .\n")
 
-    solution = Solution()
+    solution = generateSolution()
     while not solution.isOptimal():
         old_fitness = solution.fitness
         print(solution)
@@ -102,7 +103,7 @@ def hillClimbing():
 def simulatedAnnealing():
     print("\nStarting Simulated Annealing algorithm . . .\n")
 
-    solution = Solution()
+    solution = generateSolution()
     best_obtained_solution = solution
     annealing_prob = ProblemData.ANNEALING_INITIAL_PROB
     while not solution.isOptimal():
