@@ -1,0 +1,425 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{float}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Unblock Me - Group 19}
+
+\author{\IEEEauthorblockN{Guilherme Silva (201603647)}
+\IEEEauthorblockA{\textit{IART} \\
+\textit{FEUP}\\
+Porto, Portugal \\
+up201603647@fe.up.pt}
+\and
+\IEEEauthorblockN{Miguel Duarte (201606298)}
+\IEEEauthorblockA{\textit{IART} \\
+\textit{FEUP}\\
+Porto, Portugal \\
+up201606298@fe.up.pt}
+\and
+\IEEEauthorblockN{Rui Alves (201606746)}
+\IEEEauthorblockA{\textit{IART} \\
+\textit{FEUP}\\
+Porto, Portugal \\
+up201606746@fe.up.pt}
+}
+
+\maketitle
+
+\begin{abstract}
+The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving the game \textit{Unblock Me}, in which rectangular pieces block the path of a red special piece. The objective of the game is for the special piece to reach the exit of the level, which is achieved by moving it and the other pieces.
+The problem will be described and then formulated as a \textit{Search Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process. In the pursuit of the optimal \textit{Search Algorithm}, several algorithms were implemented and tested, which resulted in a study of their performance, being that different metrics were taken into account. This study was applied to puzzles of varying complexity and difficulty.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Artificial Intelligence, Search Problems, Path-finding algorithms, Decision-making Heuristics, Graph Algorithms, Depth-First Search, Breadth-First Search, Iterative Deepening, Greedy Search, A*, PyPy, Python
+\end{IEEEkeywords}
+
+\section{Introduction}
+The game that is the subject of study in this paper (\textit{Unblock Me}) will be approached with several different \textit{Search Algorithms}, implemented in \textit{Python}, in order to conclude what is the best approach for solving it using \textit{Artificial Intelligence Algorithms}.
+
+Firstly, the game will be described in further detail, ensuring that all non-formal aspects of it are well documented.
+
+Secondly, it will be formulated as a \textit{Search Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken.
+
+Thirdly, the game implementation will be touched upon, being some of the main aspects of it described, namely the representation of the initial game state in the text files that can be loaded by the program.
+
+Moreover, the \textit{Search Algorithms} that were used to approach the problem being studied will be succinctly described, also focusing on the description of the implemented \textit{Heuristics}.
+
+Additionally, the performed experiments and their results will be presented and some conclusions extrapolated from them.
+
+Finally, a section will cover the conclusions and future work, by expanding on the already developed tasks and elaborating on what can be done to further develop work related to this topic.
+
+\section{Problem Description}
+\textit{Unblock Me} is a puzzle game that was released in 17-06-2009 by \textit{Kiragames}. It is an adapted version of \textit{Rush Hour}, a puzzle game invented by Nobuyuki Yoshigahara in the 1970s. Each level consists of a 6x6 board, surrounded with walls (except for the puzzle's exit) \cite{b1}.
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=100px]{img1.png}}
+    \caption{Example of an \textit{Unblock Me} level}
+\end{figure}
+
+The game's objective is to move a special piece to the level's exit, by moving that and the other pieces with the least number of movements possible. Pieces are rectangles with a given orientation (vertical or horizontal) and constant length. Pieces can only move in the direction of their orientation into empty cells (they may not overlap).  
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=200px]{img2.png}}
+    \caption{Piece moving down one cell}
+\end{figure}
+
+Levels are fully surrounded by walls, except for the level's exit door that is aligned with the special piece and by which only the special piece can go through. The level is completed once the piece goes through the exit door.
+ 
+\begin{figure}[H]
+    \centerline{\includegraphics[width=100px]{img3.png}}
+    \caption{Beating a level by going through the exit}
+    \label{img:final_state}
+\end{figure}
+
+Some levels may even contain fixed blocks that can not be moved, representing obstacles.
+ 
+\begin{figure}[H]
+    \centerline{\includegraphics[width=100px]{img4.png}}
+    \caption{Example of an \textit{Unblock Me} level containing fixed blocks}
+\end{figure}
+
+\section{Problem Formulation}
+The game's solving process can be formulated as a search problem, in which the goal is to find the sequence of moves (state transitions) that take the special piece to the level's exit door - the problem's goal state. 
+
+\subsection{Game State Representation} \label{subsec:gr}
+
+\begin{itemize}
+    \item List of pieces, where each piece contains the following information:
+    \begin{itemize}
+        \item Origin Square (top left piece corner, e.g. (0,0))
+        \item Length (e.g. 4)
+        \item Direction (H or V)
+    \end{itemize}
+    \item Reference to the special piece
+    \item Matrix of booleans, where True means the cell is empty
+\end{itemize}
+
+This representation of the game state makes the generation of valid movements easier, due to the fact that to determine possible movements of a single piece, the other pieces do not need to be taken into account (assuming that all empty cells are known). Thus, to generate all possible branching options, the list of pieces needs to be iterated over, while checking if there are empty cells adjacent to the piece's extremities (these change with the piece's direction). This representation facilitates the execution of these tasks, making it less costly (important fact due to high number of operations of this kind):
+
+\begin{itemize}
+    \item Using a list of pieces makes it trivial to determine which of them can be moved in a given state;
+    \item Using a matrix (of booleans, that state if a cell is occupied or not) makes it trivial to check if adjacent cells to the pieces extremities are empty;
+    \item Finally, using a reference to the special piece allows accessing it in constant time, which will be useful to heuristic related operations and determine if the goal state (\autoref{subsec:gs}) is achieved.
+\end{itemize}
+
+\subsection{Initial State}
+The initial state depends of the level in question, being represented by a game state as described in \autoref{subsec:gr}.
+
+\subsection{Goal State} \label{subsec:gs}
+The goal state consists of a piece configuration where the special piece reaches the level exit (\autoref{img:final_state}).
+
+\subsection{Operators} \label{subsec:op}
+\begin{itemize}
+    \item Move piece to the left:
+    \begin{itemize}
+        \item Pre-conditions:
+        \begin{itemize}
+            \item Piece with horizontal orientation
+            \item At least the cell that is adjacent to the piece's left extremity must be empty
+        \end{itemize}
+        \item Results: The piece is moved a number of cells to the left (at most the number of empty cells, at least one cell)
+        \item Cost: 1 movement
+    \end{itemize}
+    \item Move piece to the right:
+    \begin{itemize}
+        \item Pre-conditions:
+        \begin{itemize}
+            \item Piece with horizontal orientation
+            \item At least the cell that is adjacent to the piece's right extremity must be empty
+        \end{itemize}
+        \item Results: The piece is moved a number of cells to the right (at most the number of empty cells, at least one cell)
+        \item Cost: 1 movement
+    \end{itemize}
+    \item Move piece up:
+        \begin{itemize}
+        \item Pre-conditions:
+        \begin{itemize}
+            \item Piece with vertical orientation
+            \item At least the cell that is adjacent to the piece's top extremity must be empty
+        \end{itemize}
+        \item Results: The piece is moved a number of cells upwards (at most the number of empty cells, at least one cell)
+        \item Cost: 1 movement
+    \end{itemize}
+    \item Move piece down:
+    \begin{itemize}
+        \item Pre-conditions:
+        \begin{itemize}
+            \item Piece with vertical orientation
+            \item At least the cell that is adjacent to the piece's bottom extremity must be empty
+        \end{itemize}
+        \item Results: The piece is moved a number of cells downwards (at most the number of empty cells, at least one cell)
+        \item Cost: 1 movement
+    \end{itemize}
+\end{itemize}
+
+\subsection{Path cost}
+The solution's path cost that is to be minimized is equal to the number of movements made (number of state transitions).
+
+
+\section{Related Work}
+\textit{Unblock Me} is also widely known as \textit{Rush Hour}. In June 2018, Michael Fogleman (a Software Engineer at Formlabs) developed an artificial intelligence that solves the puzzle and created a database with over two million and a half different puzzles\cite{b2}. His solution is based on the usage of bitboards\cite{b3} (data structure that is often used by board game computer systems due to its reduced space usage and the efficiency of operating upon it) for representing the game states.
+
+This game is also studied in the Computer Science MSc from the University of Princeton, namely in the course "Computer Science 402 - Artificial Intelligence". In this course, students implement multiple heuristics to solve the problem using the A* algorithm\cite{b4}. Rainhard Findling, a researcher in Aalto University in Finland, proposes a solution to this problem statement, by using a heuristic based on a vote system, in which each piece that is blocking the way of the special piece to the level's exit votes on how they want to free the way (how many moves they have to perform) for the special piece\cite{b5}.
+
+Even though that the problem is not complex, increasing the board size quickly leads to a combinatorial explosion, being that a 6x6 board has over 27 billion possible states. Thus, it is not efficient to find a solution by exploring all the possible states, being a good heuristic for state exploration mandatory for complex game levels.
+
+\section{Game Implementation}
+
+In the implementation of the game there are two classes: \textbf{GameState} and \textbf{Piece}. An instance of \textbf{Piece} contains the position of the top left corner, the length and the direction of the piece. Each of these is part of an instance of GameState, which besides a list of the pieces also contains a reference to the special piece and a boolean matrix, where each element of it represents the state of a given cell (empty or occupied). Using this implementation, the objective test is made by checking if the special piece intersects with the exit.
+
+To determine all adjacent states, the list of pieces is iterated and for each one the following steps are taken:
+
+\begin{enumerate}
+    \item Determine the position of the piece's extremities
+    \item For each extremity determine the direction of the directly adjacent cell (i.e. for the left extremity of an horizontal piece the adjacent cell it will be to the left)
+    \item Then create N new states with an updated matrix and an updated piece, where N is number of empty cells adjacent to the piece in direction determined in the previous step
+\end{enumerate}
+
+Each of the states created using this method has the cost of the original state plus one.
+
+\subsection{File representation}
+
+Each puzzle can represented by a single string, where 'o' represents an empty space, 'x' represents an immovable space and each piece is identified by an upper case letter, 'A' being reserved for the representation of the special piece.
+
+\section{Search Algorithms} \label{sec:sa}
+As determined beforehand, the following algorithms were implemented:
+\begin{itemize}
+    \item BFS (Breadth-First Search)
+    \item DFS (Depth-First Search)
+    \item Iterative Deepening Depth-First Search
+    \item Greedy Search
+    \item A* Search
+\end{itemize}
+
+The \textbf{Uniform Cost Search} algorithm was not implemented, as all of the \textbf{Operators} (described in \autoref{subsec:op}) have the same cost - this algorithm would simply be a \textbf{Breadth-First Search (BFS)}.
+
+Furthermore, it was decided that, unlike initially planned, \textbf{Bi-Directional Search Algorithms} would not be implemented. This is due to the fact that despite the \textbf{Goal State} of \textit{Unblock Me} always featuring the special piece over the level exit, all of the other pieces might be in very different configurations. Thus it is not possible to start searching from the final state of the level, making these algorithms not applicable to the problem under consideration.
+
+\subsection{Breadth-First Search}
+
+\textbf{Breadth-First Search (BFS)} analyzes all of the states with a depth lower than N prior to analyzing states with a depth of N. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Queue}. The next state to be analyzed is at the front of the \textit{Queue}. When analyzing a state, the next possible states are generated and appended to the end of this structure.
+
+The time and space complexity of this approach is exponential, making the algorithm consume copious amounts of memory. This makes it hard to run for puzzles that have a solution size bigger than 10. However, by using a \textit{Set} of searched states to avoid the expansion of visited nodes, the algorithm can be run in a reasonable amount of time, due to the small search space and high frequency of repeated states.
+
+\textbf{BFS} guarantees an optimal solution due to expanding each level of the state search tree sequentially, always choosing the smallest possible solution.
+
+\subsection{Depth-First Search}
+
+\textbf{Depth-First Search (DFS)} analyzes all of the states for a certain branching path before backtracking to another branch. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Stack}. The next state to be analyzed is on the top of the \textit{Stack}. When analyzing a state, the next possible states are generated and placed on top of this structure.
+
+However, this approach does not always reach a solution, due to the possibility of loops in the state search tree, which leads to infinite exploration of the same looping states.
+In order to avoid this, an auxiliary \textit{Set} was used to keep track of visited nodes, thus excluding the possibility of loops.
+
+\textbf{DFS} does not guarantee and optimal solution due to the order in which it expands the search tree - a deeper level can be expanded before a more shallow level and thus a larger (and therefore non-optimal) solution reached before a smaller one.
+
+\subsection{Iterative-Deepening Depth-First Search}
+
+\textbf{Iterative-Deepening Depth-First Search (IDDFS)} executes a \textbf{DFS} with a certain limited depth, repeating this process with a larger value for this limit each time until it reaches a solution.
+
+Unlike \textbf{BFS}, this algorithm does not need to store all of the states to explore in memory simultaneously and unlike \textbf{DFS} it cannot enter an infinite loop.
+
+\textbf{IDDFS} guarantees an optimal solution due to expanding each node of a given level before moving to the next level of the search tree, guarantying the smallest possible solution.
+
+\subsection{Greedy Search}
+
+\textbf{Greedy Search} expands the next node based on the value given to it by the chosen \textit{Heuristic}, always expanding the node with the lower value. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Priority Queue}. The next state to be analyzed is on top of the \textit{Priority Queue}. When analyzing a state, the next possible states are generated and inserted into this structure, which will reorder them as needed.
+
+This algorithm's efficiency depends on the chosen \textit{Heuristic}. Even when using an \textit{Admissible Heuristic}, this algorithm does not guarantee an optimal solution due to not necessarily expanding the nodes in a more shallow level before expanding nodes at a deeper level.
+
+\subsection{A* Search}
+
+\textbf{A* Search} expands the next node based based on the value given to it by the sum of the current state's weight and the chosen heuristic. To accomplish this, all of the nodes that need to be analyzed are kept in a \textit{Priority Queue}. The next state to be analyzed is on top of the \textit{Priority Queue}. When analyzing a state, the next possible states are generated and inserted into this structure, which will reorder them as needed.
+
+Both the algorithm's efficiency and solution length depend on the chosen \textit{Heuristic}. In order for this algorithm to achieve the optimal solution, the chosen heuristic must be an \textit{Admissible Heuristic}.
+
+
+\subsection{Heuristics}
+
+Heuristics are problem specific functions that estimate the cost to reach the objective state.
+
+For an heuristic to be \textbf{Admissible} it cannot, at any point, overestimate the number of steps it takes to reach the goal state. Thus, when evaluating a state, the calculated value must be lower than or equal to the state's real value, never overshooting the solution.
+
+\subsubsection{Heuristic 1}
+
+The first heuristic consists of counting the number of pieces between the special piece and the exit. These pieces need to move at least once so the piece can have a clear path to the exit, making this heuristic \textbf{Admissible}.
+
+\subsubsection{Heuristic 2}
+
+The second heuristic consists of attributing a value to every piece between the special piece and the exit. This value is 1 for pieces that can move and 2 for pieces that are blocked. This heuristic is not \textbf{Admissible}, because moving one piece can free 2 pieces at the same time, therefore the heuristic can overestimate a state's value when multiple pieces can be freed by one movement. Despite this, this heuristic can reach the optimal solution for most puzzles when used in the \textbf{A* Search Algorithm}.
+
+\section{Experiments and Results}
+\textbf{Note:} All of the below described tests were ran using \textit{PyPy} version 3.6.\\
+
+Several tests were ran, using all of the implemented algorithms and heuristics (except some cases where the runtime or memory overhead of the algorithm was not manageable - such was the case for Iterative Deepening for Long Puzzles) for different \textit{Categories of Puzzles}.
+
+\subsection{Puzzle Categorization}
+
+A selection of some interesting levels of the game was grouped into four categories - Easy, Medium, Hard and Long. This grouping was done based on the number of possible states since the initial configuration and the length of the solution, as these are the main determinants on how difficult it is to find a solution, and furthermore the optimal one. Eight Easy and Hard and ten Medium and Long levels were selected for evaluating the algorithms' performance, these presenting some of the most interesting initial piece configurations.
+
+\textbf{Easy} and \textbf{Medium} levels have similar lengths for their optimal solutions (around 10 moves), differing in the number of possible states - \textbf{Easy} levels have several hundreds of possible states while \textbf{Medium} levels have tens of thousands.
+
+\textbf{Hard} levels have a much higher number of possible states (hundreds of thousands) and a larger solution length (around 20 moves).
+
+Finally, \textbf{Long} levels do not necessarily have a large amount of possible states (ranging between thousands and tens of thousands), but instead have a much larger solution length (around 50 moves).
+
+\subsection{Performance analysis}
+
+After running all of the implemented algorithms described in \autoref{sec:sa} for each of the selected puzzles, the following data was collected:
+
+\begin{itemize}
+    \item Answer Length
+    \item Execution Time
+    \item Number of Expanded Nodes
+\end{itemize}
+
+The full experimental data obtained in all the different experiments, using the above described metrics, can be be found in \autoref{sec:annex}.
+
+By analyzing the \textbf{Answer Length}, it is possible to directly measure how good the algorithm's solution is, by checking against the optimal solution of the puzzle (that has the minimum amount of moves required to reach the \textbf{Goal State}). The solution lengths achieved with all algorithms in the easy puzzles were the following:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-easy.png}}
+    \caption{Solution length in easy puzzles}
+\end{figure}
+
+As expected, the \textbf{BFS}, \textbf{Iterative Deepening} and \textbf{A*} algorithms always reached an optimal solution, being that \textbf{DFS} almost never reaches a short solution. This difference is even more visible in the long puzzles:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-long.png}}
+    \caption{Solution length in long puzzles}
+\end{figure}
+
+Additionally, by inspecting the \textbf{Execution Time}, some insight is gained on the algorithm's \textbf{Time Complexity}, which differs for each different algorithm. The solution execution times achieved with all algorithms in the hard puzzles were the following:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-hard.png}}
+    \caption{Solution execution time in hard puzzles}
+\end{figure}
+
+In most of the puzzles, \textbf{DFS} quickly reaches a solution, although its length is much larger than the other achieved solutions. The same applies to the \textbf{Greedy} algorithms, that also provide a solution in a short time, although with a much better quality (not optimal, but with a much shorter length that DFS).\textbf{BFS} and \textbf{A*}(using heuristic 1) quickly achieve an optimal solution. The optimization made to \textbf{BFS} resulted in a drastic increase of performance of the algorithm's execution time, it consisting of using a \textit{Set} to save all of the visited nodes, avoiding the expansion of visited nodes in the search tree. Due to the fact that the considered problem has a very large amount of repeated states (it is possible to reverse any movement done at any given moment), this increase in performance allows \textbf{BFS} to achieve the overall best performance when it comes to execution time.
+
+Finally, by studying the \textbf{Number of Expanded Nodes}, both the algorithm's \textbf{Space Complexity} and how fast it approaches the optimal solution (or any solution in some cases) can be inspected. The number of expanded nodes in the solutions achieved by all of the algorithms in the medium puzzles were the following:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-medium.png}}
+    \caption{Solution number of expanded nodes in medium puzzles}
+\end{figure}
+
+In most of the puzzles, \textbf{Iterative Deepening} expanded the most states, due to the fact that in each iteration a full DFS is performed (up to a given depth). The \textbf{DFS} and \textbf{Greedy} algorithms also achieved solutions without expanding a large number of nodes, although not achieving optimal solutions. The \textbf{A*}(with heuristic 1) and \textbf{BFS} algorithms achieved optimal solutions without expanding an excessively large amount of nodes.
+
+The algorithms with the best overall performance for the problems were, therefore, \textbf{BFS} and \textbf{A*} algorithms, which are able to achieve optimal solutions in a very short period of time (with low time complexity) and without needing to expand a large number of states (with low space complexity).
+
+\section{Conclusions and Future Work}
+In this project, all of the applicable algorithms that were proposed were implemented and tested (except for the Uniform-Cost search, which explores the states in the exact same order that Breadth-First search does for this specific problem and was, therefore, not necessary for the best solution study, and for the Bi-Directional algorithms, which were not possible to apply since the final objective state is not known \textit{a priori}).
+
+A graphical user interface was developed to visualize the different puzzles and the solutions produced by each of the algorithms.
+
+In order to study the upsides and downsides of each of the algorithms, a thorough examination of their performance using different metrics (solution length, execution time and number of expanded states) was made. When analysing the produced solutions, it was concluded that they matched with the theoretical expectations:
+
+\begin{itemize}
+    \item Considering the answer length, the \textbf{BFS}, \textbf{Iterative Deepening} and \textbf{A*}(using heuristic 1) algorithms achieved optimal solutions and the \textbf{DFS} algorithm achieved the longest solutions.
+    \item Considering the execution time required to reach a solution, the \textbf{DFS} and \textbf{Greedy} algorithms achieved solutions in short execution times (although not optimal). The \textbf{BFS} and \textbf{A*} algorithms were both able to reach optimal solutions in also very small execution times. The \textbf{Iterative Deepening} algorithm originated the longest execution times for most of the studied puzzles.
+    \item Finally, considering the number of expanded states, the \textbf{A*} and \textbf{BFS} algorithms achieved the solutions with the fewest states expanded. On the other hand, the \textbf{Iterative Deepening} algorithm originated, by a large margin, solutions with the highest number of expanded states, due to the fact that, in this algorithm, multiple iterations (for different depths) of the \textbf{DFS} algorithm are applied.
+\end{itemize}
+
+In conclusion, the algorithms that achieved the best solutions according to the previously described methods where the \textbf{A*} and \textbf{BFS} algorithms, which were able to achieve optimal solutions in short execution times, without requiring the expansion of many states.
+
+All of the objectives were successfully completed and future improvements could include the study of the different heuristics in this problem and the exploration of the studied algorithms in puzzles of bigger sizes.
+
+\begin{thebibliography}{00}
+    
+\bibitem{b1} "Unblock me FREE.". Google Play. February 28, 2019.\href{https://play.google.com/store/apps/details?id=com.kiragames.unblockmefree}{https://play.google.com/store/apps/details?id=com.kiragames.unblo\\ckmefree}.
+\bibitem{b2} Fogleman, Michael. "Solving Rush Hour, the Puzzle.". July, 2018. \href{https://www.michaelfogleman.com/rush/}{https://www.michaelfogleman.com/rush/}.
+\bibitem{b3} "Bitboard.". Wikipedia - The free Encyclopedia. December 6, 2018. \href{https://en.wikipedia.org/wiki/Bitboard}{https://en.wikipedia.org/wiki/Bitboard}.
+\bibitem{b4} Littman, Michael. "Programming Assignment P1 - What A* Rush". Priceton. 2012. \href{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments/programs/rushhour/}{https://www.cs.princeton.edu/courses/archive/fall12/cos402/assignments\\/programs/rushhour/}.
+\bibitem{b5} Findling, Rainhard. "The RushHour Puzzle – an Artificial Intelligence Toy Problem.". April 4, 2012. \href{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}{http://geekoverdose2.rssing.com/browser.php?indx=39804402\&item=1}.
+\end{thebibliography}
+
+\newpage
+
+\section{Annex} \label{sec:annex}
+
+\subsection{Answer Length in Easy puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-easy.png}}
+    \caption{Answer Length in Easy puzzles}
+\end{figure}
+
+\subsection{Answer Length in Medium puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-medium.png}}
+    \caption{Answer Length in Medium puzzles}
+\end{figure}
+
+\subsection{Answer Length in Hard puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-hard.png}}
+    \caption{Answer Length in Hard puzzles}
+\end{figure}
+
+\subsection{Answer Length in Long puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/answerLength-long.png}}
+    \caption{Answer Length in Long puzzles}
+\end{figure}
+
+\subsection{Execution time in Easy puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-easy.png}}
+    \caption{Execution time in Easy puzzles}
+\end{figure}
+
+\subsection{Execution time in Medium puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-medium.png}}
+    \caption{Execution time in Medium puzzles}
+\end{figure}
+
+\subsection{Execution time in Hard puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-hard.png}}
+    \caption{Execution time in Hard puzzles}
+\end{figure}
+
+\subsection{Execution time in Long puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/executionTime-long.png}}
+    \caption{Execution time in Long puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Easy puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-easy.png}}
+    \caption{Number of expanded states in Easy puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Medium puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-medium.png}}
+    \caption{Number of expanded states in Medium puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Hard puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-hard.png}}
+    \caption{Number of expanded states in Hard puzzles}
+\end{figure}
+
+\subsection{Number of expanded states in Long puzzles}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=260px]{../../graphics/expandedNodes-long.png}}
+    \caption{Number of expanded states in Long puzzles}
+\end{figure}
+
+\end{document}
