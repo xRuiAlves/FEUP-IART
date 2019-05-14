@@ -71,16 +71,16 @@ def geneticAlgorithm():
     while best.fitness != 1:
         if (gen.number > maximum_generation_number):
             print("\nMaximum generation number reached. Aborting.")
-            print("Best obtained solution:")
-            print(best)
+            print("Best obtained solution:\n{}".format(best))
+            print("\nNumber of generated solutions: {}".format(gen.number * ProblemData.POPULATION_SIZE))
             return
         print("Generation no. {}: ".format(gen.number), end="")
         print(best)
         gen = gen.getNextGeneration()
         best = gen.getBest()
 
-    print("\nFound optimal solution in generation {}:".format(gen.number))
-    print(best)
+    print("\nFound optimal solution in generation {}: {}".format(gen.number, best))
+    print("\nNumber of generated solutions: {}".format(gen.number * ProblemData.POPULATION_SIZE))
     return
 
 def hillClimbing():
