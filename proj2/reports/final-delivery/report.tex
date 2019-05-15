@@ -218,6 +218,40 @@ The algorithm allows the manipulation of a set of variables, such as the populat
 
 \section{Experiments and Results} \label{sec:ear}
 
+In order to study the performance of the different optimization algorithms in the given problem, aswell as their optimal parameterizations, a set of experiments were done.
+
+In a first iteration, the initial solutions (for all the different algorithms) were being randomly generated. However, as the problem input size increased, noone of the algorithms were able to generate valid solutions (that would satisfy all the problem's hard constraints), which resulted in solutions with no value. For that reason, in a second iteration, an algorithm to generate the initial solutions was implemented (the algorithm will be explained in \autoref{subsec:isg}), which highly improved all of the algorithms performance.
+
+In order to run the experiments under different input conditions, a set of 23 different input scenarios were generated (using a script that was developed for that purpose), which are grouped into 5 different "difficulty levels" according to the size of the input data (number of events, number of features, number of students, ...). Not all of the different input scenarios have an optimal solution (violating no soft constraints whatsoever).
+
+\subsection{Input Scenarios Categorization}
+
+The input scenarios (total of 23 different scenarios) were categorized into 5 different difficulties, based on the size of the input data, that is, the number of events that are taking place, the number of students attending the events, the number of features that exist (offered by rooms and required by events) and the number of available rooms and their size.
+
+\begin{itemize}
+    \item \textit{Very Easy} - About 5 events, 15 to 20 students, 3 to 5 available rooms and 3 to 5 existing features 
+    \item \textit{Easy} - 12 to 18 events, 30 to 42 students, 3 to 6 available rooms and 5 to 8 features 
+    \item \textit{Medium} - 20 to 25 events, 90 to 105 students, 6 to 8 available rooms and 5 to 10 features
+    \item \textit{Hard} - 24 to 26 events, 240 to 300 students, about 5 available rooms and 5 to 10 features
+    \item \textit{Very Hard} - 45 to 50 events, 335 to 410 students, 12 to 14 available rooms and 8 to 10 features
+\end{itemize}
+
+The different input sizes allows the studying of the algorithms' performance under several distinct scenarios.
+
+\subsection{Initial Solutions Generation} \label{subsec:isg}
+
+\textbf{\textit{TODO - GUILHERME}}
+
+\subsection{Hill Climbing Algorithm}
+
+\textbf{\textit{TODO}}
+
+\subsection{Simulated Annealing Algorithm}
+
+\textbf{\textit{TODO}}
+
+\subsection{Genetic Algorithm}
+
 \textbf{\textit{TODO}}
 
 \section{Conclusions and Future Work}
