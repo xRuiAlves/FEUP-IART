@@ -1,3 +1,4 @@
+
 import sys
 import time
 import random
@@ -52,44 +53,36 @@ def main():
     print("Execution time: {:.4f} seconds".format(t2-t1))
 
 def geneticAlgorithm():
-    input_file = sys.argv[1]
-    try:
-        ProblemData.readFile(input_file)
-    except:
-        sys.stderr.write("Error: Failed file parsing: Invalid input file.\n")
-        return 2
+    print()
+    while True:
+        try:
+            maximum_generation_number = int(input("Please enter the maximum generation number: "))
+            break
+        except ValueError:
+            continue
+    
+    print("\nGenerating initial population . . .\n")
 
-    print("\n")
+    gen = generatePopulation(50, print_progress=True)
 
-    maximum_generation_number = 200
-    num_experiments = 10
-    ProblemData.MUTATION_PROB = 0.05
+    print("\nStarting Genetic algorithm . . .\n")
 
-    for i in range(10):
-        times = 0
-        num_solutions = 0
-        penn = 0
-        for i in range(num_experiments):
-            gen = generatePopulation(50, print_progress=False)
+    best = gen.getBest()
 
-            best = gen.getBest()
-            num_solutions += ProblemData.POPULATION_SIZE
+    while best.fitness != 1:
+        if (gen.number > maximum_generation_number):
+            print("\nMaximum generation number reached. Aborting.")
+            print("Best obtained solution:\n{}".format(best))
+            print("\nNumber of generated solutions: {}".format(gen.number * ProblemData.POPULATION_SIZE))
+            return
+        print("Generation no. {}: ".format(gen.number), end="")
+        print(best)
+        gen = gen.getNextGeneration()
+        best = gen.getBest()
 
-            t1 = time.time()
-            while best.fitness != 1:
-                if (gen.number > maximum_generation_number):
-                    break
-            
-                gen = gen.getNextGeneration()
-                best = gen.getBest()
-                num_solutions += ProblemData.POPULATION_SIZE
-            t2 = time.time()
-            times += (t2 - t1)
-            penn += best.penalty
-            ProblemData.MUTATION_PROB += 0.025
-
-        print("{:.1f},{:.4f},{}".format(penn/num_experiments, times/num_experiments, num_solutions//num_experiments))
-
+    print("\nFound optimal solution in generation {}: {}".format(gen.number, best))
+    print("\nNumber of generated solutions: {}".format(gen.number * ProblemData.POPULATION_SIZE))
+    return
 
 def hillClimbing():
     print("\nStarting Hill Climbing algorithm . . .\n")
@@ -156,4 +149,4 @@ def simulatedAnnealing():
     return
 
 # Entry point
-geneticAlgorithm()
+main()
