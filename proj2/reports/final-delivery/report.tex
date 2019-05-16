@@ -248,11 +248,49 @@ Secondly, the three algorithms quality is going to be evaluated and compared, ba
 
 \subsection{Simulated Annealing Algorithm Parameterizations}
 
-The simulated annealing algorithm makes use of two different parameterization variables: the initial temperature and the annealing step. In order to understand which parameterizations achieve the best results, a set of 20 experiments with different temperatures and annealing steps were made with inputs of different difficulties:
+The simulated annealing algorithm makes use of two different parameterization variables: the initial temperature and the annealing step. In order to understand which parameterizations achieve the best results, a set of 10 experiments with different temperatures and annealing steps were made with inputs of different difficulties:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{annealing_very_easy.png}}
+    \caption{Simmulated Annealing Results on very easy inputs}
+\end{figure}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{annealing_easy.png}}
+    \caption{Simmulated Annealing Results on easy inputs}
+\end{figure}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{annealing_medium.png}}
+    \caption{Simmulated Annealing Results on medium inputs}
+\end{figure}
+
+As expected, lower penalties (better solutions) were achieved with higher starting temperatures and lower annealing steps, since that results in more algorithm iterations. However, as the initial temperature increased and the annealing step decresed, the execution times and the number of explored states proportionally increased (as expected, since more algorithm iterations are being executed). These results were observed with inputs of all different difficulties.
 
 \subsection{Genetic Algorithm Parameterizations}
 
-\textbf{\textit{TODO}}
+The genetic algorithm makes use of three different parameterization variables: the generations population size, the mutation probability and the number of elite solutions preserved between consecutive generations. In order to understand which parameterizations achieve the best results, a set of 10 experiments with different parameterizations were made with inputs of different difficulties, with a maximum of 300 generations per experiment (may be less than this value if optimal is reached).
+
+Firstly, the population size was manipulated (maintaining constant values for the other variables, namely a mutation probability of 15\% and a number of preserved elite solutions equal to 10\% of the population size). The obtained results were the following: 
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{genetic_pop_size_medium.png}}
+    \caption{Genetic Algorithm Population size influence on medium inputs}
+\end{figure}
+
+As expected, the solution penalty decreased as the population size increased (since more solutions were explored and the different generations had more variability). The best performance was achieved, in all tested input difficulties, when the population size was approximately 100. The number of explored solutions and the execution time increased proportionally to the population size. 
+
+Secondly, the mutation probability was manipulated (maintaining constant values for the other variables, namely a population size of 100 and a number of preserved elite solutions of 10). The obtained results were the following: 
+
+\textbf{\textit{Insert Chart}}
+
+\textbf{\textit{Insert conclusion}}
+
+Thirdly and finally, the number of preserved elite solutions between consecutive generations was manipulated (maintaining constant values for the other variables, namely a population size of 100 and a mutation probability of 12.5\%). The obtained results were the following: 
+
+\textbf{\textit{Insert Chart}}
+
+\textbf{\textit{Insert conclusion}}
 
 \subsection{Algorithms results and comparison}
 
