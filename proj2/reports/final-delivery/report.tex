@@ -37,7 +37,8 @@ up201606746@fe.up.pt}
 \maketitle
 
 \begin{abstract}
-\textbf{\textit{TODO: UPDATE THIS}}The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving a \textit{Timetabling Problem}, in which a set of events need to be scheduled into rooms at certain time slots, given certain restrictions. The objective is to achieve the best possible allocation efficiently, enforcing the \textit{Hard Constraints} and maximizing the number of \textit{Soft Constraints} verified.
+
+The aim of this paper is to implement and compare Artificial Intelligence algorithms for solving a \textit{Timetabling Problem}, in which a set of events need to be scheduled into rooms at certain time slots, given certain restrictions. The objective is to achieve the best possible allocation efficiently, enforcing the \textit{Hard Constraints} and maximizing the number of \textit{Soft Constraints} verified.
 The problem will be described and then formulated as an \textit{Optimization Problem}, together with some discussion on the reasoning behind some of the decisions taken during this process.
 Several algorithms will be investigated, along with testing them in different configurations of these types of problems, which have varying difficulty and complexity. Both the efficiency in reaching a solution and its optimality will be taken into account in the pursuit for the optimal algorithm.
 \end{abstract}
@@ -48,11 +49,11 @@ Artificial Intelligence, Scheduling Problems, Optimization Problems, Optimizatio
 
 \section{Introduction}
 
-\textbf{\textit{TODO: UPDATE THIS}}The problem that is the subject of study in this paper (a \textit{Timetabling Problem}) will be approached with several different \textit{Optimization Algorithms}, implemented in \textit{Python3}, in order to conclude what is the best approach for solving it using \textit{Artificial Intelligence Algorithms}.
+The problem that is the subject of study in this paper (a \textit{Timetabling Problem}) will be approached with several different \textit{Optimization Algorithms}, implemented in \textit{Python3}, in order to conclude what is the best approach for solving it using \textit{Artificial Intelligence Algorithms}.
 
-Firstly, the problem will be described in further detail, ensuring that all non-formal aspects of it are well documented. Secondly, it will be formulated as an \textit{Optimization Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken. Thirdly, a research on related work on this topic will be presented, giving some insight on the problem from other points of view.
+Firstly, the problem will be described in further detail, ensuring that all non-formal aspects of it are well documented. Secondly, it will be formulated as an \textit{Optimization Problem}, with the approach taken in doing so being illustrated in increased depth, providing reasoning for the decisions taken. Thirdly, a research on related work on this topic will be presented, giving some insight on the problem from other points of view. Then, the project implementation details will be discussed and the optimization algorithms will be explained in detail. Furthermore, the developed experiments will be presented, along with the obtained results.
 
-Finally, a small section will cover the conclusions and future work, by expanding on the already developed tasks and elaborating on the planned approach.
+Finally, a section will cover the main conclusions obtained in the project development, aswell as elaborating on what can be done to further develop work related to this topic.
 
 \section{Problem Description}
 
@@ -300,13 +301,30 @@ The best performance was achieved when the number of elite solutions was approxi
 
 Based on the experiments, the optimal combination of parameterizations for the genetic algorithm are, approximately, 100 solutions in the generations population, maintaining 5\% to 10\% elite solutions between generations and with a mutation probability of 12.5\%.
 
-\subsection{Algorithms results and comparison}
+\subsection{Algorithms Results and Comparison}
 
-\textbf{\textit{TODO}}
+In order to study the algorithms performance with different difficulty inputs, all of the different inputs were tested, measuring the best achieved solution's penalty, the execution time and the number of explored solutions. The results were the following:  
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=255px]{comparison.png}}
+    \caption{Optimization Algorithms comparison with different difficulty inputs}
+\end{figure}
+
+The results shown that the best performance was obtained by the Hill-Climbing algorithm, which achieved quality solutions (with low penalty) in very low execution times and without exploring a large number of solutions. This is verified due to the fact that, in this scheduling optimization problem, the local maximums that are quickly reached by the hill climbing algorithm have a high degree of quality (very low penalty, that is, low number of soft constraint violations). 
+
+The full experiments results can be found in \autoref{sec:annex}.
 
 \section{Conclusions and Future Work}
 
-\textbf{\textit{TODO}}
+In this project, all of the applicable algorithms that were pro-posed were implemented and tested.
+
+A command line interface was developed to test the different puzzles and visualize the solutions produced by each of the algorithms.
+
+In order to study the upsides and downsides of each of the algorithms, a thorough examination of their performance using different metrics (produced solutions quality, execution time and number of explored solutions) was made. 
+
+When analysing the produced solutions, it was concluded that the algorithm that achieved the overall best performance in the different difficulty inputs was the Hill Climbing algorithm (in terms of solution quality, execution time and number of explored solutions). 
+
+All  of  the  objectives  were  successfully  completed  and future improvements could include the exploration of the studied algorithms performance in inputs of larger complexities.
 
 \begin{thebibliography}{00}
     
@@ -317,5 +335,119 @@ Based on the experiments, the optimal combination of parameterizations for the g
 \bibitem{sol2}{Halvard Arntzen, Arne Lokketangen, "A local search heuristic for a university timetabling problem" in 1st International Timetabling Competition, January 2003}
 
 \end{thebibliography}
+
+\section{Annex} \label{sec:annex}
+
+\subsection{Simmulated Annealing metrics influence on Very Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{annealing_very_easy.png}}
+    \caption{Simmulated Annealing metrics influence on Very Easy inputs}
+\end{figure}
+
+\subsection{Simmulated Annealing metrics influence on Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{annealing_easy.png}}
+    \caption{Simmulated Annealing metrics influence on Easy inputs}
+\end{figure}
+
+\subsection{Simmulated Annealing metrics influence on Medium inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{annealing_medium.png}}
+    \caption{Simmulated Annealing metrics influence on Medium inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms population size influence on Very Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{genetic_pop_size_very_easy.png}}
+    \caption{Genetic Algorithms population size influence on Very Easy inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms population size influence on Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{genetic_pop_size_easy.png}}
+    \caption{Genetic Algorithms population size influence on Easy inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms population size influence on Medium inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{genetic_pop_size_medium.png}}
+    \caption{Genetic Algorithms population size influence on Medium inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms population size influence on Hard inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{genetic_pop_size_hard.png}}
+    \caption{Genetic Algorithms population size influence on Hard inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms mutation probability influence on Very Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{mutation_prob_very_easy.png}}
+    \caption{Genetic Algorithms mutation probability influence on Very Easy inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms mutation probability influence on Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{mutation_prob_easy.png}}
+    \caption{Genetic Algorithms mutation probability influence on Easy inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms mutation probability influence on Medium inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{mutation_prob_medium.png}}
+    \caption{Genetic Algorithms mutation probability influence on Medium inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms mutation probability influence on Hard inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{mutation_prob_hard.png}}
+    \caption{Genetic Algorithms mutation probability influence on Hard inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms number of elite solutions influence on Very Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{elite_very_easy.png}}
+    \caption{Genetic Algorithms number of elite solutions influence on Very Easy inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms number of elite solutions influence on Easy inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{elite_easy.png}}
+    \caption{Genetic Algorithms number of elite solutions influence on Easy inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms number of elite solutions influence on Medium inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{elite_medium.png}}
+    \caption{Genetic Algorithms number of elite solutions influence on Medium inputs}
+\end{figure}
+
+\subsection{Genetic Algorithms number of elite solutions influence on Hard inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{elite_hard.png}}
+    \caption{Genetic Algorithms number of elite solutions influence on Hard inputs}
+\end{figure}
+
+\subsection{Algorithms performance comparison on different difficulty inputs}
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{comparison.png}}
+    \caption{Algorithms performance comparison on different difficulty inputs}
+\end{figure}
 
 \end{document}
