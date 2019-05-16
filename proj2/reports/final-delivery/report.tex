@@ -282,15 +282,23 @@ As expected, the solution penalty decreased as the population size increased (si
 
 Secondly, the mutation probability was manipulated (maintaining constant values for the other variables, namely a population size of 100 and a number of preserved elite solutions of 10). The obtained results were the following: 
 
-\textbf{\textit{Insert Chart}}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{mutation_prob_medium.png}}
+    \caption{Genetic Algorithm Mutation Probability influence on medium inputs}
+\end{figure}
 
-\textbf{\textit{Insert conclusion}}
+The mutation probability did not have a significant impact on the solution's quality, although the algorithm achieved best performance with probabilities from 10\% to 15\% for all different input difficulties. The execution time and number of explored solutions were approximately independant (constant) of the different mutation probabilities.
 
 Thirdly and finally, the number of preserved elite solutions between consecutive generations was manipulated (maintaining constant values for the other variables, namely a population size of 100 and a mutation probability of 12.5\%). The obtained results were the following: 
 
-\textbf{\textit{Insert Chart}}
+\begin{figure}[H]
+    \centerline{\includegraphics[width=250px]{elite_medium.png}}
+    \caption{Genetic Algorithm number of Elite solutions influence on medium inputs}
+\end{figure}
 
-\textbf{\textit{Insert conclusion}}
+The best performance was achieved when the number of elite solutions was approximately 5\% to 10\% of the number of solutions in the population, for all different input difficulties. The number of explored solutions was approximately independant (constant) of the number of elite solutions. The execution time highly decreased as the number of elites increased, since there are less new solutions being generated for the new generation.
+
+Based on the experiments, the optimal combination of parameterizations for the genetic algorithm are, approximately, 100 solutions in the generations population, maintaining 5\% to 10\% elite solutions between generations and with a mutation probability of 12.5\%.
 
 \subsection{Algorithms results and comparison}
 
