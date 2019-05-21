@@ -247,13 +247,13 @@ Secondly, the three algorithms quality is going to be evaluated and compared, ba
 
 Each initial solution tries to avoid allocating two events for the same time slot, if there are participants in common, and tries to assign an event to a room with the necessary features.
 
-To achieve this a directed graph of the room features is created, each node of the graph is identified by the features associated with the rooms saved in the node. Each edge connects a node with N features to a node with N+1 features, where all the features present in the former are also present in the latter.
+To achieve this, a directed graph of the room features is created and each node of the graph is identified by the features associated with the rooms saved in the node. Each edge connects a node with N features to a node with N+1 features, where all the features presented in the former are also present in the latter.
 
-In addition to the graph an auxiliary matrix is used to identify if a student is attending an event in a given time slot.
+In addition to the graph, an auxiliary matrix is used to identify if a student is attending an event in a given time slot.
 
-After both structures are built, the list of events is iterated and for each one a breadth search is used to select the room for it, starting in the node with the exact features the event needs. When the search reaches a node is going to iterate over it's rooms and find the first where there is a free time slot that does not originate student collisions. The selected slot corresponds to the first slot found, in a randomly ordered list of all free slots for that room, that does not originate collision between students.
+After both structures are built, the list of events is iterated and, for each one, a breadth search is used to select the room for it, starting in the node with the exact features the event needs. When a node is reached, their rooms are iterated in order to find the first where there is a free time slot that does not originate student collisions. The selected slot corresponds to the first slot found, in a randomly ordered list of all free slots for that room, that do not originate collision between students.
 
-This algorithm is not always able to find a solution that satisfies the conditions set in the beginning of this section. For the events that do not have a room and time slot assigned after the algorithm finishes, a random one that is free is assigned.
+This algorithm is not always able to find a solution that satisfies the conditions set in the beginning of this section. For the events that do not have a room and time slot assigned after the algorithm finishes, a random one that is free is assigned. Therefore, even though this algorithm does not guarantee the generation of a valid solution, it generates a very good approximation, which highly improves the optimization algorithms performance.
 
 \subsection{Simulated Annealing Algorithm Parameterizations}
 
