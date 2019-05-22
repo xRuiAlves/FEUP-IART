@@ -204,15 +204,15 @@ Similarly to the Hill Climbing algorithm, this algorithm does not guarantee an o
 
 \subsection{Genetic Algorithm}
 
-The \textbf{Genetic Algorithm} is based on the species evolution theory. The algorithm groups a set of solutions (a \textit{generation}), which represents a population of solutions in a given point in time. The optimization process consists in iteratively computing news generation (based on the current generation), using concepts such as \textit{evaluation}, \textit{selection}, \textit{crossover} and \textit{mutation}. 
+The \textbf{Genetic Algorithm} is based on the species evolution theory. The algorithm groups a set of solutions (a \textit{generation}), which represents a population of solutions in a given point in time. The optimization process consists in iteratively computing new generations based on the current one, using concepts such as \textit{evaluation}, \textit{selection}, \textit{crossover} and \textit{mutation}. 
 
-The \textit{evaluation} process consists in computing how good (the \textit{fitness}) of each of the generation's individuals, which is the variable that is being optimized and classifies how good a solution is.
+The \textit{evaluation} process consists in computing how good (the \textit{fitness} of) each of the generation's individuals are. This is the variable that is being optimized and thus classifies how good a solution is.
 
-The \textit{selection} process consists in selecting a subset of the current generation (based on their fitness, prioritizing the most fit solution), which will be used to generate the following generation. This process is usually made by generating a set of random numbers (equal to the generation's population size), which dictate which solutions to select (the probability of a solution is chosen is proportional to its fitness).
+The \textit{selection} process consists in selecting a subset of the current generation (based on their fitness, prioritizing the most fit Solutions), which will be used to produce the following generation. This process is usually achieved by generating a set of random numbers (equal to the generation's population size), which dictate which solutions to select (the probability of a solution is chosen is proportional to its fitness).
 
 The \textit{crossover} process consists in selecting random solutions (from the set obtained in the selection process) and combining them, generating two new solutions (children solutions). There are different ways of crossing over two solutions, such as \textit{k-point} crossover and \textit{uniform} crossover.
 
-The \textit{mutation} process consists in changing the solutions that resulted from the crossover process, based on a given mutation probability. This process allows to increase the variability of the new generation.
+The \textit{mutation} process consists in changing the solutions that resulted from the crossover process, based on a given mutation probability. This process results in an increase of the variability of the new generation.
 
 The algorithm may also use other concepts, such as \textit{Elitism}, which preserves a number of best solutions from one generation to another, in order to avoid the loss of very fit solutions.
 
