@@ -174,15 +174,16 @@ The input file assumes the following structure:
 
 The program offers a set of menus, allowing the user to choose which algorithm they want to solve the input problem, presenting the obtained solution and the execution time. 
 
-When Genetic Algorithm is chosen, the maximum number of desired generations is specified by the user. In each iteration, the current best solution in the population is presented and a verification is made is order to test if the optimal solution was reached. If so, the algorithm stops. After the optimal solution is reached (or if the maximum number of generations is reached), the execution time and number of generated solutions are presented to user.
+When Genetic Algorithm is chosen, the maximum number of desired generations is specified by the user. In each iteration, the current best solution in the population is presented and a verification is made in order to test if the optimal solution was reached. If so, the algorithm stops. After the optimal solution is reached (or if the maximum number of generations is reached), the execution time and number of generated solutions are presented to the user.
 
-When the Hill Climbing or Simulated Annealing algorithms are chosen, the algorithm execution starts and the current solution is displayed in each iteration. After the optimal solution is reached or a local maximum is reached (and if the current temperature is equal to 0 in the simulated annealing algorithm), the execution time to reach the solution and the number of explored states are presented to the user.
+When the Hill Climbing or Simulated Annealing algorithms are chosen, the algorithm execution starts and the current solution is displayed in each iteration. After the optimal solution or a local maximum is reached (and if the current temperature is equal to 0 in the simulated annealing algorithm), the algorithm stops and the execution time to reach the solution and the number of explored states are presented to the user.
 
-In order to improve the algorithms performance, the initial solutions are being pre-computed instead of being randomly generated, as will be further expanded in \autoref{sec:ear}
+In order to improve the algorithms' performance, the initial solutions are being pre-computed instead of being randomly generated, as will be further expanded in \autoref{sec:ear}
 
 \section{Optimization Algorithms}
 
-As determined beforehand, the following algorithms were implemented:
+As mentioned beforehand, the following algorithms were implemented:
+
 \begin{itemize}
     \item Hill Climbing
     \item Simulated Annealing
@@ -191,13 +192,13 @@ As determined beforehand, the following algorithms were implemented:
 
 \subsection{Hill Climbing Algorithm} \label{subsec:hca}
 
-The \textbf{Hill Climbing} algorithm is an iterative algorithm that, based on a given initial solution, analyzes all of the solution's neighbor states (the concept of neighbor state was detailed in \autoref{subsec:sns}), evaluating them. Then, it proceeds to choose the best neighbor state as the next state to be explored, until a maximum is reached (the algorithm is, for this reason, deterministic).
+\textbf{Hill Climbing} is an iterative algorithm that, based on a given initial solution, analyzes all of the solution's neighbor states (the concept of neighbor state was detailed in \autoref{subsec:sns}), evaluating them. Then, it proceeds to choose the best neighbor state as the next state to be explored, until a maximum is reached (the algorithm is, for this reason, deterministic).
 
 This algorithm has the problem of not always being able to find the optimal solution for a given input, since the termination condition is the non-existence of better neighbor states, that is, a local maximum.
 
 \subsection{Simulated Annealing Algorithm}
 
-The \textbf{Simulated Annealing} algorithm has a similar behaviour to the Hill Climbing algorithm, starting with an initial solution and iteratively analyzing all of the solution's neighbor states, evaluating them. However, it does not always choose the best neighbor state in each iteration. Instead, there is a probability to choose a different solution than the best, in order to avoid determinism and stopping optimization in a local maximum. That probability is commonly called a \textit{temperature}, that decreases in each iteration (\textit{temperature annealing}). The algorithm optimization termination condition is after the temperature has reached 0 and a local maximum has been reached (there are no better neighbor states to explore).
+The \textbf{Simulated Annealing} algorithm has a similar behaviour to the Hill Climbing algorithm, starting with an initial solution and iteratively analyzing all of the solution's neighbor states, evaluating them. However, it does not always choose the best neighbor state in each iteration. Instead, there is a probability to select a different solution than the best, in order to avoid determinism and stopping optimization in a local maximum. That probability is commonly called a \textit{temperature}, that decreases in each iteration (\textit{temperature annealing}). The algorithm optimization termination condition is after the temperature has reached 0 and a local maximum has been reached (there are no better neighbor states to explore).
 
 Similarly to the Hill Climbing algorithm, this algorithm does not guarantee an optimal solution for a given input. However, since the probability of not always choosing the best possible state removes the determinism factor, it is possible to find maximums other than the nearest local maximum.
 
@@ -324,7 +325,7 @@ The full experiments results can be found in \autoref{sec:annex}.
 
 \section{Conclusions and Future Work}
 
-In this project, all of the applicable algorithms that were pro-posed were implemented and tested.
+In this project, all of the applicable algorithms that were proposed were implemented and tested.
 
 A command line interface was developed to test the different puzzles and visualize the solutions produced by each of the algorithms.
 
@@ -332,7 +333,7 @@ In order to study the upsides and downsides of each of the algorithms, a thoroug
 
 When analysing the produced solutions, it was concluded that the algorithm that achieved the overall best performance in the different difficulty inputs was the Hill Climbing algorithm (in terms of solution quality, execution time and number of explored solutions). 
 
-All  of  the  objectives  were  successfully  completed  and future improvements could include the exploration of the studied algorithms performance in inputs of larger complexities.
+All  of  the  objectives  were  successfully  completed  and future improvements could include the exploration of the studied algorithms' performance in inputs of higher complexities.
 
 \begin{thebibliography}{00}
     
