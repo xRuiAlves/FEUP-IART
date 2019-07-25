@@ -2,7 +2,7 @@
 Projects developed for the IART (Artificial Intelligence) course unit.
 
 ### Project Infos
-* **Date:** 3rd Year, 1st Semester, 2018/2019
+* **Date:** 3rd Year, 2nd Semester, 2018/2019
 * **Topic:** Lab classes exercises and Projects
 * **Course:** Inteligência Artificial (IART) | Artificial Intelligence
 * **Course Link:** https://sigarra.up.pt/feup/pt/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=420007
